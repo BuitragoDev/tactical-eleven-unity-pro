@@ -918,6 +918,16 @@ Reglas heredadas que **no** se deben romper:
 
 ---
 
+### ProManager (reglas propias, sin equivalentes NBA)
+
+Lo que anuncia el modal y hay que implementar en las fases indicadas:
+
+- **Solo clubes de la mitad baja** de cada competición (F5, hecho).
+- **Objetivo exigente**: si no se cumple, la directiva puede destituir al final de la temporada (F15).
+- **Cese por presupuesto**: dos avisos en rojo; en Manager son tres (F12).
+- **Cambio de equipo cada temporada**: al terminar, quedarse o aceptar ofertas de clubes de la zona baja (F15).
+- **Sin excepciones económicas**: no hay margen salarial extra ni fichajes por encima del presupuesto del club (F11/F12). En fútbol no existen MLE ni aprons.
+
 ## 11. Calendario tipo de una temporada
 
 | Periodo | Contenido |

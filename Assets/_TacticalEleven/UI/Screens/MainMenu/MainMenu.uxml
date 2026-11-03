@@ -190,11 +190,11 @@
             <ui:VisualElement name="ProModalBox" class="modal-box">
                 <ui:Label text="{loc:ui.main_menu.modo_pro_promanager}" class="modal-title"/>
                 <ui:VisualElement class="modal-body">
-                    <ui:Label text="{loc:ui.main_menu.has_seleccionado_la_carrera_pro_manager_9286a6db}" class="modal-paragraph"/>
-                    <ui:Label text="{loc:ui.main_menu.sin_mid_level_exception_no_taxpayer_sobr_4765e66b}" class="modal-paragraph modal-paragraph--highlight"/>
-                    <ui:Label text="{loc:ui.main_menu.cese_por_presupuesto_mas_exigente_la_dir_10eff9e6}" class="modal-paragraph"/>
-                    <ui:Label text="{loc:ui.main_menu.objetivo_de_temporada_no_cumplirlo_puede_9507b7f5}" class="modal-paragraph"/>
-                    <ui:Label text="{loc:ui.main_menu.cambio_de_equipo_cada_temporada_podras_c_386561dc}" class="modal-paragraph"/>
+                    <ui:Label text="{loc:ui.main_menu.pro_descripcion}" class="modal-paragraph"/>
+                    <ui:Label text="{loc:ui.main_menu.pro_regla_objetivo}" class="modal-paragraph modal-paragraph--highlight"/>
+                    <ui:Label text="{loc:ui.main_menu.pro_regla_presupuesto}" class="modal-paragraph"/>
+                    <ui:Label text="{loc:ui.main_menu.pro_regla_equipo}" class="modal-paragraph"/>
+                    <ui:Label text="{loc:ui.main_menu.pro_regla_economia}" class="modal-paragraph"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="modal-actions">
                     <ui:Button name="BtnProCancel" text="{loc:ui.main_menu.btn_pro_cancel}" class="modal-btn modal-btn--secondary"/>

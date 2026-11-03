@@ -138,16 +138,8 @@
       "value": "Calidad"
     },
     {
-      "key": "ui.main_menu.cambio_de_equipo_cada_temporada_podras_c_386561dc",
-      "value": "Cambio de equipo: cada temporada podrás cambiar de franquicia entre los peores equipos de la liga."
-    },
-    {
       "key": "ui.main_menu.cargar_partida",
       "value": "CARGAR\nPARTIDA"
-    },
-    {
-      "key": "ui.main_menu.cese_por_presupuesto_mas_exigente_la_dir_10eff9e6",
-      "value": "Cese por presupuesto más exigente: la directiva te despide antes ante malos resultados económicos."
     },
     {
       "key": "ui.main_menu.cierra_el_juego_y_vuelve_al_escritorio_a_3b0082cd",
@@ -262,10 +254,6 @@
       "value": "GRÁFICOS"
     },
     {
-      "key": "ui.main_menu.has_seleccionado_la_carrera_pro_manager_9286a6db",
-      "value": "Has seleccionado la carrera ProManager. Este modo añade restricciones que te pondrán a prueba como director general:"
-    },
-    {
       "key": "ui.main_menu.informe_de_errores",
       "value": "INFORME DE ERRORES"
     },
@@ -294,12 +282,28 @@
       "value": "Música"
     },
     {
-      "key": "ui.main_menu.objetivo_de_temporada_no_cumplirlo_puede_9507b7f5",
-      "value": "Objetivo de temporada: no cumplirlo puede costarte el puesto."
-    },
-    {
       "key": "ui.main_menu.partidos_temporada",
       "value": "PARTIDOS / TEMPORADA"
+    },
+    {
+      "key": "ui.main_menu.pro_descripcion",
+      "value": "Has elegido la carrera ProManager: empiezas en un club de la zona baja y con menos margen de error."
+    },
+    {
+      "key": "ui.main_menu.pro_regla_economia",
+      "value": "Sin excepciones económicas: no hay margen salarial extra ni fichajes por encima del presupuesto del club."
+    },
+    {
+      "key": "ui.main_menu.pro_regla_equipo",
+      "value": "Cambio de equipo cada temporada: al terminar la campaña podrás quedarte o aceptar ofertas de clubes de la zona baja."
+    },
+    {
+      "key": "ui.main_menu.pro_regla_objetivo",
+      "value": "Objetivo de temporada exigente: si no lo cumples, la directiva puede destituirte al final de la campaña."
+    },
+    {
+      "key": "ui.main_menu.pro_regla_presupuesto",
+      "value": "Cese por presupuesto más exigente: bastan dos avisos en rojo (en el modo Manager son tres)."
     },
     {
       "key": "ui.main_menu.salir",
@@ -324,10 +328,6 @@
     {
       "key": "ui.main_menu.simulacion",
       "value": "SIMULACIÓN"
-    },
-    {
-      "key": "ui.main_menu.sin_mid_level_exception_no_taxpayer_sobr_4765e66b",
-      "value": "Sin Mid-Level Exception (No-Taxpayer): sobre el cap, los fichajes de agentes libres se limitan a la excepción para pagadores de impuestos."
     },
     {
       "key": "ui.main_menu.tactical",
