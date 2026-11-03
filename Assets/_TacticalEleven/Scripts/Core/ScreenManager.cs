@@ -191,61 +191,7 @@ public class ScreenManager : MonoBehaviour
         if (mode != GameMode.None)
             CurrentMode = mode;
 
-        UIDocument target = screen switch
-        {
-            GameScreen.Loading => loadingDocument,
-            GameScreen.MainMenu => mainMenuDocument,
-            GameScreen.LoadGame => loadGameDocument,
-            GameScreen.Editor => editorDocument,
-            GameScreen.SelectTeam => selectTeamDocument,
-            GameScreen.Preseason => preseasonDocument,
-            GameScreen.Dashboard => dashboardDocument,
-            GameScreen.Roster => rosterDocument,
-            GameScreen.Lineup => lineupDocument,
-            GameScreen.Tactics => tacticsDocument,
-            GameScreen.Training => trainingDocument,
-            GameScreen.Staff => staffDocument,
-            GameScreen.Injured => injuredDocument,
-            GameScreen.Dorsales => dorsalesDocument,
-            GameScreen.Calendar => calendarDocument,
-            GameScreen.Results => resultsDocument,
-            GameScreen.Standings => standingsDocument,
-            GameScreen.CompetitionInfo => competitionInfoDocument,
-            GameScreen.Filial => filialDocument,
-            GameScreen.Rivalidades => rivalidadesDocument,
-            GameScreen.Knockouts => knockoutsDocument,
-            GameScreen.Europe => europeDocument,
-            GameScreen.Copa => copaDocument,
-            GameScreen.Logros => logrosDocument,
-            GameScreen.Palmares => palmaresDocument,
-            GameScreen.Records => recordsDocument,
-            GameScreen.Premios => premiosDocument,
-            GameScreen.Stats => statsDocument,
-            GameScreen.Market => marketDocument,
-            GameScreen.Cartera => carteraDocument,
-            GameScreen.Buscador => buscadorDocument,
-            GameScreen.Historial => historialDocument,
-            GameScreen.Finanzas => finanzasDocument,
-            GameScreen.Loans => loansDocument,
-            GameScreen.Sponsors => sponsorsDocument,
-            GameScreen.TV => tvDocument,
-            GameScreen.Stadium => stadiumDocument,
-            GameScreen.City => cityDocument,
-            GameScreen.Manager => managerDocument,
-            GameScreen.Messages => messagesDocument,
-            GameScreen.Hilos => hilosDocument,
-            GameScreen.PreGame => preGameDocument,
-            GameScreen.MatchDay => matchDayDocument,
-            GameScreen.GameResults => gameResultsDocument,
-            GameScreen.SeasonSummary => seasonSummaryDocument,
-            GameScreen.PlayerAwards => playerAwardsDocument,
-            GameScreen.EndSeason => endSeasonDocument,
-            GameScreen.NewSeason => newSeasonDocument,
-            GameScreen.PlayerProfile => playerProfileDocument,
-            GameScreen.Trajectory => trajectoryDocument,
-            GameScreen.BestXI => bestXIDocument,
-            _ => null
-        };
+        UIDocument target = Resolve(screen);
 
         if (target == null)
         {
@@ -256,6 +202,65 @@ public class ScreenManager : MonoBehaviour
         CurrentScreen = screen;
         ShowOnly(target);
     }
+
+    /// <summary>¿La pantalla tiene un UIDocument asignado en el Inspector?</summary>
+    public bool IsRegistered(GameScreen screen) => Resolve(screen) != null;
+
+    private UIDocument Resolve(GameScreen screen) => screen switch
+    {
+        GameScreen.Loading => loadingDocument,
+        GameScreen.MainMenu => mainMenuDocument,
+        GameScreen.LoadGame => loadGameDocument,
+        GameScreen.Editor => editorDocument,
+        GameScreen.SelectTeam => selectTeamDocument,
+        GameScreen.Preseason => preseasonDocument,
+        GameScreen.Dashboard => dashboardDocument,
+        GameScreen.Roster => rosterDocument,
+        GameScreen.Lineup => lineupDocument,
+        GameScreen.Tactics => tacticsDocument,
+        GameScreen.Training => trainingDocument,
+        GameScreen.Staff => staffDocument,
+        GameScreen.Injured => injuredDocument,
+        GameScreen.Dorsales => dorsalesDocument,
+        GameScreen.Calendar => calendarDocument,
+        GameScreen.Results => resultsDocument,
+        GameScreen.Standings => standingsDocument,
+        GameScreen.CompetitionInfo => competitionInfoDocument,
+        GameScreen.Filial => filialDocument,
+        GameScreen.Rivalidades => rivalidadesDocument,
+        GameScreen.Knockouts => knockoutsDocument,
+        GameScreen.Europe => europeDocument,
+        GameScreen.Copa => copaDocument,
+        GameScreen.Logros => logrosDocument,
+        GameScreen.Palmares => palmaresDocument,
+        GameScreen.Records => recordsDocument,
+        GameScreen.Premios => premiosDocument,
+        GameScreen.Stats => statsDocument,
+        GameScreen.Market => marketDocument,
+        GameScreen.Cartera => carteraDocument,
+        GameScreen.Buscador => buscadorDocument,
+        GameScreen.Historial => historialDocument,
+        GameScreen.Finanzas => finanzasDocument,
+        GameScreen.Loans => loansDocument,
+        GameScreen.Sponsors => sponsorsDocument,
+        GameScreen.TV => tvDocument,
+        GameScreen.Stadium => stadiumDocument,
+        GameScreen.City => cityDocument,
+        GameScreen.Manager => managerDocument,
+        GameScreen.Messages => messagesDocument,
+        GameScreen.Hilos => hilosDocument,
+        GameScreen.PreGame => preGameDocument,
+        GameScreen.MatchDay => matchDayDocument,
+        GameScreen.GameResults => gameResultsDocument,
+        GameScreen.SeasonSummary => seasonSummaryDocument,
+        GameScreen.PlayerAwards => playerAwardsDocument,
+        GameScreen.EndSeason => endSeasonDocument,
+        GameScreen.NewSeason => newSeasonDocument,
+        GameScreen.PlayerProfile => playerProfileDocument,
+        GameScreen.Trajectory => trajectoryDocument,
+        GameScreen.BestXI => bestXIDocument,
+        _ => null
+    };
 
     private void ShowOnly(UIDocument target)
     {

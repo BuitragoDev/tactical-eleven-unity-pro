@@ -167,7 +167,7 @@ public static class GameSaveManager
         slot.managerName = manager?.Name ?? "Manager";
         slot.teamName = team?.Name ?? "Sin equipo";
         slot.teamId = team?.Id ?? 0;
-        slot.teamLogo = team?.ShortName ?? "";
+        slot.teamLogo = !string.IsNullOrEmpty(team?.Logo) ? team.Logo : (team?.Id.ToString() ?? "");
         slot.seasonYear = season != null ? $"{season.YearStart}-{season.YearEnd}" : "2026-2027";
         slot.currentMatchDay = season?.CurrentMatchDay ?? 0;
         slot.gameMode = manager?.GameMode ?? "manager";

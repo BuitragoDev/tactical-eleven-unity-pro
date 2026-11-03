@@ -13,6 +13,7 @@ public class UiSmokeTests
 {
     private const string LoadingPath = "Assets/_TacticalEleven/UI/Screens/Loading/Loading.uxml";
     private const string MainMenuPath = "Assets/_TacticalEleven/UI/Screens/MainMenu/MainMenu.uxml";
+    private const string LoadGamePath = "Assets/_TacticalEleven/UI/Screens/LoadGame/LoadGame.uxml";
 
     private static readonly Regex TokenRegex = new Regex(@"\{loc:([A-Za-z0-9_.-]+)\}");
 
@@ -47,6 +48,7 @@ public class UiSmokeTests
 
     [TestCase(LoadingPath)]
     [TestCase(MainMenuPath)]
+    [TestCase(LoadGamePath)]
     public void UxmlTokens_ExistInSpanishTable(string path)
     {
         var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
@@ -65,6 +67,7 @@ public class UiSmokeTests
 
     [TestCase(LoadingPath)]
     [TestCase(MainMenuPath)]
+    [TestCase(LoadGamePath)]
     public void UxmlTexts_AreResolvedAfterApply(string path)
     {
         var tree = Load(path);
@@ -74,6 +77,18 @@ public class UiSmokeTests
         foreach (var label in root.Query<Label>().ToList())
             Assert.That(label.text.Contains("{loc:"), Is.False,
                 $"Token sin resolver en {path}: {label.text}");
+    }
+
+    [Test]
+    public void LoadGameUxml_HasSlotsAreaAndDeleteModal()
+    {
+        var root = Load(LoadGamePath).Instantiate();
+        Assert.That(root.Q<VisualElement>("SlotsGrid"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("EmptyState"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("DeleteModalOverlay"), Is.Not.Null);
+        Assert.That(root.Q<Button>("BtnDeleteYes"), Is.Not.Null);
+        Assert.That(root.Q<Button>("BtnDeleteNo"), Is.Not.Null);
+        Assert.That(root.Q<Button>("BtnBack"), Is.Not.Null);
     }
 
     private static VisualTreeAsset Load(string path)

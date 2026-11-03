@@ -71,5 +71,6 @@ public enum GameScreen
 public enum SimMode
 {
     Direct = 0,
-    PlayByPlay = 1
+    PlayByPlay = 1,
+    Visual2D = 2
 }

@@ -2,6 +2,78 @@
   "language": "es",
   "entries": [
     {
+      "key": "ui.load_game.borrar_partida",
+      "value": "BORRAR PARTIDA"
+    },
+    {
+      "key": "ui.load_game.btn_back",
+      "value": "VOLVER AL MENU"
+    },
+    {
+      "key": "ui.load_game.btn_delete_no",
+      "value": "NO"
+    },
+    {
+      "key": "ui.load_game.btn_delete_yes",
+      "value": "SÍ, BORRAR"
+    },
+    {
+      "key": "ui.load_game.cargar",
+      "value": "CARGAR"
+    },
+    {
+      "key": "ui.load_game.cargar_partida",
+      "value": "CARGAR PARTIDA"
+    },
+    {
+      "key": "ui.load_game.empieza_una_nueva_partida_desde_el_menu_0dc2c75a",
+      "value": "Empieza una nueva partida desde el menu principal"
+    },
+    {
+      "key": "ui.load_game.esta_accion_no_se_puede_deshacer_y_todos_90d6ff3b",
+      "value": "Esta acción no se puede deshacer y todos los datos de la partida se perderán."
+    },
+    {
+      "key": "ui.load_game.estas_seguro_de_que_quieres_borrar_esta_ff5a3c70",
+      "value": "¿Estás seguro de que quieres borrar esta partida?"
+    },
+    {
+      "key": "ui.load_game.fecha",
+      "value": "FECHA"
+    },
+    {
+      "key": "ui.load_game.five",
+      "value": "ELEVEN"
+    },
+    {
+      "key": "ui.load_game.jornada",
+      "value": "JORNADA"
+    },
+    {
+      "key": "ui.load_game.liga",
+      "value": "LIGA"
+    },
+    {
+      "key": "ui.load_game.no_hay_partidas_guardadas",
+      "value": "NO HAY PARTIDAS GUARDADAS"
+    },
+    {
+      "key": "ui.load_game.selecciona_una_partida_guardada_para_con_94180361",
+      "value": "Selecciona una partida guardada para continuar"
+    },
+    {
+      "key": "ui.load_game.sin_temporada",
+      "value": "Sin temporada"
+    },
+    {
+      "key": "ui.load_game.tactical",
+      "value": "TACTICAL"
+    },
+    {
+      "key": "ui.load_game.tf",
+      "value": "TF"
+    },
+    {
       "key": "ui.loading.pulsa_cualquier_tecla_o_haz_clic_para_co_896f17c7",
       "value": "Pulsa cualquier tecla o haz clic para continuar"
     },
@@ -56,6 +128,10 @@
     {
       "key": "ui.main_menu.btn_pro_confirm",
       "value": "CONTINUAR"
+    },
+    {
+      "key": "ui.main_menu.bug_report_pendiente",
+      "value": "El informe de errores estará disponible más adelante."
     },
     {
       "key": "ui.main_menu.calidad",
@@ -134,6 +210,10 @@
       "value": "EDITOR\nBASE DE DATOS"
     },
     {
+      "key": "ui.main_menu.editor_pendiente",
+      "value": "El editor estará disponible en la siguiente fase."
+    },
+    {
       "key": "ui.main_menu.efectos",
       "value": "Efectos"
     },
@@ -146,12 +226,20 @@
       "value": "Empieza desde abajo y haz que tu carrera hable por ti. Tus resultados abrirán nuevas puertas cada temporada: quédate, progresa… o salta a un desafío mayor."
     },
     {
+      "key": "ui.main_menu.error_crear_partida",
+      "value": "No se pudo crear la partida: {0}"
+    },
+    {
       "key": "ui.main_menu.error_modal_cerrar",
       "value": "CERRAR"
     },
     {
       "key": "ui.main_menu.error_modal_title",
       "value": "NO SE PUDO INICIAR LA PARTIDA"
+    },
+    {
+      "key": "ui.main_menu.error_sin_huecos",
+      "value": "No quedan huecos de guardado (máximo {0})."
     },
     {
       "key": "ui.main_menu.estas_seguro_de_que_quieres_salir_del_ju_c65dd5f1",
@@ -224,6 +312,10 @@
     {
       "key": "ui.main_menu.salir_del_juego_2",
       "value": "SALIR DEL JUEGO"
+    },
+    {
+      "key": "ui.main_menu.seleccion_pendiente",
+      "value": "La selección de equipo estará disponible en la siguiente fase."
     },
     {
       "key": "ui.main_menu.si_has_encontrado_un_error_o_quieres_sug_a522f511",

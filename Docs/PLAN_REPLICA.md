@@ -282,7 +282,16 @@ Notas:
 | **F1** | ✅ Hecha | 25 tablas (`Models/*.cs` + columnas nuevas), `DatabaseManager` (fachada + migraciones + seed + template), `GameSaveManager`, `DbMetaData`, `SchemaMigration*`, `SeedBaseline`, `SeedAudit`, `ReferentialIntegrity`; tests `PersistenceTests` + `UiSmokeTests` (**13/13**) |
 | **F2** | ✅ Hecha | 9 competiciones, **236 clubes** (82 españoles, 101 europeos y 53 históricos), 233 escudos + genérico, 10 estadios, huella de seed calculada y auditoría; tests `SeedTests` |
 | **F3** | ✅ Hecha | **4.184 jugadores** (~45 atributos, 19-29 por club), `PlayerRating` como fuente única del overall, **437 finales**, **69 Balones de Oro** y **32 Pichichis**; tests `PlayerSeedTests` |
-| F4 | ⏭ Siguiente | Menús: crear partida, cargar, editor y flujo ProManager |
+| **F4** | ✅ Hecha | Menú completo (Liga Manager, ProManager con modal, Cargar, Editor pendiente, Salir, aviso legal), **modal de configuración** en la base (audio/calidad/vista de partido), pantalla **Cargar partida** con tarjetas y borrado; tests `SaveSlotLifecycleTests` + UI |
+| F5 | ⏭ Siguiente | Selección de equipo (filtros por competición) y creación de manager/temporada |
+
+**F4 — decisiones tomadas:**
+
+- **Modal de configuración en `UIScreenController`**: audio (3 sliders), calidad gráfica y vista de partido (`TF_SimMode` 0/1/2). Se abre desde el engranaje; solo existe en las pantallas que incluyen el markup.
+- **Nueva partida**: comprueba hueco → `CleanupOrphanDb` → `InitSaveSlot` → `SelectTeam`. Si la pantalla de selección no está creada, avisa y **no crea el slot** (evita partidas huérfanas).
+- **Cargar partida**: tarjetas con escudo, manager, temporada, jornada, liga y fecha; cargar abre el slot y navega al Dashboard; borrar pide confirmación.
+- **Editor**: el botón avisa de que llega en la siguiente fase (la pantalla necesita sesión `template` y edición de assets).
+- **`ScreenManager.IsRegistered`**: permite comprobar si una pantalla está asignada antes de navegar.
 
 **F3 — decisiones tomadas:**
 
