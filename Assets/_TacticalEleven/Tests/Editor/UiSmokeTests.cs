@@ -1,0 +1,85 @@
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine.UIElements;
+
+/// <summary>
+/// F0 — Humo de UI: los UXML de arranque se instancian, tienen los elementos que
+/// esperan sus controllers y todas sus claves de localización existen. Se ejecuta
+/// en EditMode (no necesita entrar en Play).
+/// </summary>
+public class UiSmokeTests
+{
+    private const string LoadingPath = "Assets/_TacticalEleven/UI/Screens/Loading/Loading.uxml";
+    private const string MainMenuPath = "Assets/_TacticalEleven/UI/Screens/MainMenu/MainMenu.uxml";
+
+    private static readonly Regex TokenRegex = new Regex(@"\{loc:([A-Za-z0-9_.-]+)\}");
+
+    [SetUp]
+    public void SetUp()
+    {
+        LocalizationService.SetLanguage(LocalizationService.DefaultLanguage);
+        LocalizationService.Reload();
+    }
+
+    [Test]
+    public void LoadingUxml_InstantiatesAndHasRootAndTip()
+    {
+        var tree = Load(LoadingPath);
+        var root = tree.Instantiate();
+        Assert.That(root.Q<VisualElement>("LoadingRoot"), Is.Not.Null);
+        Assert.That(root.Q<Label>("LoadingTip"), Is.Not.Null);
+    }
+
+    [Test]
+    public void MainMenuUxml_HasTheFiveMenuOptions()
+    {
+        var tree = Load(MainMenuPath);
+        var root = tree.Instantiate();
+
+        Assert.That(root.Q<Button>("BtnManager"), Is.Not.Null, "Liga Manager");
+        Assert.That(root.Q<Button>("BtnProManager"), Is.Not.Null, "ProManager");
+        Assert.That(root.Q<Button>("BtnLoadGame"), Is.Not.Null, "Cargar partida");
+        Assert.That(root.Q<Button>("BtnEditor"), Is.Not.Null, "Editor");
+        Assert.That(root.Q<Button>("BtnExit"), Is.Not.Null, "Salir");
+    }
+
+    [TestCase(LoadingPath)]
+    [TestCase(MainMenuPath)]
+    public void UxmlTokens_ExistInSpanishTable(string path)
+    {
+        var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
+        Assert.That(uxml, Is.Not.Null);
+
+        string text = System.IO.File.ReadAllText(path);
+        var missing = new List<string>();
+        foreach (Match match in TokenRegex.Matches(text))
+        {
+            string key = match.Groups[1].Value;
+            if (!LocalizationService.TryGet(key, out _)) missing.Add(key);
+        }
+
+        Assert.That(missing, Is.Empty, $"{path}: claves sin entrada → {string.Join(", ", missing)}");
+    }
+
+    [TestCase(LoadingPath)]
+    [TestCase(MainMenuPath)]
+    public void UxmlTexts_AreResolvedAfterApply(string path)
+    {
+        var tree = Load(path);
+        var root = tree.Instantiate();
+        LocalizationService.Apply(root);
+
+        foreach (var label in root.Query<Label>().ToList())
+            Assert.That(label.text.Contains("{loc:"), Is.False,
+                $"Token sin resolver en {path}: {label.text}");
+    }
+
+    private static VisualTreeAsset Load(string path)
+    {
+        var asset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
+        Assert.That(asset, Is.Not.Null, $"No se encontró {path}");
+        return asset;
+    }
+}
