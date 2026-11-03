@@ -222,8 +222,13 @@ public class LoadGameController : UIScreenController
         _pendingDeleteSlot = slotNumber;
         if (_deleteOverlay != null)
         {
+            _deleteOverlay.style.display = DisplayStyle.Flex;
             _deleteOverlay.AddToClassList("modal-overlay--visible");
-            _deleteBox?.AddToClassList("modal-box--visible");
+            if (_deleteBox != null)
+            {
+                _deleteBox.style.display = DisplayStyle.Flex;
+                _deleteBox.AddToClassList("modal-box--visible");
+            }
         }
     }
 
@@ -240,7 +245,12 @@ public class LoadGameController : UIScreenController
     {
         if (_deleteOverlay == null) return;
         _deleteOverlay.RemoveFromClassList("modal-overlay--visible");
-        _deleteBox?.RemoveFromClassList("modal-box--visible");
+        _deleteOverlay.style.display = DisplayStyle.None;
+        if (_deleteBox != null)
+        {
+            _deleteBox.RemoveFromClassList("modal-box--visible");
+            _deleteBox.style.display = DisplayStyle.None;
+        }
     }
 
     private void ShowError(string detail)

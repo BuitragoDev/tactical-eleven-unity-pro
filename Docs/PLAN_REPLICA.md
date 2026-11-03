@@ -957,6 +957,7 @@ Reglas heredadas que **no** se deben romper:
 - `DatabaseManager.cs` no tiene `schema_migrations`, `db_meta` ni transacciones atómicas → F1.
 - **Nacionalidades y banderas (resuelto)**: los PNG de `Flags/Default` y `Flags/Large (2×)` ya están en **ISO3** (`ARG`, `DEU`, `GBR`…); `Constants.NormalizeFlagCode` mapea los códigos FIFA del seeder (`GER`→`DEU`, `NED`→`NLD`, `ENG`→`GBR`…) y `GetFlagPath`/`GetFlagPathLarge` apuntan a las carpetas correctas. Queda como tarea de F3 revisar los códigos raros (`KVX`, `UN`).
 - **Assets copiados sin `.meta`**: se importan como sprite múltiple y la UI recorta (logo de Loading). Copiar el `.meta` original o fijar `spriteMode: 1`.
+- **Modales: nunca `style="display: none"` inline en `.modal-overlay`** (gana a `modal-overlay--visible` y el modal no se abre). La clase ya los oculta; los helpers ponen además `style.display` explícito. Cubierto por `UiSmokeTests.ModalOverlays_DoNotUseInlineDisplayNone`.
 
 **Decisiones abiertas:**
 

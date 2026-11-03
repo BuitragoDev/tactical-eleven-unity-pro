@@ -386,8 +386,14 @@ public class SelectTeamController : UIScreenController
             else _squadRight?.Add(row);
         }
 
+        _squadOverlay.style.display = DisplayStyle.Flex;
         _squadOverlay.AddToClassList("modal-overlay--visible");
-        _root.Q<VisualElement>("SquadModalBox")?.AddToClassList("modal-box--visible");
+        var squadBox = _root.Q<VisualElement>("SquadModalBox");
+        if (squadBox != null)
+        {
+            squadBox.style.display = DisplayStyle.Flex;
+            squadBox.AddToClassList("modal-box--visible");
+        }
         CustomScrollbar.Reset(_squadBar);
     }
 
@@ -422,7 +428,13 @@ public class SelectTeamController : UIScreenController
     {
         if (_squadOverlay == null) return;
         _squadOverlay.RemoveFromClassList("modal-overlay--visible");
-        _root.Q<VisualElement>("SquadModalBox")?.RemoveFromClassList("modal-box--visible");
+        _squadOverlay.style.display = DisplayStyle.None;
+        var squadBox = _root.Q<VisualElement>("SquadModalBox");
+        if (squadBox != null)
+        {
+            squadBox.RemoveFromClassList("modal-box--visible");
+            squadBox.style.display = DisplayStyle.None;
+        }
     }
 
     // ── Continuar ─────────────────────────────────────────────────────────

@@ -204,15 +204,25 @@ public abstract class UIScreenController : MonoBehaviour
         UpdateConfigSimButtons(GetSimMode());
 
         // El fondo opaco lo pone la clase compartida .modal-overlay--visible.
+        _configModalOverlay.style.display = DisplayStyle.Flex;
         _configModalOverlay.AddToClassList("modal-overlay--visible");
-        _configModalBox?.AddToClassList("modal-box--visible");
+        if (_configModalBox != null)
+        {
+            _configModalBox.style.display = DisplayStyle.Flex;
+            _configModalBox.AddToClassList("modal-box--visible");
+        }
     }
 
     protected virtual void CloseConfigModal()
     {
         if (_configModalOverlay == null) return;
         _configModalOverlay.RemoveFromClassList("modal-overlay--visible");
-        _configModalBox?.RemoveFromClassList("modal-box--visible");
+        _configModalOverlay.style.display = DisplayStyle.None;
+        if (_configModalBox != null)
+        {
+            _configModalBox.RemoveFromClassList("modal-box--visible");
+            _configModalBox.style.display = DisplayStyle.None;
+        }
     }
 
     protected void UpdateConfigLabels()

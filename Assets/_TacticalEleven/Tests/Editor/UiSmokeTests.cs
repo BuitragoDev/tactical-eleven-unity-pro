@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEditor;
@@ -92,6 +93,28 @@ public class UiSmokeTests
         Assert.That(root.Q<Button>("BtnDeleteYes"), Is.Not.Null);
         Assert.That(root.Q<Button>("BtnDeleteNo"), Is.Not.Null);
         Assert.That(root.Q<Button>("BtnBack"), Is.Not.Null);
+    }
+
+    [Test]
+    public void ModalOverlays_DoNotUseInlineDisplayNone()
+    {
+        // Un `display:none` inline gana a `.modal-overlay--visible`, así que el modal
+        // nunca se abriría (bug de los modales PRO y de plantilla). La clase ya oculta
+        // el overlay por defecto.
+        string root = Path.Combine(Application.dataPath, "_TacticalEleven", "UI", "Screens");
+        var offenders = new System.Collections.Generic.List<string>();
+
+        foreach (string file in Directory.GetFiles(root, "*.uxml", SearchOption.AllDirectories))
+        {
+            foreach (string line in File.ReadAllLines(file))
+            {
+                if (line.Contains("class=\"modal-overlay\"") && line.Contains("display: none"))
+                    offenders.Add(Path.GetFileName(file) + ": " + line.Trim());
+            }
+        }
+
+        Assert.That(offenders, Is.Empty,
+            "Overlays con display inline:\n" + string.Join("\n", offenders));
     }
 
     private static VisualTreeAsset Load(string path)

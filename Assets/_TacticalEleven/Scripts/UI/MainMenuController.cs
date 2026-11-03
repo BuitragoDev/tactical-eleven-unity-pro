@@ -160,15 +160,26 @@ public class MainMenuController : UIScreenController
     private void OpenModal(VisualElement overlay, VisualElement box)
     {
         if (overlay == null) return;
+        // style.display explícito: un display inline en el UXML ganaría a la clase.
+        overlay.style.display = DisplayStyle.Flex;
         overlay.AddToClassList("modal-overlay--visible");
-        box?.AddToClassList("modal-box--visible");
+        if (box != null)
+        {
+            box.style.display = DisplayStyle.Flex;
+            box.AddToClassList("modal-box--visible");
+        }
     }
 
     private void CloseModal(VisualElement overlay, VisualElement box)
     {
         if (overlay == null) return;
         overlay.RemoveFromClassList("modal-overlay--visible");
-        box?.RemoveFromClassList("modal-box--visible");
+        overlay.style.display = DisplayStyle.None;
+        if (box != null)
+        {
+            box.RemoveFromClassList("modal-box--visible");
+            box.style.display = DisplayStyle.None;
+        }
     }
 
     private void ShowError(string key, params object[] args)
