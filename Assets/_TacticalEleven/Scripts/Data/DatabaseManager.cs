@@ -329,6 +329,8 @@ public partial class DatabaseManager : MonoBehaviour
     public bool EnsureTemplateDb()
     {
         string templatePath = TemplateDbPath;
+        string expectedFingerprint = SeedBaseline.Fingerprint;
+
         if (File.Exists(templatePath))
         {
             // La huella es frescura, no validez: si no coincide se reconstruye.
@@ -336,7 +338,7 @@ public partial class DatabaseManager : MonoBehaviour
             {
                 using var existing = new SQLiteConnection(templatePath);
                 var meta = existing.Table<DbMetaData>().FirstOrDefault();
-                if (meta != null && meta.SeedFingerprint == SeedBaseline.Fingerprint)
+                if (meta != null && meta.SeedFingerprint == expectedFingerprint)
                     return true;
 
                 Debug.LogWarning("[DB] Template obsoleto (huella distinta): se reconstruye.");
@@ -366,7 +368,7 @@ public partial class DatabaseManager : MonoBehaviour
                     CreateTables();
                     RunMigrations();
                     SeedStaticDataIfNeeded();
-                    WriteSeedFingerprint(SeedBaseline.Fingerprint);
+                    WriteSeedFingerprint(expectedFingerprint);
                 }
                 finally
                 {

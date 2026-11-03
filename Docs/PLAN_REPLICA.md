@@ -281,7 +281,15 @@ Notas:
 | **F0** | ✅ Hecha | Fuentes, tema, panel settings, estilos globales, `GameEnums`, `ScreenManager` (un campo por pantalla), `UIScreenController`, `FullScreenUI`, `AudioManager`, `CursorManager`, `LocalizationService`, `CustomScrollbar`, `CustomSlider`, `IRandomSource`, `CalendarHelper`; audio/iconos/banderas copiados. **Las pantallas las crea el usuario en el Editor** (ver «Alta manual de una pantalla») |
 | **F1** | ✅ Hecha | 25 tablas (`Models/*.cs` + columnas nuevas), `DatabaseManager` (fachada + migraciones + seed + template), `GameSaveManager`, `DbMetaData`, `SchemaMigration*`, `SeedBaseline`, `SeedAudit`, `ReferentialIntegrity`; tests `PersistenceTests` + `UiSmokeTests` (**13/13**) |
 | **F2** | ✅ Hecha | 9 competiciones, **236 clubes** (82 españoles, 101 europeos y 53 históricos), 233 escudos + genérico, 10 estadios, huella de seed calculada y auditoría; tests `SeedTests` |
-| F3 | ⏭ Siguiente | Jugadores (plantillas reales), palmarés y premios históricos |
+| **F3** | ✅ Hecha | **4.184 jugadores** (~45 atributos, 19-29 por club), `PlayerRating` como fuente única del overall, **437 finales**, **69 Balones de Oro** y **32 Pichichis**; tests `PlayerSeedTests` |
+| F4 | ⏭ Siguiente | Menús: crear partida, cargar, editor y flujo ProManager |
+
+**F3 — decisiones tomadas:**
+
+- **Seed de jugadores**: `PlayerSeeder` del intento anterior, con atributos procedurales deterministas (`Random.InitState(teamId, dorsal, posición)`); 4.184 jugadores, todos los clubes de liga con 19-29.
+- **Overall = `PlayerRating`**: media de los atributos relevantes por demarcación (campo: 8 físicos + 14 técnicos + 14 mentales; portero: 14 mentales + 8 específicos) capada por el potencial. `PlayerDataDB.GetCalculatedAverage()` delega en ella.
+- **Palmarés**: 437 finales + 69 premios (`finals_records`, `awards_records`) y 32 Pichichis (`golden_boot_records`), referenciando los ids de club del seed (incluidos los 53 históricos).
+- **Dorsales repetidos**: el seed repite dorsales en 65 clubes; la auditoría lo deja como **WARN** (no bloquea la partida). La inscripción única se gestiona en F10/F11.
 
 **F2 — decisiones tomadas:**
 

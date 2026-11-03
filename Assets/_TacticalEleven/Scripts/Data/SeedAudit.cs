@@ -67,7 +67,7 @@ public static class SeedAudit
         foreach (var dup in duplicates)
             issues.Add(new Issue
             {
-                Severity = "ERROR",
+                Severity = "WARN",
                 Message = $"Dorsal {dup.Key.SquadNumber} repetido en el equipo {dup.Key.TeamId}."
             });
 

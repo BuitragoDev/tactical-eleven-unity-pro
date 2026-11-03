@@ -24,6 +24,8 @@ public partial class DatabaseManager
             if (db.Table<LeagueDataDB>().Count() == 0) SeedCompetitions();
             if (db.Table<TeamDataDB>().Count() == 0) SeedTeams();
             if (db.Table<PlayerDataDB>().Count() == 0) SeedPlayers();
+            if (db.Table<FinalsRecord>().Count() == 0) SeedPalmares();
+            if (db.Table<GoldenBootRecord>().Count() == 0) SeedGoldenBoot();
             if (db.Table<ManagerDataDB>().Count() == 0) SeedManagerDefaults();
             if (db.Table<TeamSettingsDataDB>().Count() == 0) EnsureTeamSettingsForAllTeams();
 
@@ -54,8 +56,21 @@ public partial class DatabaseManager
 
     void SeedPlayers()
     {
-        // F3: plantillas reales desde PlayerSeeder.
-        Debug.Log("[DB] SeedPlayers pendiente (F3).");
+        PlayerSeeder.Seed(Db);
+    }
+
+    void SeedPalmares()
+    {
+        Db.InsertAll(PalmaresSeeder.FinalsData);
+        if (Db.Table<AwardsRecord>().Count() == 0)
+            Db.InsertAll(PalmaresSeeder.AwardsData);
+        Debug.Log($"[DB] {PalmaresSeeder.FinalsData.Count} finales históricas sembradas.");
+    }
+
+    void SeedGoldenBoot()
+    {
+        Db.InsertAll(GoldenBootSeeder.Data);
+        Debug.Log($"[DB] {GoldenBootSeeder.Data.Count} Pichichis históricos sembrados.");
     }
 
     void SeedManagerDefaults()

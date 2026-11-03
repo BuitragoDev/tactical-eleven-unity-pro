@@ -105,17 +105,8 @@ public class PlayerDataDB
     public string InjuryType { get; set; }
     public int Treated { get; set; }
 
-    public double GetCalculatedAverage()
-    {
-        int sum = 0;
-        sum += Pace + Acceleration + Stamina + Strength + Agility + Balance + Jumping + NaturalFitness;
-        sum += Aggression + Anticipation + Bravery + Composure + Concentration + Decisions + Determination + Leadership;
-        if (MainPosition == 0)
-            sum += Handling + Kicking + Reflexes + GkPositioning + OneOnOnes + CommandOfArea + RushingOut + PenaltySaving;
-        else
-            sum += Passing + Crossing + Dribbling + Finishing + FirstTouch + Heading + LongShots + Technique;
-        return sum / 24.0;
-    }
+    /// <summary>Media de atributos relevante para la posición (delega en PlayerRating).</summary>
+    public double GetCalculatedAverage() => PlayerRating.FromAttributes(this);
 }
 
 [Table("player_season_stats")]
