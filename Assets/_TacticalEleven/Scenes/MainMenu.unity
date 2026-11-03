@@ -458,7 +458,7 @@ MonoBehaviour:
   mainMenuDocument: {fileID: 794716298}
   loadGameDocument: {fileID: 1843726702}
   editorDocument: {fileID: 0}
-  selectTeamDocument: {fileID: 0}
+  selectTeamDocument: {fileID: 923450129}
   preseasonDocument: {fileID: 0}
   dashboardDocument: {fileID: 0}
   rosterDocument: {fileID: 0}

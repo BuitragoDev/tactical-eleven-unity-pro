@@ -115,8 +115,9 @@ public class SelectTeamController : UIScreenController
         base.LoadData();
         var db = DatabaseManager.Instance;
 
-        // Solo clubes jugables: 1ª, 2ª y 1ª RFEF, sin filiales.
-        _allTeams = FilialRules.Selectable(db.GetAllTeams())
+        // Todos los clubes de 1ª, 2ª y 1ª RFEF (los filiales se muestran deshabilitados).
+        _allTeams = db.GetAllTeams()
+            .Where(t => t.LeagueId >= 1 && t.LeagueId <= 4)
             .OrderBy(t => t.Name)
             .ToList();
 
@@ -224,7 +225,7 @@ public class SelectTeamController : UIScreenController
 
         foreach (var team in teams)
         {
-            bool disabled = pro && !IsSelectableInProManager(team);
+            bool disabled = !FilialRules.CanSelect(team, pro, _allTeams);
             _teamsGrid.Add(CreateTeamItem(team, disabled));
         }
 
@@ -235,7 +236,10 @@ public class SelectTeamController : UIScreenController
     {
         var item = new VisualElement();
         item.AddToClassList("team-item");
-        item.tooltip = team.Name;
+        if (disabled && team.IsFilial == 1)
+            item.tooltip = $"{team.Name} · {LocalizationService.T("ui.select_team.filial_no_seleccionable")}";
+        else
+            item.tooltip = team.Name;
 
         if (disabled) item.AddToClassList("team-item--disabled");
 
@@ -322,7 +326,7 @@ public class SelectTeamController : UIScreenController
     /// <summary>Objetivo orientativo según la posición del club en su competición.</summary>
     private string ObjectiveFor(TeamDataDB team)
     {
-        var rivals = _allTeams.Where(t => t.LeagueId == team.LeagueId)
+        var rivals = _allTeams.Where(t => t.LeagueId == team.LeagueId && t.IsFilial == 0)
                               .OrderByDescending(t => t.Overall)
                               .ToList();
         int rank = rivals.FindIndex(t => t.Id == team.Id) + 1;
@@ -428,15 +432,6 @@ public class SelectTeamController : UIScreenController
         bool hasTeam = _selectedTeam != null;
         bool hasName = _managerInput != null && !string.IsNullOrWhiteSpace(_managerInput.value);
         if (_btnContinue != null) _btnContinue.SetEnabled(hasTeam && hasName);
-    }
-
-    private bool IsSelectableInProManager(TeamDataDB team)
-    {
-        var rivals = _allTeams.Where(t => t.LeagueId == team.LeagueId)
-                              .OrderByDescending(t => t.Overall)
-                              .ToList();
-        int index = rivals.FindIndex(t => t.Id == team.Id);
-        return index >= rivals.Count / 2; // solo la mitad baja de su competición
     }
 
     private void OnContinue()

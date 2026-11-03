@@ -418,6 +418,10 @@
       "value": "ESTADIO"
     },
     {
+      "key": "ui.select_team.filial_no_seleccionable",
+      "value": "filial · no seleccionable"
+    },
+    {
       "key": "ui.select_team.fundacion",
       "value": "FUNDACIÓN"
     },

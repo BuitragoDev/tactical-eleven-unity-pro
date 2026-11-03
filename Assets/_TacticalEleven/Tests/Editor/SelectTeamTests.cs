@@ -150,6 +150,26 @@ public class SelectTeamTests
     }
 
     [Test]
+    public void CanSelect_FilialesAreShownButDisabled()
+    {
+        var teams = TeamSeeder.Build();
+        FilialRules.Apply(teams);
+        var byId = teams.ToDictionary(t => t.Id);
+
+        Assert.That(FilialRules.CanSelect(byId[41], false, teams), Is.False,
+            "Real Sociedad B no es jugable");
+        Assert.That(FilialRules.CanSelect(byId[1], false, teams), Is.True,
+            "Real Madrid CF sí es jugable");
+        Assert.That(FilialRules.CanSelect(byId[198], false, teams), Is.False,
+            "Los históricos (LeagueId 0) no son jugables");
+
+        // ProManager: el mejor de 1ª no entra; el peor sí.
+        var liga = teams.Where(t => t.LeagueId == 1).OrderByDescending(t => t.Overall).ToList();
+        Assert.That(FilialRules.CanSelect(liga.First(), true, teams), Is.False);
+        Assert.That(FilialRules.CanSelect(liga.Last(), true, teams), Is.True);
+    }
+
+    [Test]
     public void SeededSlot_MarksReserveTeamsAsFilial()
     {
         var rsb = _db.Db.Table<TeamDataDB>().FirstOrDefault(t => t.Name == "Real Sociedad B");
