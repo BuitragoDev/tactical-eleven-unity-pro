@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
