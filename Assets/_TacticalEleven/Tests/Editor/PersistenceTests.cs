@@ -67,9 +67,9 @@ public class PersistenceTests
         Assert.That(db.InitSaveSlot(1), Is.True, "El slot debe poder reabrirse");
         Assert.That(db.Db, Is.Not.Null);
 
-        // F1: aún no hay contenido estático, pero el esquema debe estar completo.
-        Assert.That(db.Db.Table<TeamDataDB>().Count(), Is.EqualTo(0));
-        Assert.That(db.Db.Table<LeagueDataDB>().Count(), Is.EqualTo(0));
+        // F2: el slot nuevo ya trae competiciones y clubes del seed.
+        Assert.That(db.Db.Table<LeagueDataDB>().Count(), Is.EqualTo(9));
+        Assert.That(db.Db.Table<TeamDataDB>().Count(), Is.EqualTo(236));
     }
 
     [Test]
@@ -128,13 +128,14 @@ public class PersistenceTests
     // ── AUDITORÍA / INTEGRIDAD ─────────────────────────────────────────────
 
     [Test]
-    public void SeedAudit_WithoutData_ReturnsWarningNotError()
+    public void SeedAudit_AfterSeed_HasNoErrors()
     {
         var db = DatabaseManager.Instance;
         Assert.That(db.InitSaveSlot(1), Is.True, db.LastInitError);
 
         var issues = SeedAudit.Validate(db.Db);
-        Assert.That(issues.Any(i => i.Severity == "ERROR"), Is.False);
+        Assert.That(issues.Any(i => i.Severity == "ERROR"), Is.False,
+            string.Join(" | ", issues.Select(i => i.Message)));
     }
 
     [Test]

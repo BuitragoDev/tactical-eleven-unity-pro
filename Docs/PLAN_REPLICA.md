@@ -280,7 +280,16 @@ Notas:
 |---|---|---|
 | **F0** | ✅ Hecha | Fuentes, tema, panel settings, estilos globales, `GameEnums`, `ScreenManager` (un campo por pantalla), `UIScreenController`, `FullScreenUI`, `AudioManager`, `CursorManager`, `LocalizationService`, `CustomScrollbar`, `CustomSlider`, `IRandomSource`, `CalendarHelper`; audio/iconos/banderas copiados. **Las pantallas las crea el usuario en el Editor** (ver «Alta manual de una pantalla») |
 | **F1** | ✅ Hecha | 25 tablas (`Models/*.cs` + columnas nuevas), `DatabaseManager` (fachada + migraciones + seed + template), `GameSaveManager`, `DbMetaData`, `SchemaMigration*`, `SeedBaseline`, `SeedAudit`, `ReferentialIntegrity`; tests `PersistenceTests` + `UiSmokeTests` (**13/13**) |
-| F2 | ⏭ Siguiente | Competiciones, 82 clubes, 101 europeos, escudos y estadios |
+| **F2** | ✅ Hecha | 9 competiciones, **236 clubes** (82 españoles, 101 europeos y 53 históricos), 233 escudos + genérico, 10 estadios, huella de seed calculada y auditoría; tests `SeedTests` |
+| F3 | ⏭ Siguiente | Jugadores (plantillas reales), palmarés y premios históricos |
+
+**F2 — decisiones tomadas:**
+
+- **Seed de clubes**: se reutiliza el del intento anterior (236 filas). Los 53 clubes con `LeagueId = 0` son históricos para el palmarés y **no aparecen** en SelectTeam.
+- **Huella del seed**: `SeedBaseline.Fingerprint` se **calcula** desde `CompetitionSeeder` + `TeamSeeder` (MD5); si cambia el seed, el template se reconstruye solo, sin tocar constantes.
+- **Escudos**: 233 PNG por id + `default` genérico generado; se cargan como `Sprite` en `Teams/Logos/{32,64,120}`.
+- **Estadio**: `StadiumImage` se asigna por aforo (`small` <30.000, `medium` <60.000, `large` ≥60.000).
+- **2ª RFEF**: fuera del juego (decisión previa); no se siembra.
 
 **Desviaciones respecto al plan (decididas al implementar):**
 

@@ -40,14 +40,16 @@ public partial class DatabaseManager
 
     void SeedCompetitions()
     {
-        // F2: ligas (1ª, 2ª, 1ª RFEF G1/G2), Copa, Supercopa y competiciones europeas.
-        Debug.Log("[DB] SeedCompetitions pendiente (F2).");
+        var leagues = CompetitionSeeder.Build();
+        Db.InsertAll(leagues);
+        Debug.Log($"[DB] {leagues.Count} competiciones sembradas.");
     }
 
     void SeedTeams()
     {
-        // F2: 82 clubes españoles + 101 europeos.
-        Debug.Log("[DB] SeedTeams pendiente (F2).");
+        var teams = TeamSeeder.Build();
+        Db.InsertAll(teams);
+        Debug.Log($"[DB] {teams.Count} clubes sembrados.");
     }
 
     void SeedPlayers()
