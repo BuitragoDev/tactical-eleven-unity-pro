@@ -1577,7 +1577,7 @@ public static class PlayerSeeder
         AddSimple(MER, "Eudald", "Vergés", "Vergés", 29, "ESP", 177, 70, RIGHT, LB, 0, 62, 66, 250000, 62, 2500000, 5, 3);
         AddSimple(MER, "Manu", "Rivas", "Rivas", 23, "ESP", 180, 72, RIGHT, LB, 0, 60, 68, 150000, 30, 1500000, 4, 16);
         AddSimple(MER, "Jacobo", "Martí", "Martí", 21, "ESP", 182, 72, RIGHT, RB, 0, 60, 72, 100000, 20, 1000000, 4, 2);
-        AddSimple(MER, "Pipe", "", "Pipe", 33, "ESP", 175, 70, RIGHT, RB, 0, 58, 60, RIGHT, GK, 0, 5, 17);
+        AddSimple(MER, "Pipe", "", "Pipe", 33, "ESP", 175, 70, RIGHT, RB, 0, 58, 60, 200_000, 1_500, 400_000, 5, 17);
         AddSimple(MER, "Martín", "Solar", "Solar", 26, "ESP", 175, 70, RIGHT, CM, 0, 62, 66, 300000, 75, 3000000, 4, 6);
         AddSimple(MER, "Geo", "Almeida", "Almeida", 21, "PRT", 185, 74, RIGHT, CM, 0, 62, 72, 250000, 62, 2500000, 4, 18);
         AddSimple(MER, "Raúl", "Beneit", "Beneit", 31, "ESP", 172, 68, RIGHT, CM, 0, 62, 66, 200000, 50, 2000000, 5, 8);
@@ -1711,13 +1711,13 @@ public static class PlayerSeeder
         // ══════════════════════════════════════════════════════════
         int ZAM = 53;
         AddSimple(ZAM, "Fermín", "Sobrón", "Sobrón", 30, "ESP", 177, 81, RIGHT, GK, 0, 60, 66, 200000, 50, 2000000, 5, 1);
-        AddSimple(ZAM, "Adrián", "Pereda", "Pereda", 23, "ESP", 194, 89, RIGHT, GK, 0, 60, 70, RIGHT, GK, 0, 4, 13);
+        AddSimple(ZAM, "Adrián", "Pereda", "Pereda", 23, "ESP", 194, 89, RIGHT, GK, 0, 60, 70, 150_000, 1_200, 300_000, 4, 13);
         AddSimple(ZAM, "Luismi", "Luengo", "Luengo", 25, "ESP", 185, 77, RIGHT, CB, 0, 62, 68, 250000, 62, 2500000, 4, 4);
         AddSimple(ZAM, "Miki", "Codina", "Codina", 24, "ESP", 185, 77, RIGHT, CB, 0, 62, 68, 250000, 62, 2500000, 4, 5);
         AddSimple(ZAM, "Erik", "Ruiz", "Ruiz", 31, "ESP", 184, 77, RIGHT, CB, 0, 60, 64, 150000, 30, 1500000, 5, 14);
         AddSimple(ZAM, "Ismael", "Athuman", "Athuman", 31, "KEN", 185, 77, RIGHT, CB, 0, 60, 64, 100000, 20, 1000000, 5, 15);
         AddSimple(ZAM, "Dani", "Merchán", "Merchán", 24, "ESP", 180, 72, RIGHT, LB, 0, 62, 68, 200000, 50, 2000000, 4, 3);
-        AddSimple(ZAM, "Mani", "López", "M. López", 19, "MAR", 178, 71, RIGHT, LB, 0, 60, 74, RIGHT, GK, 0, 3, 16);
+        AddSimple(ZAM, "Mani", "López", "M. López", 19, "MAR", 178, 71, RIGHT, LB, 0, 60, 74, 250_000, 1_000, 500_000, 3, 16);
         AddSimple(ZAM, "Diego", "Moreno", "D. Moreno", 25, "ESP", 177, 70, RIGHT, RB, 0, 62, 68, 200000, 50, 2000000, 4, 2);
         AddSimple(ZAM, "Sergi", "López", "S. López", 22, "ESP", 180, 72, RIGHT, RB, 0, 62, 72, 200000, 50, 2000000, 4, 17);
         AddSimple(ZAM, "Markel", "Lozano", "Lozano", 30, "ESP", 189, 75, RIGHT, CM, 0, 62, 66, 300000, 75, 3000000, 5, 6);

@@ -16,12 +16,20 @@ public static class SeedBaseline
     /// <summary>Versión de esquema que espera el seed (ver `DatabaseManager.SchemaVersion`).</summary>
     public const int SchemaVersion = 1;
 
+    /// <summary>
+    /// Versión manual del seed de jugadores. Se sube al tocar `PlayerSeeder`
+    /// (4.000+ filas: no se hashean para no penalizar la apertura de partida).
+    /// </summary>
+    public const int PlayerSeedVersion = 2;
+
     /// <summary>Huella actual del seed (determinista entre ejecuciones).</summary>
     public static string Fingerprint
     {
         get
         {
             var sb = new StringBuilder();
+
+            sb.Append("players-v").Append(PlayerSeedVersion).Append(';');
 
             foreach (var l in CompetitionSeeder.Build().OrderBy(l => l.Id))
                 sb.Append(l.Id).Append('|').Append(l.Name).Append('|').Append(l.Type)

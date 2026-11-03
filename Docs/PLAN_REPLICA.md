@@ -290,6 +290,9 @@ Notas:
 - **Overall = `PlayerRating`**: media de los atributos relevantes por demarcación (campo: 8 físicos + 14 técnicos + 14 mentales; portero: 14 mentales + 8 específicos) capada por el potencial. `PlayerDataDB.GetCalculatedAverage()` delega en ella.
 - **Palmarés**: 437 finales + 69 premios (`finals_records`, `awards_records`) y 32 Pichichis (`golden_boot_records`), referenciando los ids de club del seed (incluidos los 53 históricos).
 - **Dorsales repetidos**: el seed repite dorsales en 65 clubes; la auditoría lo deja como **WARN** (no bloquea la partida). La inscripción única se gestiona en F10/F11.
+- **Bug del seed corregido**: 3 llamadas (`Pipe` en Mérida; `Pereda` y `Mani López` en Zamora) tenían `valor/salario/cláusula` desplazados por `RIGHT, GK, 0` (`Value=1`, `Wage=0`, `Clause=0`). Ya tienen valores reales.
+- **`SeedBaseline.PlayerSeedVersion`**: el seed de 4.184 jugadores no se hashea (coste); se sube a mano al tocar `PlayerSeeder` para invalidar el template.
+- **Tests**: 25/25 en verde (F3 cerrada).
 
 **F2 — decisiones tomadas:**
 
