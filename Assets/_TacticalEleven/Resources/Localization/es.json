@@ -368,6 +368,178 @@
     {
       "key": "ui.main_menu.volumen_general",
       "value": "Volumen General"
+    },
+    {
+      "key": "ui.select_team.aforo",
+      "value": "Aforo"
+    },
+    {
+      "key": "ui.select_team.ataque",
+      "value": "ATAQUE"
+    },
+    {
+      "key": "ui.select_team.btn_back",
+      "value": "VOLVER"
+    },
+    {
+      "key": "ui.select_team.btn_close_squad",
+      "value": "CERRAR"
+    },
+    {
+      "key": "ui.select_team.btn_continue",
+      "value": "CONTINUAR"
+    },
+    {
+      "key": "ui.select_team.btn_show_squad",
+      "value": "VER PLANTILLA"
+    },
+    {
+      "key": "ui.select_team.ciudad",
+      "value": "Ciudad"
+    },
+    {
+      "key": "ui.select_team.competicion",
+      "value": "COMPETICIÓN"
+    },
+    {
+      "key": "ui.select_team.conferencia",
+      "value": "COMPETICIÓN"
+    },
+    {
+      "key": "ui.select_team.defensa",
+      "value": "DEFENSA"
+    },
+    {
+      "key": "ui.select_team.division",
+      "value": "FUNDACIÓN"
+    },
+    {
+      "key": "ui.select_team.estadio",
+      "value": "ESTADIO"
+    },
+    {
+      "key": "ui.select_team.fundacion",
+      "value": "FUNDACIÓN"
+    },
+    {
+      "key": "ui.select_team.header_mode",
+      "value": "MANAGER"
+    },
+    {
+      "key": "ui.select_team.instalaciones",
+      "value": "Instalaciones"
+    },
+    {
+      "key": "ui.select_team.liga",
+      "value": "LIGA"
+    },
+    {
+      "key": "ui.select_team.margen_salarial",
+      "value": "MASA SALARIAL"
+    },
+    {
+      "key": "ui.select_team.masa_salarial",
+      "value": "MASA SALARIAL"
+    },
+    {
+      "key": "ui.select_team.media",
+      "value": "MEDIA"
+    },
+    {
+      "key": "ui.select_team.nombre_del_manager",
+      "value": "NOMBRE DEL MANAGER"
+    },
+    {
+      "key": "ui.select_team.objetivo_ascenso",
+      "value": "Ascenso"
+    },
+    {
+      "key": "ui.select_team.objetivo_campeonato",
+      "value": "Campeonato"
+    },
+    {
+      "key": "ui.select_team.objetivo_europa",
+      "value": "Europa"
+    },
+    {
+      "key": "ui.select_team.objetivo_media",
+      "value": "Media tabla"
+    },
+    {
+      "key": "ui.select_team.objetivo_permanencia",
+      "value": "Permanencia"
+    },
+    {
+      "key": "ui.select_team.objetivo_playoff",
+      "value": "Playoff de ascenso"
+    },
+    {
+      "key": "ui.select_team.objetivo_temporada",
+      "value": "Objetivo temporada"
+    },
+    {
+      "key": "ui.select_team.pabellon",
+      "value": "ESTADIO"
+    },
+    {
+      "key": "ui.select_team.pais",
+      "value": "PAÍS"
+    },
+    {
+      "key": "ui.select_team.presidente",
+      "value": "PAÍS"
+    },
+    {
+      "key": "ui.select_team.presupuesto",
+      "value": "Presupuesto"
+    },
+    {
+      "key": "ui.select_team.pretemporada_pendiente",
+      "value": "Partida creada. La pretemporada llega en la siguiente fase."
+    },
+    {
+      "key": "ui.select_team.propietario",
+      "value": "PAÍS"
+    },
+    {
+      "key": "ui.select_team.reputacion",
+      "value": "Reputación"
+    },
+    {
+      "key": "ui.select_team.selecciona_un_equipo",
+      "value": "Selecciona un equipo para ver su ficha"
+    },
+    {
+      "key": "ui.select_team.seleccionar_equipo",
+      "value": "SELECCIONAR EQUIPO"
+    },
+    {
+      "key": "ui.select_team.tab_all",
+      "value": "TODOS"
+    },
+    {
+      "key": "ui.select_team.tab_east",
+      "value": "ESTE"
+    },
+    {
+      "key": "ui.select_team.tab_laliga",
+      "value": "1ª DIV."
+    },
+    {
+      "key": "ui.select_team.tab_laliga2",
+      "value": "2ª DIV."
+    },
+    {
+      "key": "ui.select_team.tab_rfef1",
+      "value": "1ª RFEF G1"
+    },
+    {
+      "key": "ui.select_team.tab_rfef2",
+      "value": "1ª RFEF G2"
+    },
+    {
+      "key": "ui.select_team.tab_west",
+      "value": "OESTE"
     }
   ]
 }

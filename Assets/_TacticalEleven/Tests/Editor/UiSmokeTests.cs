@@ -14,6 +14,7 @@ public class UiSmokeTests
     private const string LoadingPath = "Assets/_TacticalEleven/UI/Screens/Loading/Loading.uxml";
     private const string MainMenuPath = "Assets/_TacticalEleven/UI/Screens/MainMenu/MainMenu.uxml";
     private const string LoadGamePath = "Assets/_TacticalEleven/UI/Screens/LoadGame/LoadGame.uxml";
+    private const string SelectTeamPath = "Assets/_TacticalEleven/UI/Screens/SelectTeam/SelectTeam.uxml";
 
     private static readonly Regex TokenRegex = new Regex(@"\{loc:([A-Za-z0-9_.-]+)\}");
 
@@ -49,6 +50,7 @@ public class UiSmokeTests
     [TestCase(LoadingPath)]
     [TestCase(MainMenuPath)]
     [TestCase(LoadGamePath)]
+    [TestCase(SelectTeamPath)]
     public void UxmlTokens_ExistInSpanishTable(string path)
     {
         var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
@@ -68,6 +70,7 @@ public class UiSmokeTests
     [TestCase(LoadingPath)]
     [TestCase(MainMenuPath)]
     [TestCase(LoadGamePath)]
+    [TestCase(SelectTeamPath)]
     public void UxmlTexts_AreResolvedAfterApply(string path)
     {
         var tree = Load(path);
