@@ -419,7 +419,7 @@ public class SelectTeamController : UIScreenController
         flag.tooltip = CountryCodes.GetName(player.Nationality);
         row.Add(flag);
 
-        var age = new Label(player.Age.ToString());
+        var age = new Label(LocalizationService.T("ui.select_team.edad_anios", player.Age));
         age.AddToClassList("modal-player-age");
         row.Add(age);
 

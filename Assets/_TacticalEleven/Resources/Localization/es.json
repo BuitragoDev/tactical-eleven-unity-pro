@@ -414,6 +414,10 @@
       "value": "FUNDACIÓN"
     },
     {
+      "key": "ui.select_team.edad_anios",
+      "value": "{0} años"
+    },
+    {
       "key": "ui.select_team.estadio",
       "value": "ESTADIO"
     },
