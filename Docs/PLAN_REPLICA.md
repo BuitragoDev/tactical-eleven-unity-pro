@@ -290,8 +290,8 @@ Notas:
 
 - **Filtros por competición** (no por conferencia): `TabLiga`, `TabLiga2`, `TabRfef1`, `TabRfef2` (la pestaña TODOS se retiró), filtrando por `teams.LeagueId` 1-4.
 - **Ficha del club** con datos reales del seed: competición, fundación, país, estadio, aforo, reputación e instalaciones (estrellas), presupuesto, masa salarial, ataque/defensa/media y **objetivo orientativo** según su puesto por media en la competición.
-- **ProManager**: solo es seleccionable la **mitad baja** de cada competición.
-- **Filiales visibles pero deshabilitados**: aparecen en la rejilla atenuados (tooltip «filial · no seleccionable») y no se pueden elegir. `FilialRules` los marca en el seed (`IsFilial`, `ParentClubId`) por nombre y tabla de padres (Real Sociedad B, Celta Fortuna, Bilbao Athletic, Fabril, Castilla, Atlético Madrileño y Villarreal B); `CanSelect` centraliza la regla (también la mitad baja de ProManager). Quedan **75 clubes jugables** de los 82 españoles. La huella incluye la marca y `InitSaveSlot` repara plantillas/partidas antiguas.
+- **ProManager**: solo son seleccionables los clubes de **Primera Federación** (grupos 1 y 2) que no sean filiales (35 de 40). La pantalla abre en el grupo 1; el resto de clubes aparecen deshabilitados.
+- **Filiales visibles pero deshabilitados**: aparecen en la rejilla atenuados (tooltip «filial · no seleccionable») y no se pueden elegir. `FilialRules` los marca en el seed (`IsFilial`, `ParentClubId`) por nombre y tabla de padres (Real Sociedad B, Celta Fortuna, Bilbao Athletic, Fabril, Castilla, Atlético Madrileño y Villarreal B); `CanSelect` centraliza la regla (en ProManager solo Primera Federación sin filiales). Quedan **75 clubes jugables** de los 82 españoles. La huella incluye la marca y `InitSaveSlot` repara plantillas/partidas antiguas.
 - **Al continuar**: limpia managers/temporadas de intentos previos, crea `managers` + `seasons` (fase `preseason`, `current_date` 15/07, jornadas 38/42/38), actualiza `saves.json` y navega a Pretemporada cuando exista (F6).
 - **`PlayerPositionNames`**: códigos y nombres de demarcación en un único sitio (POR, DFC, LI, LD, MCD, MC, MCO, EI, ED, DC…).
 
@@ -922,7 +922,7 @@ Reglas heredadas que **no** se deben romper:
 
 Lo que anuncia el modal y hay que implementar en las fases indicadas:
 
-- **Solo clubes de la mitad baja** de cada competición (F5, hecho).
+- **Solo Primera Federación** (grupos 1 y 2) y **sin filiales** (35 clubes jugables de 40): F5, hecho. La pantalla abre en el grupo 1 y el resto de clubes aparecen deshabilitados.
 - **Objetivo exigente**: si no se cumple, la directiva puede destituir al final de la temporada (F15).
 - **Cese por presupuesto**: dos avisos en rojo; en Manager son tres (F12).
 - **Cambio de equipo cada temporada**: al terminar, quedarse o aceptar ofertas de clubes de la zona baja (F15).

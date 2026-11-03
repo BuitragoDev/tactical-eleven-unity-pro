@@ -156,17 +156,23 @@ public class SelectTeamTests
         FilialRules.Apply(teams);
         var byId = teams.ToDictionary(t => t.Id);
 
-        Assert.That(FilialRules.CanSelect(byId[41], false, teams), Is.False,
+        Assert.That(FilialRules.CanSelect(byId[41], false), Is.False,
             "Real Sociedad B no es jugable");
-        Assert.That(FilialRules.CanSelect(byId[1], false, teams), Is.True,
-            "Real Madrid CF sí es jugable");
-        Assert.That(FilialRules.CanSelect(byId[198], false, teams), Is.False,
+        Assert.That(FilialRules.CanSelect(byId[1], false), Is.True,
+            "Real Madrid CF sí es jugable en Manager");
+        Assert.That(FilialRules.CanSelect(byId[198], false), Is.False,
             "Los históricos (LeagueId 0) no son jugables");
 
-        // ProManager: el mejor de 1ª no entra; el peor sí.
-        var liga = teams.Where(t => t.LeagueId == 1).OrderByDescending(t => t.Overall).ToList();
-        Assert.That(FilialRules.CanSelect(liga.First(), true, teams), Is.False);
-        Assert.That(FilialRules.CanSelect(liga.Last(), true, teams), Is.True);
+        // ProManager: solo Primera Federación (grupos 3 y 4) y sin filiales.
+        Assert.That(FilialRules.CanSelect(byId[1], true), Is.False, "1ª no vale en ProManager");
+        Assert.That(FilialRules.CanSelect(byId[21], true), Is.False, "2ª no vale en ProManager");
+
+        var rfef1 = teams.First(t => t.LeagueId == 3 && t.IsFilial == 0);
+        var rfef2 = teams.First(t => t.LeagueId == 4 && t.IsFilial == 0);
+        Assert.That(FilialRules.CanSelect(rfef1, true), Is.True, "1ª RFEF G1 sí");
+        Assert.That(FilialRules.CanSelect(rfef2, true), Is.True, "1ª RFEF G2 sí");
+        Assert.That(FilialRules.CanSelect(byId[59], true), Is.False,
+            "Bilbao Athletic (filial de 1ª RFEF) no vale");
     }
 
     [Test]
@@ -176,6 +182,19 @@ public class SelectTeamTests
         Assert.That(rsb, Is.Not.Null);
         Assert.That(rsb.IsFilial, Is.EqualTo(1));
         Assert.That(rsb.ParentClubId, Is.EqualTo(4));
+    }
+
+    [Test]
+    public void ProManagerSelectable_AreOnlyNonFilialPrimeraFederacion()
+    {
+        var teams = TeamSeeder.Build();
+        FilialRules.Apply(teams);
+
+        var allowed = teams.Where(t => FilialRules.CanSelect(t, true)).ToList();
+
+        Assert.That(allowed.Count, Is.EqualTo(35), "40 clubes de 1ª RFEF menos los 5 filiales de esa categoría");
+        Assert.That(allowed.All(t => t.LeagueId == 3 || t.LeagueId == 4), Is.True);
+        Assert.That(allowed.All(t => t.IsFilial == 0), Is.True);
     }
 
     [Test]

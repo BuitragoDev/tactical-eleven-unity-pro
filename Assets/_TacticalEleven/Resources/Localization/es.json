@@ -287,7 +287,7 @@
     },
     {
       "key": "ui.main_menu.pro_descripcion",
-      "value": "Has elegido la carrera ProManager: empiezas en un club de la zona baja y con menos margen de error."
+      "value": "Has elegido la carrera ProManager: solo puedes empezar con un equipo de Primera Federación que no sea filial."
     },
     {
       "key": "ui.main_menu.pro_regla_economia",
@@ -295,7 +295,7 @@
     },
     {
       "key": "ui.main_menu.pro_regla_equipo",
-      "value": "Cambio de equipo cada temporada: al terminar la campaña podrás quedarte o aceptar ofertas de clubes de la zona baja."
+      "value": "Cambio de equipo cada temporada: al terminar la campaña podrás quedarte o aceptar ofertas de clubes de Primera Federación."
     },
     {
       "key": "ui.main_menu.pro_regla_objetivo",

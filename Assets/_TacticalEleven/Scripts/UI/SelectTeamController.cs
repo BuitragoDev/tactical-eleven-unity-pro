@@ -183,7 +183,8 @@ public class SelectTeamController : UIScreenController
             _managerInput.value = "";
 
         CloseSquadModal();
-        ShowFilter("liga");
+        // En ProManager lo válido es 1ª RFEF, así que se abre en su primer grupo.
+        ShowFilter(pro ? "rfef1" : "liga");
         ValidateContinue();
     }
 
@@ -225,7 +226,7 @@ public class SelectTeamController : UIScreenController
 
         foreach (var team in teams)
         {
-            bool disabled = !FilialRules.CanSelect(team, pro, _allTeams);
+            bool disabled = !FilialRules.CanSelect(team, pro);
             _teamsGrid.Add(CreateTeamItem(team, disabled));
         }
 

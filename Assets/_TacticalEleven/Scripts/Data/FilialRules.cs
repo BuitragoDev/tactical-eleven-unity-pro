@@ -69,22 +69,16 @@ public static class FilialRules
             .Where(t => t.LeagueId >= 1 && t.LeagueId <= 4 && t.IsFilial == 0);
 
     /// <summary>
-    /// ¿Se puede elegir este club? Los filiales y los históricos nunca; en ProManager,
-    /// solo la mitad baja de su competición (los filiales no cuentan como rivales).
+    /// ¿Se puede elegir este club? Los filiales y los históricos nunca. En ProManager
+    /// solo se puede empezar en **Primera Federación** (grupos 1 y 2), sin filiales.
     /// </summary>
-    public static bool CanSelect(TeamDataDB team, bool proManager, IEnumerable<TeamDataDB> allTeams)
+    public static bool CanSelect(TeamDataDB team, bool proManager)
     {
         if (team == null) return false;
         if (team.LeagueId < 1 || team.LeagueId > 4) return false;
         if (team.IsFilial == 1) return false;
         if (!proManager) return true;
 
-        var rivals = (allTeams ?? Enumerable.Empty<TeamDataDB>())
-            .Where(t => t.LeagueId == team.LeagueId && t.IsFilial == 0)
-            .OrderByDescending(t => t.Overall)
-            .ToList();
-
-        int index = rivals.FindIndex(t => t.Id == team.Id);
-        return index >= rivals.Count / 2;
+        return team.LeagueId == 3 || team.LeagueId == 4;
     }
 }
