@@ -67,7 +67,7 @@ fútbol en lugar de baloncesto.
 - **Textos de UI por claves:** UXML con `text="{loc:clave}"`; C# con `LocalizationService.T("clave")`
   o `T("clave", args)` (plantillas `{0}`). La tabla base es `Resources/Localization/es.json`.
   **No añadas literales visibles** en UXML ni en controllers.
-- **Fechas** `"yyyy-MM-dd"`. **Dinero** `$"{valor:N0} $"{` (siempre con formato `N0`).
+- **Fechas** `"yyyy-MM-dd"`. **Dinero** `$"{valor:N0} $"` (siempre con formato `N0`).
 - **Modales:** overlay + caja con las clases compartidas `modal-overlay--visible` /
   `modal-box--visible` (estilos en `UI/Styles/Modals.uss`, importados por el tema).
   **Nunca pongas `style="display: none"` inline en un `.modal-overlay`**: gana a la clase y el
