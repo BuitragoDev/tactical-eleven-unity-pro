@@ -35,10 +35,13 @@ public static class SeedBaseline
                 sb.Append(l.Id).Append('|').Append(l.Name).Append('|').Append(l.Type)
                   .Append('|').Append(l.TeamCount).Append(';');
 
-            foreach (var t in TeamSeeder.Build().OrderBy(t => t.Id))
+            var seededTeams = TeamSeeder.Build();
+            FilialRules.Apply(seededTeams);
+            foreach (var t in seededTeams.OrderBy(t => t.Id))
                 sb.Append(t.Id).Append('|').Append(t.Name).Append('|').Append(t.ShortName)
                   .Append('|').Append(t.LeagueId).Append('|').Append(t.StadiumCapacity)
-                  .Append('|').Append(t.Overall).Append(';');
+                  .Append('|').Append(t.Overall).Append('|').Append(t.IsFilial)
+                  .Append('|').Append(t.ParentClubId).Append(';');
 
             foreach (var f in PalmaresSeeder.FinalsData)
                 sb.Append(f.Season).Append('|').Append(f.CompetitionId).Append('|')
@@ -65,7 +68,8 @@ public static class SeedBaseline
         foreach (var t in (teams ?? Enumerable.Empty<TeamDataDB>()).OrderBy(t => t.Id))
             sb.Append(t.Id).Append('|').Append(t.Name).Append('|').Append(t.ShortName)
               .Append('|').Append(t.LeagueId).Append('|').Append(t.StadiumCapacity)
-              .Append('|').Append(t.Overall).Append(';');
+              .Append('|').Append(t.Overall).Append('|').Append(t.IsFilial)
+              .Append('|').Append(t.ParentClubId).Append(';');
         return Hash(sb.ToString());
     }
 

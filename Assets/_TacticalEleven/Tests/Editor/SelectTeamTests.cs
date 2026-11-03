@@ -121,6 +121,50 @@ public class SelectTeamTests
         Assert.That(year, Is.EqualTo(DateTime.Now.Month >= 7 ? DateTime.Now.Year : DateTime.Now.Year - 1));
     }
 
+    // ── FILIALES ───────────────────────────────────────────────────────────
+
+    [Test]
+    public void FilialRules_MarksKnownReserveTeams()
+    {
+        var teams = TeamSeeder.Build();
+        FilialRules.Apply(teams);
+
+        var byId = teams.ToDictionary(t => t.Id);
+        foreach (var id in new[] { 41, 42, 59, 62, 68, 75, 76 })
+        {
+            Assert.That(byId[id].IsFilial, Is.EqualTo(1), $"{byId[id].Name} debe ser filial");
+            Assert.That(byId[id].ParentClubId, Is.GreaterThan(0),
+                $"{byId[id].Name} debe tener club matriz");
+        }
+
+        // El primer equipo del filial no se marca.
+        Assert.That(byId[4].IsFilial, Is.EqualTo(0), "Real Sociedad no es filial");
+        Assert.That(byId[41].ParentClubId, Is.EqualTo(4));
+        Assert.That(byId[68].ParentClubId, Is.EqualTo(1));
+
+        var selectable = FilialRules.Selectable(teams).ToList();
+        Assert.That(selectable.Any(t => t.IsFilial == 1), Is.False);
+        Assert.That(selectable.Any(t => t.Name == "Real Sociedad B"), Is.False);
+        Assert.That(selectable.Any(t => t.Name == "Real Madrid Castilla"), Is.False);
+        Assert.That(selectable.Count, Is.EqualTo(75), "82 clubes españoles menos 7 filiales");
+    }
+
+    [Test]
+    public void SeededSlot_MarksReserveTeamsAsFilial()
+    {
+        var rsb = _db.Db.Table<TeamDataDB>().FirstOrDefault(t => t.Name == "Real Sociedad B");
+        Assert.That(rsb, Is.Not.Null);
+        Assert.That(rsb.IsFilial, Is.EqualTo(1));
+        Assert.That(rsb.ParentClubId, Is.EqualTo(4));
+    }
+
+    [Test]
+    public void GetWorstTeams_ExcludesReserveTeams()
+    {
+        var worst = _db.GetWorstTeams(20, 1, 2, 3, 4);
+        Assert.That(worst.Any(t => t.IsFilial == 1), Is.False);
+    }
+
     // ── PANTALLA ───────────────────────────────────────────────────────────
 
     [Test]
@@ -131,7 +175,8 @@ public class SelectTeamTests
         Assert.That(uxml, Is.Not.Null);
 
         var root = uxml.Instantiate();
-        foreach (var tab in new[] { "TabAll", "TabLiga", "TabLiga2", "TabRfef1", "TabRfef2" })
+        Assert.That(root.Q<Button>("TabAll"), Is.Null, "La pestaña TODOS ya no existe");
+        foreach (var tab in new[] { "TabLiga", "TabLiga2", "TabRfef1", "TabRfef2" })
             Assert.That(root.Q<Button>(tab), Is.Not.Null, $"Falta la pestaña {tab}");
 
         Assert.That(root.Q<VisualElement>("TeamsGrid"), Is.Not.Null);

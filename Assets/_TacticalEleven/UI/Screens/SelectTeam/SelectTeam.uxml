@@ -17,8 +17,7 @@
         <ui:VisualElement class="content-area">
             <ui:VisualElement class="left-panel">
                 <ui:VisualElement class="tabs-bar">
-                    <ui:Button name="TabAll" text="{loc:ui.select_team.tab_all}" class="tab-btn tab-btn--active"/>
-                    <ui:Button name="TabLiga" text="{loc:ui.select_team.tab_laliga}" class="tab-btn"/>
+                    <ui:Button name="TabLiga" text="{loc:ui.select_team.tab_laliga}" class="tab-btn tab-btn--active"/>
                     <ui:Button name="TabLiga2" text="{loc:ui.select_team.tab_laliga2}" class="tab-btn"/>
                     <ui:Button name="TabRfef1" text="{loc:ui.select_team.tab_rfef1}" class="tab-btn"/>
                     <ui:Button name="TabRfef2" text="{loc:ui.select_team.tab_rfef2}" class="tab-btn"/>

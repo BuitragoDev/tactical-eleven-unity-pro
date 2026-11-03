@@ -288,9 +288,10 @@ Notas:
 
 **F5 — decisiones tomadas:**
 
-- **Filtros por competición** (no por conferencia): `TabAll`, `TabLiga`, `TabLiga2`, `TabRfef1`, `TabRfef2`, filtrando por `teams.LeagueId` 1-4.
+- **Filtros por competición** (no por conferencia): `TabLiga`, `TabLiga2`, `TabRfef1`, `TabRfef2` (la pestaña TODOS se retiró), filtrando por `teams.LeagueId` 1-4.
 - **Ficha del club** con datos reales del seed: competición, fundación, país, estadio, aforo, reputación e instalaciones (estrellas), presupuesto, masa salarial, ataque/defensa/media y **objetivo orientativo** según su puesto por media en la competición.
 - **ProManager**: solo es seleccionable la **mitad baja** de cada competición.
+- **Filiales fuera**: no se puede jugar con equipos B. `FilialRules` los marca en el seed (`IsFilial`, `ParentClubId`) por nombre y tabla de padres (Real Sociedad B, Celta Fortuna, Bilbao Athletic, Fabril, Castilla, Atlético Madrileño y Villarreal B). Quedan **75 clubes seleccionables** de los 82 españoles. La huella incluye la marca y `InitSaveSlot` repara plantillas/partidas antiguas.
 - **Al continuar**: limpia managers/temporadas de intentos previos, crea `managers` + `seasons` (fase `preseason`, `current_date` 15/07, jornadas 38/42/38), actualiza `saves.json` y navega a Pretemporada cuando exista (F6).
 - **`PlayerPositionNames`**: códigos y nombres de demarcación en un único sitio (POR, DFC, LI, LD, MCD, MC, MCO, EI, ED, DC…).
 

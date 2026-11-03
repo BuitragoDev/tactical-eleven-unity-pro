@@ -50,8 +50,9 @@ public partial class DatabaseManager
     void SeedTeams()
     {
         var teams = TeamSeeder.Build();
+        FilialRules.Apply(teams);
         Db.InsertAll(teams);
-        Debug.Log($"[DB] {teams.Count} clubes sembrados.");
+        Debug.Log($"[DB] {teams.Count} clubes sembrados ({teams.Count(t => t.IsFilial == 1)} filiales).");
     }
 
     void SeedPlayers()

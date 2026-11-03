@@ -95,6 +95,7 @@ public partial class DatabaseManager : MonoBehaviour
 
                 CloneFromTemplate();
                 SeedStaticDataIfNeeded();
+                EnsureFiliales();
 
                 // El slot nuevo se audita completo (F1): un ERROR revierte.
                 var issues = SeedAudit.Validate(_dbField);
@@ -426,6 +427,23 @@ public partial class DatabaseManager : MonoBehaviour
             if (own) { try { db.Rollback(); } catch { } }
             throw;
         }
+    }
+
+    /// <summary>
+    /// Marca los filiales en partidas/templates creados antes de F5 (la huella no
+    /// los distinguía). Idempotente: solo toca clubes con nombre de filial sin marcar.
+    /// </summary>
+    void EnsureFiliales()
+    {
+        var all = _dbField.Table<TeamDataDB>().ToList();
+        var pending = all.Where(t => t.IsFilial == 0 && FilialRules.IsFilialName(t.Name)).ToList();
+        if (pending.Count == 0) return;
+
+        FilialRules.Apply(all);
+        foreach (var team in all.Where(t => t.IsFilial == 1))
+            _dbField.Update(team);
+
+        Debug.Log($"[DB] {pending.Count} filiales marcados en la partida.");
     }
 
     public void WriteSeedFingerprint(string fingerprint)

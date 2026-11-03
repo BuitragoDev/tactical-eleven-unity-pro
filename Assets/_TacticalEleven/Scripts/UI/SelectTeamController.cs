@@ -15,7 +15,6 @@ public class SelectTeamController : UIScreenController
     private Label _headerMode;
     private TextField _managerInput;
 
-    private Button _tabAll;
     private Button _tabLiga;
     private Button _tabLiga2;
     private Button _tabRfef1;
@@ -70,7 +69,6 @@ public class SelectTeamController : UIScreenController
         _headerMode = _root.Q<Label>("HeaderMode");
         _managerInput = _root.Q<TextField>("ManagerNameInput");
 
-        _tabAll = _root.Q<Button>("TabAll");
         _tabLiga = _root.Q<Button>("TabLiga");
         _tabLiga2 = _root.Q<Button>("TabLiga2");
         _tabRfef1 = _root.Q<Button>("TabRfef1");
@@ -107,7 +105,7 @@ public class SelectTeamController : UIScreenController
         _squadRight = _root.Q<VisualElement>("SquadColumnRight");
         _btnCloseSquad = _root.Q<Button>("BtnCloseSquad");
 
-        foreach (var b in new[] { _btnBack, _btnContinue, _tabAll, _tabLiga, _tabLiga2,
+        foreach (var b in new[] { _btnBack, _btnContinue, _tabLiga, _tabLiga2,
                                   _tabRfef1, _tabRfef2, _btnShowSquad, _btnCloseSquad })
             RegisterHandCursor(b);
     }
@@ -117,8 +115,8 @@ public class SelectTeamController : UIScreenController
         base.LoadData();
         var db = DatabaseManager.Instance;
 
-        _allTeams = db.GetAllTeams()
-            .Where(t => t.LeagueId >= 1 && t.LeagueId <= 4)
+        // Solo clubes jugables: 1ª, 2ª y 1ª RFEF, sin filiales.
+        _allTeams = FilialRules.Selectable(db.GetAllTeams())
             .OrderBy(t => t.Name)
             .ToList();
 
@@ -161,7 +159,6 @@ public class SelectTeamController : UIScreenController
         _btnBack?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ScreenManager.Instance.GoTo(GameScreen.MainMenu); });
         _btnContinue?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OnContinue(); });
 
-        _tabAll?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ShowFilter("all"); });
         _tabLiga?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ShowFilter("liga"); });
         _tabLiga2?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ShowFilter("liga2"); });
         _tabRfef1?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ShowFilter("rfef1"); });
@@ -185,7 +182,7 @@ public class SelectTeamController : UIScreenController
             _managerInput.value = "";
 
         CloseSquadModal();
-        ShowFilter("all");
+        ShowFilter("liga");
         ValidateContinue();
     }
 
@@ -194,7 +191,6 @@ public class SelectTeamController : UIScreenController
     private void ShowFilter(string filter)
     {
         _filter = filter;
-        SetTabActive(_tabAll, filter == "all");
         SetTabActive(_tabLiga, filter == "liga");
         SetTabActive(_tabLiga2, filter == "liga2");
         SetTabActive(_tabRfef1, filter == "rfef1");
@@ -202,16 +198,13 @@ public class SelectTeamController : UIScreenController
 
         int leagueId = filter switch
         {
-            "liga" => 1,
             "liga2" => 2,
             "rfef1" => 3,
             "rfef2" => 4,
-            _ => 0
+            _ => 1
         };
 
-        var teams = leagueId == 0
-            ? _allTeams
-            : _allTeams.Where(t => t.LeagueId == leagueId).ToList();
+        var teams = _allTeams.Where(t => t.LeagueId == leagueId).ToList();
 
         BuildGrid(teams);
     }

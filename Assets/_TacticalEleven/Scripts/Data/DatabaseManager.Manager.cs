@@ -84,7 +84,7 @@ public partial class DatabaseManager
         // en sqlite-net y aquí solo recorremos 236 clubes.
         return Db.Table<TeamDataDB>()
                  .ToList()
-                 .Where(t => ids.Contains(t.LeagueId))
+                 .Where(t => ids.Contains(t.LeagueId) && t.IsFilial == 0)
                  .OrderBy(t => t.Overall)
                  .Take(Mathf.Max(0, count))
                  .ToList();
