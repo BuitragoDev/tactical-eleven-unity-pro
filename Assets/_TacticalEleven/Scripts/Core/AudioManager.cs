@@ -62,9 +62,24 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        // Sin AudioListener no se oye nada. Se comprueba en Start (la escena ya está
+        // cargada) y, si la cámara no lo tiene, se añade al propio AudioManager.
+        bool addedListener = EnsureAudioListener();
+
+        // Si acabamos de crear el listener, reiniciamos la música para que suene ya.
+        if (addedListener) musicSource.Stop();
+
         Debug.Log("[AudioManager] Start — musicSource.isPlaying=" + musicSource.isPlaying);
         if (!musicSource.isPlaying)
             PlayMusic("backgroundMenu");
+    }
+
+    bool EnsureAudioListener()
+    {
+        if (FindFirstObjectByType<AudioListener>() != null) return false;
+        gameObject.AddComponent<AudioListener>();
+        Debug.Log("[AudioManager] No había AudioListener en la escena: se añade al AudioManager.");
+        return true;
     }
 
     void TryPlayMusic(string clipName)

@@ -16,6 +16,17 @@ public class MainMenuController : UIScreenController
 
     public override GameScreen ScreenId => GameScreen.MainMenu;
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        // Música del menú (TryPlayMusic no la reinicia si ya suena) y cursor normal.
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMusic("backgroundMenu");
+        if (CursorManager.Instance != null)
+            CursorManager.Instance.SetDefaultCursor();
+    }
+
     protected override void CacheReferences()
     {
         _btnManager = _root.Q<Button>("BtnManager");
