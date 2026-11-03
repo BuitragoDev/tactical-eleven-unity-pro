@@ -226,6 +226,7 @@ public static class CountryCodes
     {
         if (string.IsNullOrEmpty(code)) return "default";
         string upper = code.Trim().ToUpperInvariant();
+        if (upper == "DEFAULT") return "default"; // el archivo genérico va en minúsculas
         return FlagAliases.TryGetValue(upper, out var iso3) ? iso3 : upper;
     }
 

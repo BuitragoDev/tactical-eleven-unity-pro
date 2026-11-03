@@ -57,6 +57,7 @@ public class SelectTeamController : UIScreenController
     private List<TeamDataDB> _allTeams = new();
     private Dictionary<int, List<PlayerDataDB>> _playersByTeam = new();
     private Dictionary<string, Sprite> _logoSprites = new();
+    private readonly Dictionary<string, Sprite> _flagSprites = new();
     private TeamDataDB _selectedTeam;
     private string _filter = "all";
 
@@ -411,6 +412,13 @@ public class SelectTeamController : UIScreenController
         pos.AddToClassList("modal-player-pos");
         row.Add(pos);
 
+        var flag = new VisualElement();
+        flag.AddToClassList("modal-player-flag");
+        var flagSprite = FlagFor(player.Nationality);
+        if (flagSprite != null) flag.style.backgroundImage = new StyleBackground(flagSprite);
+        flag.tooltip = Constants.GetName(player.Nationality);
+        row.Add(flag);
+
         var age = new Label(player.Age.ToString());
         age.AddToClassList("modal-player-age");
         row.Add(age);
@@ -423,6 +431,20 @@ public class SelectTeamController : UIScreenController
         row.Add(ovr);
 
         return row;
+    }
+
+    /// <summary>Bandera de la nacionalidad (ISO3), con alias FIFA y fallback genérico.</summary>
+    private Sprite FlagFor(string nationality)
+    {
+        string code = Constants.NormalizeFlagCode(nationality);
+        if (_flagSprites.TryGetValue(code, out var cached)) return cached;
+
+        var sprite = Resources.Load<Sprite>(Constants.GetFlagPath(code));
+        if (sprite == null)
+            sprite = Resources.Load<Sprite>(Constants.GetFlagPath("default"));
+
+        _flagSprites[code] = sprite;
+        return sprite;
     }
 
     private void CloseSquadModal()
