@@ -1,49 +1,10 @@
 fileFormatVersion: 2
-guid: dbb0e6d4479b25cfb85f013c62d72f26
+guid: 5c5db835f4cc45cab07eb04ae8bee6c8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5716038209891638688
-    second: buitrago_studios_logo2_0
-  - first:
-      213: -284692849560898287
-    second: buitrago_studios_logo2_1
-  - first:
-      213: 3248176275317288028
-    second: buitrago_studios_logo2_2
-  - first:
-      213: 5067327703498773912
-    second: buitrago_studios_logo2_3
-  - first:
-      213: -6980932361024747508
-    second: buitrago_studios_logo2_4
-  - first:
-      213: -1044916397605944704
-    second: buitrago_studios_logo2_5
-  - first:
-      213: 3556021017705551347
-    second: buitrago_studios_logo2_6
-  - first:
-      213: -3505465095499392681
-    second: buitrago_studios_logo2_7
-  - first:
-      213: -6891614816700950469
-    second: buitrago_studios_logo2_8
-  - first:
-      213: -7672882755319673721
-    second: buitrago_studios_logo2_9
-  - first:
-      213: 7503180176817018630
-    second: buitrago_studios_logo2_10
-  - first:
-      213: -8662998497973435431
-    second: buitrago_studios_logo2_11
-  - first:
-      213: 2175398336258996510
-    second: buitrago_studios_logo2_12
-  - first:
-      213: 844732262015478177
-    second: buitrago_studios_logo2_13
+      213: -2979949358407401427
+    second: mas_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -85,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -152,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: buitrago_studios_logo2_0
+      name: mas_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 4
-        width: 115
-        height: 121
+        x: 0
+        y: 0
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,294 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 06269d0788d8ca0b0800000000000000
-      internalID: -5716038209891638688
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_1
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 69
-        width: 39
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 11534d79c519c0cf0800000000000000
-      internalID: -284692849560898287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_2
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 6
-        width: 74
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c5c6322ec17d31d20800000000000000
-      internalID: 3248176275317288028
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_3
-      rect:
-        serializedVersion: 2
-        x: 169
-        y: 69
-        width: 43
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8955a8fc2b3c25640800000000000000
-      internalID: 5067327703498773912
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_4
-      rect:
-        serializedVersion: 2
-        x: 202
-        y: 17
-        width: 43
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c084714110fbe1f90800000000000000
-      internalID: -6980932361024747508
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_5
-      rect:
-        serializedVersion: 2
-        x: 215
-        y: 69
-        width: 14
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 08287b49216bf71f0800000000000000
-      internalID: -1044916397605944704
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_6
-      rect:
-        serializedVersion: 2
-        x: 229
-        y: 69
-        width: 41
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3f599266646895130800000000000000
-      internalID: 3556021017705551347
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_7
-      rect:
-        serializedVersion: 2
-        x: 248
-        y: 1
-        width: 46
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7595a3281161a5fc0800000000000000
-      internalID: -3505465095499392681
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_8
-      rect:
-        serializedVersion: 2
-        x: 269
-        y: 69
-        width: 81
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b3898b966d01c50a0800000000000000
-      internalID: -6891614816700950469
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_9
-      rect:
-        serializedVersion: 2
-        x: 294
-        y: 17
-        width: 14
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 78c43f569c1748590800000000000000
-      internalID: -7672882755319673721
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_10
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 17
-        width: 51
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6075ee40e96a02860800000000000000
-      internalID: 7503180176817018630
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_11
-      rect:
-        serializedVersion: 2
-        x: 347
-        y: 69
-        width: 46
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9d30d8eb3c8d6c780800000000000000
-      internalID: -8662998497973435431
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_12
-      rect:
-        serializedVersion: 2
-        x: 356
-        y: 7
-        width: 95
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e1971b5d241903e10800000000000000
-      internalID: 2175398336258996510
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buitrago_studios_logo2_13
-      rect:
-        serializedVersion: 2
-        x: 392
-        y: 69
-        width: 58
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1a9aeb7448719bb00800000000000000
-      internalID: 844732262015478177
+      spriteID: d204973d8d715a6d0800000000000000
+      internalID: -2979949358407401427
       vertices: []
       indices: 
       edges: []
@@ -463,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -473,20 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      buitrago_studios_logo2_0: -5716038209891638688
-      buitrago_studios_logo2_1: -284692849560898287
-      buitrago_studios_logo2_10: 7503180176817018630
-      buitrago_studios_logo2_11: -8662998497973435431
-      buitrago_studios_logo2_12: 2175398336258996510
-      buitrago_studios_logo2_13: 844732262015478177
-      buitrago_studios_logo2_2: 3248176275317288028
-      buitrago_studios_logo2_3: 5067327703498773912
-      buitrago_studios_logo2_4: -6980932361024747508
-      buitrago_studios_logo2_5: -1044916397605944704
-      buitrago_studios_logo2_6: 3556021017705551347
-      buitrago_studios_logo2_7: -3505465095499392681
-      buitrago_studios_logo2_8: -6891614816700950469
-      buitrago_studios_logo2_9: -7672882755319673721
+      mas_0: -2979949358407401427
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -409,7 +409,7 @@ Reglas de compatibilidad:
 
 **Rescate del seed antiguo:** los 236 equipos de `SeedTeams` cubren 1ª, 2ª, 1ª RFEF y los clubes europeos (32 + 34 + 35 = 101). **No se añade 2ª RFEF.** Hay que **reclasificar** los clubes europeos: en el intento anterior se guardaban como `LeagueId=5/6/7`; aquí van en `competition_entries` (participación por temporada), no como liga del club, y las plazas españolas se recalculan cada temporada.
 
-**Assets:** copiar `Teams/{32x32,64x64,120x120}` a `Art/Resources/Teams/Logos/...`; `Stadiums/*` a `Art/Resources/Stadiums/`; `Flags/*` a `Art/Resources/Flags/`; `Icons/*` a `Art/Resources/Icons/`. Prever **escudo genérico** para los clubes del pool de ascenso que no tengan logo.
+**Assets:** copiar `Teams/{32x32,64x64,120x120}` a `Art/Resources/Teams/Logos/...`; `Stadiums/*` a `Art/Resources/Stadiums/`; `Flags/*` a `Art/Resources/Flags/`; `Icons/*` a `Art/Resources/Icons/`. **Copiar siempre el `.meta` junto al PNG**: sin él Unity importa la imagen como *sprite múltiple* con recortes automáticos y la UI muestra solo una porción (pasó con el logo de Loading). Prever **escudo genérico** para los clubes del pool de ascenso que no tengan logo.
 
 **Aceptación:** `GetAllTeams()` devuelve **82 clubes españoles** (20 + 22 + 40) **+ 101 europeos**; cada uno con competición, estadio y aforo; el auditor informa plantillas fuera de rango pero **no reasigna clubes**.
 
@@ -916,6 +916,8 @@ Reglas heredadas que **no** se deben romper:
 - `ScheduleGenerator.GenerateCopaDelRey` solo genera **una ronda**; la copa completa va en F13.
 - `ScheduleGenerator` usa `UnityEngine.Random` y no valida el calendario → inyectar `IRandomSource` y añadir `ValidateSchedule`.
 - `DatabaseManager.cs` no tiene `schema_migrations`, `db_meta` ni transacciones atómicas → F1.
+- **Nacionalidades y banderas**: `PlayerSeeder` mezcla códigos ISO3 (`ARG`) y FIFA (`GER`, `NED`, `ENG`), mientras los PNG de `Flags/` están en **ISO2** (`AR`, `DE`, `NL`). F3 debe normalizar la tabla `Constants.CountryCodes` y mapear a los archivos antes de pintar banderas.
+- **Assets copiados sin `.meta`**: se importan como sprite múltiple y la UI recorta (logo de Loading). Copiar el `.meta` original o fijar `spriteMode: 1`.
 
 **Decisiones abiertas:**
 
