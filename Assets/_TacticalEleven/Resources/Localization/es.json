@@ -146,6 +146,10 @@
       "value": "Cierra el juego y vuelve al escritorio. Asegúrate de haber guardado tu progreso si lo deseas."
     },
     {
+      "key": "ui.main_menu.clubes",
+      "value": "CLUBES"
+    },
+    {
       "key": "ui.main_menu.comenzar",
       "value": "COMENZAR"
     },
@@ -195,7 +199,7 @@
     },
     {
       "key": "ui.main_menu.edita_jugadores_equipos_atributos_y_esta_28647caf",
-      "value": "Edita jugadores, equipos, atributos y estadísticas. Crea tu liga personalizada y ajusta cada detalle antes de empezar tu partida."
+      "value": "Edita clubes, jugadores, atributos, estadios y equipaciones. Ajusta cada detalle de la base de datos antes de empezar tu partida."
     },
     {
       "key": "ui.main_menu.editor_base_de_datos",
@@ -246,16 +250,16 @@
       "value": "ELEVEN"
     },
     {
-      "key": "ui.main_menu.franquicias",
-      "value": "FRANQUICIAS"
-    },
-    {
       "key": "ui.main_menu.graficos",
       "value": "GRÁFICOS"
     },
     {
       "key": "ui.main_menu.informe_de_errores",
       "value": "INFORME DE ERRORES"
+    },
+    {
+      "key": "ui.main_menu.jornadas_temporada",
+      "value": "JORNADAS / TEMPORADA"
     },
     {
       "key": "ui.main_menu.jugadores",
@@ -271,7 +275,7 @@
     },
     {
       "key": "ui.main_menu.los_nombres_de_equipos_jugadores_y_logot_bcf4bdee",
-      "value": "Los nombres de equipos, jugadores y logotipos de la LaLiga son propiedad de sus respectivos dueños. Tactical Eleven no está afiliado, patrocinado ni respaldado por la LaLiga, sus equipos ni sus jugadores."
+      "value": "Los nombres de equipos, jugadores y logotipos de LaLiga son propiedad de sus respectivos dueños. Tactical Eleven no está afiliado, patrocinado ni respaldado por LaLiga, sus equipos ni sus jugadores."
     },
     {
       "key": "ui.main_menu.modo_pro_promanager",
@@ -280,10 +284,6 @@
     {
       "key": "ui.main_menu.musica",
       "value": "Música"
-    },
-    {
-      "key": "ui.main_menu.partidos_temporada",
-      "value": "PARTIDOS / TEMPORADA"
     },
     {
       "key": "ui.main_menu.pro_descripcion",

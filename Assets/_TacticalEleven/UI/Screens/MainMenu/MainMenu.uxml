@@ -78,16 +78,16 @@
             </ui:VisualElement>
             <ui:VisualElement name="StatsStrip" class="stats-strip">
                 <ui:VisualElement class="stat-item">
-                    <ui:Label text="30" class="stat-val"/>
-                    <ui:Label text="{loc:ui.main_menu.franquicias}" class="stat-lbl"/>
+                    <ui:Label text="82" class="stat-val"/>
+                    <ui:Label text="{loc:ui.main_menu.clubes}" class="stat-lbl"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="stat-item">
-                    <ui:Label text="600+" class="stat-val stat-val-accent"/>
+                    <ui:Label text="4.000+" class="stat-val stat-val-accent"/>
                     <ui:Label text="{loc:ui.main_menu.jugadores}" class="stat-lbl"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="stat-item">
-                    <ui:Label text="82" class="stat-val"/>
-                    <ui:Label text="{loc:ui.main_menu.partidos_temporada}" class="stat-lbl"/>
+                    <ui:Label text="38" class="stat-val"/>
+                    <ui:Label text="{loc:ui.main_menu.jornadas_temporada}" class="stat-lbl"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="stat-item last">
                     <ui:Label text="∞" class="stat-val stat-val-accent"/>
