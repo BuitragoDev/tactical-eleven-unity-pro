@@ -202,6 +202,30 @@ Assets/_TacticalEleven/Scripts/Data/SQLite.cs      → wrapper sqlite-net (mismo
 
 **Licencia:** `SQLite.cs` es el wrapper **sqlite-net (MIT, © Krueger Systems)**; conservar el aviso del encabezado al copiarlo o modificarlo y reflejarlo en `Docs/THIRD_PARTY_ASSETS.md` (F18). Los binarios nativos de SQLite son de dominio público (SQLite).
 
+### 4.2 Alta manual de una pantalla (Editor)
+
+Patrón idéntico a Tactical Five. Por cada pantalla nueva:
+
+1. **UXML + USS** en `Assets/_TacticalEleven/UI/Screens/<Pantalla>/<Pantalla>.uxml` y `.uss`
+   (reutilizar `GlobalVariables`/`Typography`/`Utilities`; textos con `{loc:clave}`).
+2. **GameObject** en `MainMenu.unity` llamado `<Pantalla>Document`.
+3. Añadir **`UIDocument`**:
+   - `Panel Settings` → `TacticalElevenPanelSettings`
+   - `Source Asset` → `<Pantalla>.uxml`
+4. Añadir **`FullScreenUI`** (fuerza el root a pantalla completa).
+5. Añadir **`<Pantalla>Controller`** heredando de `UIScreenController` y sobrescribiendo
+   `ScreenId` (y solo los hooks que necesite).
+6. **Arrastrar** el GameObject (o su componente `UIDocument`) al campo correspondiente
+   de `ScreenManager` en el Inspector (`Loading`, `MainMenu`, `Dashboard`…).
+7. Navegar con `ScreenManager.Instance.GoTo(GameScreen.<Pantalla>)`.
+
+Notas:
+- El árbol se reconstruye en `OnEnable` de cada `UIDocument`: todo el wiring va ahí
+  (nunca en `Start`), y no se acumulan callbacks entre visitas.
+- Si el campo del `ScreenManager` queda vacío, `GoTo` avisa por consola y mantiene la
+  pantalla actual (no rompe la navegación).
+- `ScreenId` es el valor que usan el header/sidebar para marcar la sección activa.
+
 ---
 
 ## 5. Identidad visual (copia literal de Tactical Five)
@@ -254,16 +278,16 @@ Assets/_TacticalEleven/Scripts/Data/SQLite.cs      → wrapper sqlite-net (mismo
 
 | Fase | Estado | Qué hay |
 |---|---|---|
-| **F0** | ✅ Hecha | Fuentes, tema, panel settings, estilos globales, `GameEnums`, `ScreenManager`, `UIScreenController`, `FullScreenUI`, `AudioManager`, `CursorManager`, `LocalizationService`, `CustomScrollbar`, `CustomSlider`, `IRandomSource`, `CalendarHelper`; escena `MainMenu.unity` generada con `Loading` + `MainMenu` y audio/iconos/banderas copiados |
+| **F0** | ✅ Hecha | Fuentes, tema, panel settings, estilos globales, `GameEnums`, `ScreenManager` (un campo por pantalla), `UIScreenController`, `FullScreenUI`, `AudioManager`, `CursorManager`, `LocalizationService`, `CustomScrollbar`, `CustomSlider`, `IRandomSource`, `CalendarHelper`; audio/iconos/banderas copiados. **Las pantallas las crea el usuario en el Editor** (ver «Alta manual de una pantalla») |
 | **F1** | ✅ Hecha | 25 tablas (`Models/*.cs` + columnas nuevas), `DatabaseManager` (fachada + migraciones + seed + template), `GameSaveManager`, `DbMetaData`, `SchemaMigration*`, `SeedBaseline`, `SeedAudit`, `ReferentialIntegrity`; tests `PersistenceTests` + `UiSmokeTests` (**13/13**) |
 | F2 | ⏭ Siguiente | Competiciones, 82 clubes, 101 europeos, escudos y estadios |
 
 **Desviaciones respecto al plan (decididas al implementar):**
 
-- `ScreenManager` usa una **lista serializada** `screen → UIDocument` en vez de un campo por pantalla y un `switch` de 50 casos. Es equivalente y se amplía sin tocar código.
+- `ScreenManager` sigue el patrón de Tactical Five: **un campo `[SerializeField] UIDocument` por pantalla** (agrupados por `Header`) y un `switch` en `GoTo`; las pantallas se arrastran en el Inspector. No hay generación automática de escena (se retiró `SceneBootstrap`).
 - El enum de demarcaciones se llama **`PlayerPosition`**, no `Position`: el enum global `Position` ocultaba `UnityEngine.UIElements.Position` y rompía el fullscreen (CS0117).
 - `GameSaveManager.BaseDirOverride` y `DatabaseManager.DataRootOverride` existen **solo para tests** (carpeta temporal, sin tocar las partidas reales).
-- La escena no se versiona a mano: la genera `Editor/SceneBootstrap.cs` (menú *Tactical Eleven → Bootstrap → Main Menu Scene* o `-executeMethod SceneBootstrap.Create`).
+- La escena y los GameObjects de pantalla los crea el usuario en el Editor (no hay bootstrap automático).
 - `PRAGMA journal_mode` y `busy_timeout` se ejecutan con `ExecuteScalar`, no con `Execute` (sqlite-net lanza "not an error" al devolver fila).
 
 ---
@@ -287,7 +311,7 @@ Assets/_TacticalEleven/Scripts/Data/SQLite.cs      → wrapper sqlite-net (mismo
   - `FullScreenUI.cs`, `AudioManager.cs`, `CursorManager.cs`.
   - `LocalizationService.cs`, `CustomScrollbar.cs`, `CustomSlider.cs`, `IRandomSource.cs`, `CalendarHelper.cs`.
   - **Diferidos a F2/F4**: `TeamImages`, `CustomScopes`, `StatFormat`, `NamePools`, header/sidebar y modal de configuración.
-- `Assets/_TacticalEleven/Scenes/MainMenu.unity`: GameObjects `Main Camera`, `ScreenManager` (+`DatabaseManager`), `CursorManager`, `LoadingDocument` y `MainMenuDocument`, generados con `Editor/SceneBootstrap.cs`.
+- `Assets/_TacticalEleven/Scenes/MainMenu.unity`: escena única. El usuario crea en el Editor los GameObjects de pantalla (`UIDocument` + `FullScreenUI` + controller) y los arrastra a `ScreenManager`.
 - `Assets/_TacticalEleven/Resources/Localization/es.json` (tabla vacía + claves comunes).
 - `Tools/localization_extract.py` (copiar de T5 y adaptar rutas).
 
