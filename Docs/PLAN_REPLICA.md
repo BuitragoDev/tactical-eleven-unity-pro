@@ -916,7 +916,7 @@ Reglas heredadas que **no** se deben romper:
 - `ScheduleGenerator.GenerateCopaDelRey` solo genera **una ronda**; la copa completa va en F13.
 - `ScheduleGenerator` usa `UnityEngine.Random` y no valida el calendario → inyectar `IRandomSource` y añadir `ValidateSchedule`.
 - `DatabaseManager.cs` no tiene `schema_migrations`, `db_meta` ni transacciones atómicas → F1.
-- **Nacionalidades y banderas**: `PlayerSeeder` mezcla códigos ISO3 (`ARG`) y FIFA (`GER`, `NED`, `ENG`), mientras los PNG de `Flags/` están en **ISO2** (`AR`, `DE`, `NL`). F3 debe normalizar la tabla `Constants.CountryCodes` y mapear a los archivos antes de pintar banderas.
+- **Nacionalidades y banderas (resuelto)**: los PNG de `Flags/Default` y `Flags/Large (2×)` ya están en **ISO3** (`ARG`, `DEU`, `GBR`…); `Constants.NormalizeFlagCode` mapea los códigos FIFA del seeder (`GER`→`DEU`, `NED`→`NLD`, `ENG`→`GBR`…) y `GetFlagPath`/`GetFlagPathLarge` apuntan a las carpetas correctas. Queda como tarea de F3 revisar los códigos raros (`KVX`, `UN`).
 - **Assets copiados sin `.meta`**: se importan como sprite múltiple y la UI recorta (logo de Loading). Copiar el `.meta` original o fijar `spriteMode: 1`.
 
 **Decisiones abiertas:**

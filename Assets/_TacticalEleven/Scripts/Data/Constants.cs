@@ -207,14 +207,41 @@ public static class CountryCodes
         { "NIR", "Northern Ireland" },
     };
 
+    /// <summary>
+    /// Códigos que no son ISO3 (FIFA o legado) y su equivalente ISO3, que es el
+    /// nombre de archivo de las banderas en `Resources/Flags`.
+    /// </summary>
+    public static readonly Dictionary<string, string> FlagAliases = new()
+    {
+        { "ALG", "DZA" }, { "BUL", "BGR" }, { "CHI", "CHL" }, { "CRC", "CRI" },
+        { "CRO", "HRV" }, { "CTA", "CAF" }, { "DEN", "DNK" }, { "ENG", "GBR" },
+        { "EQG", "GNQ" }, { "GAM", "GMB" }, { "GER", "DEU" }, { "GRE", "GRC" },
+        { "GUI", "GIN" }, { "KVX", "XKX" }, { "MAD", "MDG" }, { "NED", "NLD" },
+        { "POR", "PRT" }, { "RSA", "ZAF" }, { "SUI", "CHE" }, { "URU", "URY" },
+        { "ZIM", "ZWE" },
+    };
+
+    /// <summary>Devuelve el código ISO3 usado por los archivos de bandera.</summary>
+    public static string NormalizeFlagCode(string code)
+    {
+        if (string.IsNullOrEmpty(code)) return "default";
+        string upper = code.Trim().ToUpperInvariant();
+        return FlagAliases.TryGetValue(upper, out var iso3) ? iso3 : upper;
+    }
+
     public static string GetName(string code)
     {
         if (string.IsNullOrEmpty(code)) return "";
-        return Names.TryGetValue(code.ToUpper(), out var name) ? name : code;
+        string iso3 = NormalizeFlagCode(code);
+        if (Names.TryGetValue(iso3, out var name)) return name;
+        return Names.TryGetValue(code.Trim().ToUpperInvariant(), out name) ? name : code;
     }
 
+    /// <summary>Ruta de la bandera normal (Resources, sin extensión).</summary>
     public static string GetFlagPath(string code)
-    {
-        return string.IsNullOrEmpty(code) ? "Flags/default" : $"Flags/{code.ToUpper()}";
-    }
+        => $"Flags/Default/{NormalizeFlagCode(code)}";
+
+    /// <summary>Ruta de la bandera grande (Resources, sin extensión).</summary>
+    public static string GetFlagPathLarge(string code)
+        => $"Flags/Large (2×)/{NormalizeFlagCode(code)}";
 }
