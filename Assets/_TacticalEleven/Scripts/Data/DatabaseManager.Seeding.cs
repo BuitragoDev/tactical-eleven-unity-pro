@@ -57,6 +57,24 @@ public partial class DatabaseManager
     void SeedPlayers()
     {
         PlayerSeeder.Seed(Db);
+        EnsureReleaseClauses();
+    }
+
+    /// <summary>
+    /// El seed deja 3 jugadores sin cláusula (porteros de Mérida y Zamora). Se les
+    /// asigna una coherente con su valor para que todo profesional tenga cláusula.
+    /// </summary>
+    void EnsureReleaseClauses()
+    {
+        var pending = Db.Table<PlayerDataDB>().Where(p => p.ReleaseClause == 0).ToList();
+        foreach (var player in pending)
+        {
+            player.ReleaseClause = Math.Max((player.Value > 0 ? player.Value : 1_000_000L) * 2, 2_000_000L);
+            Db.Update(player);
+        }
+
+        if (pending.Count > 0)
+            Debug.Log($"[DB] Cláusula asignada a {pending.Count} jugadores sin cláusula.");
     }
 
     void SeedPalmares()

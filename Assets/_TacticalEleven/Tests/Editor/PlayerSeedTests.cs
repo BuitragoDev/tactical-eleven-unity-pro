@@ -67,11 +67,19 @@ public class PlayerSeedTests
     {
         foreach (var p in _db.Db.Table<PlayerDataDB>().ToList())
         {
-            Assert.That(p.MainPosition, Is.InRange(0, 14), $"{p.LastName} sin posición válida");
-            Assert.That(p.SquadNumber, Is.GreaterThan(0), $"{p.LastName} sin dorsal");
-            Assert.That(p.ReleaseClause, Is.GreaterThan(0), $"{p.LastName} sin cláusula");
-            Assert.That(p.Wage, Is.GreaterThan(0), $"{p.LastName} sin salario");
+            string name = DisplayName(p);
+            Assert.That(p.MainPosition, Is.InRange(0, 14), $"{name} (id {p.Id}) sin posición válida");
+            Assert.That(p.SquadNumber, Is.GreaterThan(0), $"{name} (id {p.Id}) sin dorsal");
+            Assert.That(p.ReleaseClause, Is.GreaterThan(0), $"{name} (id {p.Id}) sin cláusula");
+            Assert.That(p.Wage, Is.GreaterThan(0), $"{name} (id {p.Id}) sin salario");
         }
+    }
+
+    private static string DisplayName(PlayerDataDB p)
+    {
+        if (!string.IsNullOrWhiteSpace(p.CommonName)) return p.CommonName;
+        string full = $"{p.FirstName} {p.LastName}".Trim();
+        return string.IsNullOrEmpty(full) ? "Sin nombre" : full;
     }
 
     // ── OVERALL ────────────────────────────────────────────────────────────
