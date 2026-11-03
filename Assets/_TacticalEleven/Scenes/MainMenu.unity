@@ -220,7 +220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &794716296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,8 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c4ec1d8e240351a991eac3e7a90ac6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CursorManager
-  cursorDefault: {fileID: 0}
-  cursorHand: {fileID: 0}
+  cursorDefault: {fileID: 2800000, guid: 998e46740798b963d8d610b116912a20, type: 3}
+  cursorHand: {fileID: 2800000, guid: c8912e269acc8d88ab1b1a89edadada8, type: 3}
   defaultHotspot: {x: 0, y: 0}
   handHotspot: {x: 0, y: 0}
 --- !u!4 &1119227455
@@ -373,12 +373,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123512e86bc86c0f4a5acf1feef1737e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenManager
-  screens:
-  - screen: 0
-    document: {fileID: 1780472946}
-  - screen: 1
-    document: {fileID: 794716298}
-  initialDocument: {fileID: 1780472946}
+  loadingDocument: {fileID: 1780472946}
+  mainMenuDocument: {fileID: 794716298}
+  loadGameDocument: {fileID: 0}
+  editorDocument: {fileID: 0}
+  selectTeamDocument: {fileID: 0}
+  preseasonDocument: {fileID: 0}
+  dashboardDocument: {fileID: 0}
+  rosterDocument: {fileID: 0}
+  lineupDocument: {fileID: 0}
+  tacticsDocument: {fileID: 0}
+  trainingDocument: {fileID: 0}
+  staffDocument: {fileID: 0}
+  injuredDocument: {fileID: 0}
+  dorsalesDocument: {fileID: 0}
+  calendarDocument: {fileID: 0}
+  resultsDocument: {fileID: 0}
+  standingsDocument: {fileID: 0}
+  competitionInfoDocument: {fileID: 0}
+  filialDocument: {fileID: 0}
+  rivalidadesDocument: {fileID: 0}
+  knockoutsDocument: {fileID: 0}
+  europeDocument: {fileID: 0}
+  copaDocument: {fileID: 0}
+  logrosDocument: {fileID: 0}
+  palmaresDocument: {fileID: 0}
+  recordsDocument: {fileID: 0}
+  premiosDocument: {fileID: 0}
+  statsDocument: {fileID: 0}
+  marketDocument: {fileID: 0}
+  carteraDocument: {fileID: 0}
+  buscadorDocument: {fileID: 0}
+  historialDocument: {fileID: 0}
+  finanzasDocument: {fileID: 0}
+  loansDocument: {fileID: 0}
+  sponsorsDocument: {fileID: 0}
+  tvDocument: {fileID: 0}
+  stadiumDocument: {fileID: 0}
+  cityDocument: {fileID: 0}
+  managerDocument: {fileID: 0}
+  messagesDocument: {fileID: 0}
+  hilosDocument: {fileID: 0}
+  preGameDocument: {fileID: 0}
+  matchDayDocument: {fileID: 0}
+  gameResultsDocument: {fileID: 0}
+  seasonSummaryDocument: {fileID: 0}
+  playerAwardsDocument: {fileID: 0}
+  endSeasonDocument: {fileID: 0}
+  newSeasonDocument: {fileID: 0}
+  playerProfileDocument: {fileID: 0}
+  trajectoryDocument: {fileID: 0}
+  bestXIDocument: {fileID: 0}
 --- !u!4 &1560262452
 Transform:
   m_ObjectHideFlags: 0
@@ -412,7 +457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1780472944
 MonoBehaviour:
   m_ObjectHideFlags: 0
