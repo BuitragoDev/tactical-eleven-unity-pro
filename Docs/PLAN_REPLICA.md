@@ -283,7 +283,16 @@ Notas:
 | **F2** | ✅ Hecha | 9 competiciones, **236 clubes** (82 españoles, 101 europeos y 53 históricos), 233 escudos + genérico, 10 estadios, huella de seed calculada y auditoría; tests `SeedTests` |
 | **F3** | ✅ Hecha | **4.184 jugadores** (~45 atributos, 19-29 por club), `PlayerRating` como fuente única del overall, **437 finales**, **69 Balones de Oro** y **32 Pichichis**; tests `PlayerSeedTests` |
 | **F4** | ✅ Hecha | Menú completo (Liga Manager, ProManager con modal, Cargar, Editor pendiente, Salir, aviso legal), **modal de configuración** en la base (audio/calidad/vista de partido), pantalla **Cargar partida** con tarjetas y borrado; tests `SaveSlotLifecycleTests` + UI |
-| F5 | ⏭ Siguiente | Selección de equipo (filtros por competición) y creación de manager/temporada |
+| **F5** | ✅ Hecha | Selección de equipo con **5 pestañas** (Todos, 1ª, 2ª, 1ª RFEF G1/G2), ficha del club, plantilla y nombre del manager; crea manager + temporada (38/42/38 jornadas) y deja el slot listo |
+| F6 | ⏭ Siguiente | Pretemporada y calendario de liga |
+
+**F5 — decisiones tomadas:**
+
+- **Filtros por competición** (no por conferencia): `TabAll`, `TabLiga`, `TabLiga2`, `TabRfef1`, `TabRfef2`, filtrando por `teams.LeagueId` 1-4.
+- **Ficha del club** con datos reales del seed: competición, fundación, país, estadio, aforo, reputación e instalaciones (estrellas), presupuesto, masa salarial, ataque/defensa/media y **objetivo orientativo** según su puesto por media en la competición.
+- **ProManager**: solo es seleccionable la **mitad baja** de cada competición.
+- **Al continuar**: limpia managers/temporadas de intentos previos, crea `managers` + `seasons` (fase `preseason`, `current_date` 15/07, jornadas 38/42/38), actualiza `saves.json` y navega a Pretemporada cuando exista (F6).
+- **`PlayerPositionNames`**: códigos y nombres de demarcación en un único sitio (POR, DFC, LI, LD, MCD, MC, MCO, EI, ED, DC…).
 
 **F4 — decisiones tomadas:**
 
