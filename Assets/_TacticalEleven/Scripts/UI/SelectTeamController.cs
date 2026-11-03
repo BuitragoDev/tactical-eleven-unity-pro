@@ -416,7 +416,7 @@ public class SelectTeamController : UIScreenController
         flag.AddToClassList("modal-player-flag");
         var flagSprite = FlagFor(player.Nationality);
         if (flagSprite != null) flag.style.backgroundImage = new StyleBackground(flagSprite);
-        flag.tooltip = Constants.GetName(player.Nationality);
+        flag.tooltip = CountryCodes.GetName(player.Nationality);
         row.Add(flag);
 
         var age = new Label(player.Age.ToString());
@@ -436,12 +436,12 @@ public class SelectTeamController : UIScreenController
     /// <summary>Bandera de la nacionalidad (ISO3), con alias FIFA y fallback genérico.</summary>
     private Sprite FlagFor(string nationality)
     {
-        string code = Constants.NormalizeFlagCode(nationality);
+        string code = CountryCodes.NormalizeFlagCode(nationality);
         if (_flagSprites.TryGetValue(code, out var cached)) return cached;
 
-        var sprite = Resources.Load<Sprite>(Constants.GetFlagPath(code));
+        var sprite = Resources.Load<Sprite>(CountryCodes.GetFlagPath(code));
         if (sprite == null)
-            sprite = Resources.Load<Sprite>(Constants.GetFlagPath("default"));
+            sprite = Resources.Load<Sprite>(CountryCodes.GetFlagPath("default"));
 
         _flagSprites[code] = sprite;
         return sprite;

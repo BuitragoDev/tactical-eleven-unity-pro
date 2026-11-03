@@ -209,16 +209,16 @@ public class SelectTeamTests
     [Test]
     public void Flags_LoadForIso3AndFifaAliases()
     {
-        Assert.That(Resources.Load<Sprite>(Constants.GetFlagPath("ESP")), Is.Not.Null,
+        Assert.That(Resources.Load<Sprite>(CountryCodes.GetFlagPath("ESP")), Is.Not.Null,
             "Bandera de España (ISO3)");
-        Assert.That(Resources.Load<Sprite>(Constants.GetFlagPath("ARG")), Is.Not.Null);
-        Assert.That(Resources.Load<Sprite>(Constants.GetFlagPath("GER")), Is.Not.Null,
+        Assert.That(Resources.Load<Sprite>(CountryCodes.GetFlagPath("ARG")), Is.Not.Null);
+        Assert.That(Resources.Load<Sprite>(CountryCodes.GetFlagPath("GER")), Is.Not.Null,
             "GER debe resolver al alias DEU");
-        Assert.That(Resources.Load<Sprite>(Constants.GetFlagPath("NED")), Is.Not.Null,
+        Assert.That(Resources.Load<Sprite>(CountryCodes.GetFlagPath("NED")), Is.Not.Null,
             "NED debe resolver al alias NLD");
-        Assert.That(Resources.Load<Sprite>(Constants.GetFlagPath("default")), Is.Not.Null,
+        Assert.That(Resources.Load<Sprite>(CountryCodes.GetFlagPath("default")), Is.Not.Null,
             "Bandera genérica de reserva");
-        Assert.That(Constants.GetName("GER"), Is.EqualTo("Germany"));
+        Assert.That(CountryCodes.GetName("GER"), Is.EqualTo("Germany"));
     }
 
     // ── PANTALLA ───────────────────────────────────────────────────────────
