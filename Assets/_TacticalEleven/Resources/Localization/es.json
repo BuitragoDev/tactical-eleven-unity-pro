@@ -2,6 +2,306 @@
   "language": "es",
   "entries": [
     {
+      "key": "ui.dashboard.ajustes",
+      "value": "Ajustes"
+    },
+    {
+      "key": "ui.dashboard.amistoso",
+      "value": "Amistoso"
+    },
+    {
+      "key": "ui.dashboard.avanzar_dia",
+      "value": "Avanzar día"
+    },
+    {
+      "key": "ui.dashboard.clasificacion",
+      "value": "Clasificación"
+    },
+    {
+      "key": "ui.dashboard.dia_partido",
+      "value": "Día de partido: el avance se detiene hasta jugarlo."
+    },
+    {
+      "key": "ui.dashboard.fecha",
+      "value": "Fecha"
+    },
+    {
+      "key": "ui.dashboard.fila_dg",
+      "value": "DG"
+    },
+    {
+      "key": "ui.dashboard.fila_equipo",
+      "value": "EQUIPO"
+    },
+    {
+      "key": "ui.dashboard.fila_pj",
+      "value": "PJ"
+    },
+    {
+      "key": "ui.dashboard.fila_pos",
+      "value": "POS"
+    },
+    {
+      "key": "ui.dashboard.fila_pts",
+      "value": "PTS"
+    },
+    {
+      "key": "ui.dashboard.finanzas",
+      "value": "Finanzas"
+    },
+    {
+      "key": "ui.dashboard.jornada",
+      "value": "Jornada {0}"
+    },
+    {
+      "key": "ui.dashboard.jugar_partido",
+      "value": "Jugar partido"
+    },
+    {
+      "key": "ui.dashboard.local",
+      "value": "Local"
+    },
+    {
+      "key": "ui.dashboard.manager",
+      "value": "Manager"
+    },
+    {
+      "key": "ui.dashboard.masa_salarial",
+      "value": "Masa salarial"
+    },
+    {
+      "key": "ui.dashboard.motor_f8",
+      "value": "El motor de partido se activa en la Fase 8."
+    },
+    {
+      "key": "ui.dashboard.nav_actualidad",
+      "value": "Actualidad"
+    },
+    {
+      "key": "ui.dashboard.nav_alineacion",
+      "value": "Alineación"
+    },
+    {
+      "key": "ui.dashboard.nav_buscador",
+      "value": "Buscador"
+    },
+    {
+      "key": "ui.dashboard.nav_calendario",
+      "value": "Calendario"
+    },
+    {
+      "key": "ui.dashboard.nav_cartera",
+      "value": "Cartera"
+    },
+    {
+      "key": "ui.dashboard.nav_ciudad",
+      "value": "La Ciudad"
+    },
+    {
+      "key": "ui.dashboard.nav_clasificacion",
+      "value": "Clasificación"
+    },
+    {
+      "key": "ui.dashboard.nav_competiciones",
+      "value": "Competiciones"
+    },
+    {
+      "key": "ui.dashboard.nav_dashboard",
+      "value": "Dashboard"
+    },
+    {
+      "key": "ui.dashboard.nav_dorsales",
+      "value": "Dorsales"
+    },
+    {
+      "key": "ui.dashboard.nav_eliminatorias",
+      "value": "Eliminatorias"
+    },
+    {
+      "key": "ui.dashboard.nav_enfermeria",
+      "value": "Enfermería"
+    },
+    {
+      "key": "ui.dashboard.nav_entrenamiento",
+      "value": "Entrenamiento"
+    },
+    {
+      "key": "ui.dashboard.nav_estadio",
+      "value": "Estadio"
+    },
+    {
+      "key": "ui.dashboard.nav_estadisticas",
+      "value": "Estadísticas"
+    },
+    {
+      "key": "ui.dashboard.nav_filial",
+      "value": "Filial / Cantera"
+    },
+    {
+      "key": "ui.dashboard.nav_finanzas",
+      "value": "Finanzas"
+    },
+    {
+      "key": "ui.dashboard.nav_hilos",
+      "value": "Hilos"
+    },
+    {
+      "key": "ui.dashboard.nav_historial",
+      "value": "Historial"
+    },
+    {
+      "key": "ui.dashboard.nav_info_competicion",
+      "value": "Info competición"
+    },
+    {
+      "key": "ui.dashboard.nav_info_manager",
+      "value": "Info"
+    },
+    {
+      "key": "ui.dashboard.nav_inicio",
+      "value": "Inicio"
+    },
+    {
+      "key": "ui.dashboard.nav_jugadores",
+      "value": "Jugadores"
+    },
+    {
+      "key": "ui.dashboard.nav_logros_manager",
+      "value": "Logros del mánager"
+    },
+    {
+      "key": "ui.dashboard.nav_manager",
+      "value": "Manager"
+    },
+    {
+      "key": "ui.dashboard.nav_mercado",
+      "value": "Mercado"
+    },
+    {
+      "key": "ui.dashboard.nav_noticias",
+      "value": "Noticias"
+    },
+    {
+      "key": "ui.dashboard.nav_ofertas",
+      "value": "Ofertas"
+    },
+    {
+      "key": "ui.dashboard.nav_palmares",
+      "value": "Palmarés"
+    },
+    {
+      "key": "ui.dashboard.nav_patrocinadores",
+      "value": "Patrocinadores"
+    },
+    {
+      "key": "ui.dashboard.nav_plantilla",
+      "value": "Plantilla"
+    },
+    {
+      "key": "ui.dashboard.nav_premios",
+      "value": "Premios"
+    },
+    {
+      "key": "ui.dashboard.nav_prestamos",
+      "value": "Préstamos"
+    },
+    {
+      "key": "ui.dashboard.nav_records",
+      "value": "Récords"
+    },
+    {
+      "key": "ui.dashboard.nav_resultados",
+      "value": "Resultados"
+    },
+    {
+      "key": "ui.dashboard.nav_rivalidades",
+      "value": "Rivalidades"
+    },
+    {
+      "key": "ui.dashboard.nav_staff",
+      "value": "Cuerpo técnico"
+    },
+    {
+      "key": "ui.dashboard.nav_tactica",
+      "value": "Táctica"
+    },
+    {
+      "key": "ui.dashboard.nav_televisiones",
+      "value": "Televisiones"
+    },
+    {
+      "key": "ui.dashboard.noticia_proximo",
+      "value": "Próximo compromiso: {0}, el {1}. La plantilla sigue preparando el partido."
+    },
+    {
+      "key": "ui.dashboard.noticia_sin_partido",
+      "value": "No hay partidos programados. Avanza el día para seguir."
+    },
+    {
+      "key": "ui.dashboard.noticias",
+      "value": "Noticias"
+    },
+    {
+      "key": "ui.dashboard.objetivo",
+      "value": "Objetivo"
+    },
+    {
+      "key": "ui.dashboard.objetivo_hint",
+      "value": "Puesto {0} de {1} por plantilla"
+    },
+    {
+      "key": "ui.dashboard.plantilla",
+      "value": "Plantilla"
+    },
+    {
+      "key": "ui.dashboard.plantilla_jugadores",
+      "value": "Jugadores"
+    },
+    {
+      "key": "ui.dashboard.plantilla_lesionados",
+      "value": "Lesionados"
+    },
+    {
+      "key": "ui.dashboard.plantilla_media",
+      "value": "Media"
+    },
+    {
+      "key": "ui.dashboard.plantilla_moral",
+      "value": "Moral"
+    },
+    {
+      "key": "ui.dashboard.presupuesto",
+      "value": "Presupuesto"
+    },
+    {
+      "key": "ui.dashboard.proximamente",
+      "value": "Esta pantalla llegará en una fase posterior."
+    },
+    {
+      "key": "ui.dashboard.proximo_partido",
+      "value": "Próximo partido"
+    },
+    {
+      "key": "ui.dashboard.sin_partidos",
+      "value": "Sin partidos programados"
+    },
+    {
+      "key": "ui.dashboard.sin_resultados",
+      "value": "Aún no hay resultados"
+    },
+    {
+      "key": "ui.dashboard.temporada_fin",
+      "value": "Fin del calendario: la nueva temporada llega en la Fase 15."
+    },
+    {
+      "key": "ui.dashboard.ultimo_resultado",
+      "value": "Último resultado"
+    },
+    {
+      "key": "ui.dashboard.visitante",
+      "value": "Visitante"
+    },
+    {
       "key": "ui.load_game.borrar_partida",
       "value": "BORRAR PARTIDA"
     },

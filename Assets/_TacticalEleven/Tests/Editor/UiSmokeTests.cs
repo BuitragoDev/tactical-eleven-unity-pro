@@ -17,6 +17,8 @@ public class UiSmokeTests
     private const string MainMenuPath = "Assets/_TacticalEleven/UI/Screens/MainMenu/MainMenu.uxml";
     private const string LoadGamePath = "Assets/_TacticalEleven/UI/Screens/LoadGame/LoadGame.uxml";
     private const string SelectTeamPath = "Assets/_TacticalEleven/UI/Screens/SelectTeam/SelectTeam.uxml";
+    private const string PreseasonPath = "Assets/_TacticalEleven/UI/Screens/Preseason/Preseason.uxml";
+    private const string DashboardPath = "Assets/_TacticalEleven/UI/Screens/Dashboard/Dashboard.uxml";
 
     private static readonly Regex TokenRegex = new Regex(@"\{loc:([A-Za-z0-9_.-]+)\}");
 
@@ -53,6 +55,8 @@ public class UiSmokeTests
     [TestCase(MainMenuPath)]
     [TestCase(LoadGamePath)]
     [TestCase(SelectTeamPath)]
+    [TestCase(PreseasonPath)]
+    [TestCase(DashboardPath)]
     public void UxmlTokens_ExistInSpanishTable(string path)
     {
         var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
@@ -73,6 +77,8 @@ public class UiSmokeTests
     [TestCase(MainMenuPath)]
     [TestCase(LoadGamePath)]
     [TestCase(SelectTeamPath)]
+    [TestCase(PreseasonPath)]
+    [TestCase(DashboardPath)]
     public void UxmlTexts_AreResolvedAfterApply(string path)
     {
         var tree = Load(path);
@@ -94,6 +100,16 @@ public class UiSmokeTests
         Assert.That(root.Q<Button>("BtnDeleteYes"), Is.Not.Null);
         Assert.That(root.Q<Button>("BtnDeleteNo"), Is.Not.Null);
         Assert.That(root.Q<Button>("BtnBack"), Is.Not.Null);
+    }
+
+    [Test]
+    public void Scene_HasDashboardDocumentWiredToScreenManager()
+    {
+        string scene = File.ReadAllText("Assets/_TacticalEleven/Scenes/MainMenu.unity");
+        Assert.That(scene.Contains("m_Name: DashboardDocument"), Is.True,
+            "Falta el GameObject DashboardDocument en la escena");
+        Assert.That(Regex.IsMatch(scene, @"dashboardDocument: \{fileID: (?!0\})"), Is.True,
+            "El campo dashboardDocument del ScreenManager no está enlazado");
     }
 
     [Test]

@@ -1,0 +1,281 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="Dashboard.uss" />
+
+    <ui:VisualElement name="DashboardRoot" class="dash-root">
+
+        <!-- ══ HEADER ══ -->
+        <ui:VisualElement name="DashHeader" class="dash-header">
+            <ui:VisualElement name="HeaderLogo" class="dash-header-logo" />
+
+            <ui:VisualElement class="dash-header-team">
+                <ui:Label name="HeaderTeam" class="dash-header-team-name" text="" />
+                <ui:Label name="HeaderLeague" class="dash-header-team-league" text="" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="dash-header-sep" />
+
+            <ui:VisualElement class="dash-header-meta">
+                <ui:Label class="dash-header-meta-label" text="{loc:ui.dashboard.fecha}" />
+                <ui:Label name="HeaderDate" class="dash-header-meta-value" text="" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="dash-header-meta">
+                <ui:Label class="dash-header-meta-label" text="{loc:ui.dashboard.presupuesto}" />
+                <ui:Label name="HeaderBudget" class="dash-header-meta-value" text="" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="dash-header-meta">
+                <ui:Label class="dash-header-meta-label" text="{loc:ui.dashboard.manager}" />
+                <ui:Label name="HeaderManager" class="dash-header-meta-value" text="" />
+            </ui:VisualElement>
+
+            <ui:Button name="BtnSettings" class="dash-header-settings" text="{loc:ui.dashboard.ajustes}" />
+        </ui:VisualElement>
+
+        <!-- ══ CUERPO: SIDEBAR + DASHBOARD ══ -->
+        <ui:VisualElement class="dash-body">
+
+            <!-- Sidebar -->
+            <ui:VisualElement class="dash-sidebar">
+                <ui:VisualElement name="SidebarViewport" class="dash-sidebar-viewport">
+                    <ui:VisualElement name="SidebarContent" class="dash-sidebar-content">
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_inicio}" />
+                        <ui:Button name="NavDashboard" class="dash-nav-btn dash-nav-btn--active"
+                                   text="{loc:ui.dashboard.nav_dashboard}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_plantilla}" />
+                        <ui:Button name="NavRoster" class="dash-nav-btn" text="{loc:ui.dashboard.nav_jugadores}" />
+                        <ui:Button name="NavLineup" class="dash-nav-btn" text="{loc:ui.dashboard.nav_alineacion}" />
+                        <ui:Button name="NavTactics" class="dash-nav-btn" text="{loc:ui.dashboard.nav_tactica}" />
+                        <ui:Button name="NavTraining" class="dash-nav-btn" text="{loc:ui.dashboard.nav_entrenamiento}" />
+                        <ui:Button name="NavStaff" class="dash-nav-btn" text="{loc:ui.dashboard.nav_staff}" />
+                        <ui:Button name="NavInjured" class="dash-nav-btn" text="{loc:ui.dashboard.nav_enfermeria}" />
+                        <ui:Button name="NavDorsales" class="dash-nav-btn" text="{loc:ui.dashboard.nav_dorsales}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_calendario}" />
+                        <ui:Button name="NavCalendar" class="dash-nav-btn" text="{loc:ui.dashboard.nav_calendario}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_competiciones}" />
+                        <ui:Button name="NavResults" class="dash-nav-btn" text="{loc:ui.dashboard.nav_resultados}" />
+                        <ui:Button name="NavStandings" class="dash-nav-btn" text="{loc:ui.dashboard.nav_clasificacion}" />
+                        <ui:Button name="NavCompetition" class="dash-nav-btn" text="{loc:ui.dashboard.nav_info_competicion}" />
+                        <ui:Button name="NavFilial" class="dash-nav-btn" text="{loc:ui.dashboard.nav_filial}" />
+                        <ui:Button name="NavRivalidades" class="dash-nav-btn" text="{loc:ui.dashboard.nav_rivalidades}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_estadisticas}" />
+                        <ui:Button name="NavStats" class="dash-nav-btn" text="{loc:ui.dashboard.nav_estadisticas}" />
+                        <ui:Button name="NavPalmares" class="dash-nav-btn" text="{loc:ui.dashboard.nav_palmares}" />
+                        <ui:Button name="NavRecords" class="dash-nav-btn" text="{loc:ui.dashboard.nav_records}" />
+                        <ui:Button name="NavPremios" class="dash-nav-btn" text="{loc:ui.dashboard.nav_premios}" />
+                        <ui:Button name="NavKnockouts" class="dash-nav-btn" text="{loc:ui.dashboard.nav_eliminatorias}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_mercado}" />
+                        <ui:Button name="NavMarket" class="dash-nav-btn" text="{loc:ui.dashboard.nav_ofertas}" />
+                        <ui:Button name="NavCartera" class="dash-nav-btn" text="{loc:ui.dashboard.nav_cartera}" />
+                        <ui:Button name="NavBuscador" class="dash-nav-btn" text="{loc:ui.dashboard.nav_buscador}" />
+                        <ui:Button name="NavHistorial" class="dash-nav-btn" text="{loc:ui.dashboard.nav_historial}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_finanzas}" />
+                        <ui:Button name="NavFinanzas" class="dash-nav-btn" text="{loc:ui.dashboard.nav_finanzas}" />
+                        <ui:Button name="NavLoans" class="dash-nav-btn" text="{loc:ui.dashboard.nav_prestamos}" />
+                        <ui:Button name="NavSponsors" class="dash-nav-btn" text="{loc:ui.dashboard.nav_patrocinadores}" />
+                        <ui:Button name="NavTV" class="dash-nav-btn" text="{loc:ui.dashboard.nav_televisiones}" />
+                        <ui:Button name="NavCity" class="dash-nav-btn" text="{loc:ui.dashboard.nav_ciudad}" />
+                        <ui:Button name="NavStadium" class="dash-nav-btn" text="{loc:ui.dashboard.nav_estadio}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_manager}" />
+                        <ui:Button name="NavManager" class="dash-nav-btn" text="{loc:ui.dashboard.nav_info_manager}" />
+                        <ui:Button name="NavLogros" class="dash-nav-btn" text="{loc:ui.dashboard.nav_logros_manager}" />
+
+                        <ui:Label class="dash-nav-group" text="{loc:ui.dashboard.nav_actualidad}" />
+                        <ui:Button name="NavMessages" class="dash-nav-btn" text="{loc:ui.dashboard.nav_noticias}" />
+                        <ui:Button name="NavHilos" class="dash-nav-btn" text="{loc:ui.dashboard.nav_hilos}" />
+
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="SidebarScrollTrack" class="dash-sidebar-scrollbar">
+                    <ui:VisualElement name="SidebarScrollThumb" class="dash-sidebar-scrollbar-thumb" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Contenido -->
+            <ui:VisualElement class="dash-main">
+
+                <!-- Fila 1: próximo partido + último resultado -->
+                <ui:VisualElement class="dash-row dash-row--top">
+
+                    <ui:VisualElement name="NextCard" class="dash-card dash-next">
+                        <ui:Label class="dash-card-title" text="{loc:ui.dashboard.proximo_partido}" />
+                        <ui:VisualElement name="NextBody" class="dash-next-body">
+                            <ui:VisualElement name="NextLogo" class="dash-next-logo" />
+                            <ui:VisualElement class="dash-next-info">
+                                <ui:Label name="NextRival" class="dash-next-rival" text="" />
+                                <ui:Label name="NextVenue" class="dash-next-venue" text="" />
+                                <ui:Label name="NextDate" class="dash-next-date" text="" />
+                                <ui:Label name="NextComp" class="dash-next-comp" text="" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label name="NextEmpty" class="dash-empty" text="{loc:ui.dashboard.sin_partidos}" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="dash-card dash-last">
+                        <ui:Label class="dash-card-title" text="{loc:ui.dashboard.ultimo_resultado}" />
+                        <ui:Label name="LastScore" class="dash-last-score" text="" />
+                        <ui:Label name="LastRival" class="dash-last-rival" text="" />
+                        <ui:Label name="LastDate" class="dash-last-date" text="" />
+                        <ui:Label name="LastEmpty" class="dash-empty" text="{loc:ui.dashboard.sin_resultados}" />
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <!-- Fila 2: clasificación + objetivo/finanzas -->
+                <ui:VisualElement class="dash-row dash-row--mid">
+
+                    <ui:VisualElement class="dash-card dash-standings">
+                        <ui:Label class="dash-card-title" text="{loc:ui.dashboard.clasificacion}" />
+                        <ui:VisualElement class="dash-table-head">
+                            <ui:Label class="dash-cell dash-cell--pos" text="{loc:ui.dashboard.fila_pos}" />
+                            <ui:Label class="dash-cell dash-cell--team" text="{loc:ui.dashboard.fila_equipo}" />
+                            <ui:Label class="dash-cell dash-cell--num" text="{loc:ui.dashboard.fila_pj}" />
+                            <ui:Label class="dash-cell dash-cell--num" text="{loc:ui.dashboard.fila_dg}" />
+                            <ui:Label class="dash-cell dash-cell--num" text="{loc:ui.dashboard.fila_pts}" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="StandingsBody" class="dash-table-body" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="dash-col">
+                        <ui:VisualElement class="dash-card dash-objective">
+                            <ui:Label class="dash-card-title" text="{loc:ui.dashboard.objetivo}" />
+                            <ui:Label name="ObjectiveValue" class="dash-objective-value" text="" />
+                            <ui:Label name="ObjectiveHint" class="dash-objective-hint" text="" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="dash-card dash-finance">
+                            <ui:Label class="dash-card-title" text="{loc:ui.dashboard.finanzas}" />
+                            <ui:VisualElement class="dash-row-line">
+                                <ui:Label class="dash-row-label" text="{loc:ui.dashboard.presupuesto}" />
+                                <ui:Label name="FinanceBudget" class="dash-row-value" text="" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="dash-row-line">
+                                <ui:Label class="dash-row-label" text="{loc:ui.dashboard.masa_salarial}" />
+                                <ui:Label name="FinanceWage" class="dash-row-value" text="" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <!-- Fila 3: plantilla + noticias -->
+                <ui:VisualElement class="dash-row dash-row--bottom">
+
+                    <ui:VisualElement class="dash-card dash-squad">
+                        <ui:Label class="dash-card-title" text="{loc:ui.dashboard.plantilla}" />
+                        <ui:VisualElement class="dash-squad-grid">
+                            <ui:VisualElement class="dash-squad-cell">
+                                <ui:Label class="dash-squad-value" name="SquadCount" text="0" />
+                                <ui:Label class="dash-squad-label" text="{loc:ui.dashboard.plantilla_jugadores}" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="dash-squad-cell">
+                                <ui:Label class="dash-squad-value" name="SquadAverage" text="0" />
+                                <ui:Label class="dash-squad-label" text="{loc:ui.dashboard.plantilla_media}" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="dash-squad-cell">
+                                <ui:Label class="dash-squad-value" name="SquadMorale" text="0" />
+                                <ui:Label class="dash-squad-label" text="{loc:ui.dashboard.plantilla_moral}" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="dash-squad-cell">
+                                <ui:Label class="dash-squad-value" name="SquadInjured" text="0" />
+                                <ui:Label class="dash-squad-label" text="{loc:ui.dashboard.plantilla_lesionados}" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="dash-card dash-news">
+                        <ui:Label class="dash-card-title" text="{loc:ui.dashboard.noticias}" />
+                        <ui:Label name="NewsText" class="dash-news-text" text="" />
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <!-- Barra de avance de día -->
+                <ui:VisualElement class="dash-daybar">
+                    <ui:Label name="DayStatus" class="dash-day-status" text="" />
+                    <ui:Button name="BtnAdvance" class="dash-advance" text="{loc:ui.dashboard.avanzar_dia}" />
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Aviso temporal -->
+        <ui:Label name="DashToast" class="dash-toast" text="" />
+
+        <!-- ══ MODAL DE CONFIGURACIÓN ══ -->
+        <ui:VisualElement name="ConfigModalOverlay" class="modal-overlay">
+            <ui:VisualElement name="ConfigModalBox" class="modal-box">
+                <ui:Label text="{loc:ui.main_menu.configuracion}" class="modal-title"/>
+                <ui:VisualElement class="modal-body">
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.main_menu.audio}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.main_menu.volumen_general}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderMaster" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillMaster" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerMaster" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelMaster" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.main_menu.musica}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderMusic" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillMusic" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerMusic" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelMusic" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.main_menu.efectos}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderSFX" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillSFX" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerSFX" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelSFX" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.main_menu.graficos}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-quality-row">
+                            <ui:Label text="{loc:ui.main_menu.calidad}" class="settings-label"/>
+                            <ui:VisualElement class="settings-quality-options">
+                                <ui:Button name="ConfigBtnQualityLow" text="{loc:ui.main_menu.config_btn_quality_low}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityMedium" text="{loc:ui.main_menu.config_btn_quality_medium}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityHigh" text="{loc:ui.main_menu.config_btn_quality_high}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityUltra" text="{loc:ui.main_menu.config_btn_quality_ultra}" class="settings-quality-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.main_menu.simulacion}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-quality-row">
+                            <ui:Label text="{loc:ui.main_menu.vista_de_partido}" class="settings-label"/>
+                            <ui:VisualElement class="settings-quality-options">
+                                <ui:Button name="ConfigBtnSimDirect" text="{loc:ui.main_menu.config_btn_sim_direct}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnSimPlay" text="{loc:ui.main_menu.config_btn_sim_play}" class="settings-quality-btn settings-quality-btn--wide"/>
+                                <ui:Button name="ConfigBtnSimVisual" text="{loc:ui.main_menu.config_btn_sim_visual}" class="settings-quality-btn settings-quality-btn--wide"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Button name="ConfigBtnCerrar" text="{loc:ui.main_menu.config_btn_cerrar}" class="modal-close"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>

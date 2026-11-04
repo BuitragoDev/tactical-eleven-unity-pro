@@ -285,7 +285,7 @@ Notas:
 | **F4** | ✅ Hecha | Menú completo (Liga Manager, ProManager con modal, Cargar, Editor pendiente, Salir, aviso legal), **modal de configuración** en la base (audio/calidad/vista de partido), pantalla **Cargar partida** con tarjetas y borrado; tests `SaveSlotLifecycleTests` + UI |
 | **F5** | ✅ Hecha | Selección de equipo con **4 pestañas** (1ª, 2ª, 1ª RFEF G1/G2), ficha del club, plantilla y nombre del manager; crea manager + temporada (38/42/38 jornadas) y deja el slot listo |
 | **F6** | ✅ Hecha | Calendario de liga completo (doble vuelta, 380/462/380 partidos), fechas con parones FIFA/navideño y descanso mínimo de 48 h, pretemporada de hasta 4 amistosos elegidos por el jugador y pantalla `Preseason` con filtros por competición; tests `ScheduleTests` (**57/57** en total) |
-| F7 | ⏭ Siguiente | Dashboard, header, sidebar y avance de día |
+| **F7** | ✅ Hecha | Dashboard con header (club, fecha, presupuesto, manager), sidebar completo, tarjetas de resumen (próximo partido, último resultado, clasificación, objetivo, finanzas, plantilla, noticias), modal de ajustes y **avance de día** con parada en día de partido; tests `DashboardTests`
 
 **F6 — decisiones tomadas:**
 
@@ -605,6 +605,15 @@ ACTUALIDAD: Noticias · Hilos
 **Extra:** simulación rápida hasta fecha (reutiliza `FastSimRoutine` y `CalendarController`).
 
 **Aceptación:** avanzar un día no rompe nada, el header refresca, los modales bloquean el avance y no hay doble pre-lote.
+
+**F7 — decisiones tomadas:**
+
+- **Chrome dentro de `Dashboard.uxml`**: header + sidebar + contenido + modal de ajustes en un solo `UIDocument`. El sidebar es navegable y crece con las fases: los botones sin pantalla asignada muestran «Esta pantalla llegará en una fase posterior» en vez de dejar un clic muerto.
+- **Reglas puras**: `LeagueTable` calcula la clasificación desde `games` jugados; `SeasonObjective` centraliza los **6 objetivos** (Campeonato, Europa, Media tabla, Permanencia, Ascenso y Playoff) y lo comparten la ficha de equipo y el Dashboard; `GameDayRules` resuelve fecha siguiente, fase y detección de día de partido.
+- **Avance de día** (`DatabaseManager.AdvanceDay`): mueve `seasons.current_date` y `current_match_day`, recalcula `phase` (`preseason` hasta el primer partido de liga; `regular` después) y **se detiene en el día de partido**. Sin motor (F8) el botón explica que la simulación llega en la fase siguiente; cuando F8 exista solo hay que enlazar el `PreGame`.
+- **Clasificación**: se muestran los 6 primeros y, si el club queda fuera, una fila separada con su posición. En pretemporada el objetivo se calcula por media de plantilla (igual que la ficha de F5).
+- **Estado en SQLite**: cada avance actualiza el slot (`saves.json`) para que Cargar partida muestre la fecha real.
+- **Escena**: `DashboardDocument` (UIDocument + FullScreenUI + DashboardController) creado y enlazado a `ScreenManager.dashboardDocument`.
 
 ---
 

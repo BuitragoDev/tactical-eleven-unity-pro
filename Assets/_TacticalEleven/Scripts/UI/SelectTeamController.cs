@@ -332,32 +332,8 @@ public class SelectTeamController : UIScreenController
                               .OrderByDescending(t => t.Overall)
                               .ToList();
         int rank = rivals.FindIndex(t => t.Id == team.Id) + 1;
-        int total = rivals.Count;
 
-        string key;
-        if (team.LeagueId == 1)
-        {
-            if (rank <= 4) key = "ui.select_team.objetivo_campeonato";
-            else if (rank <= 7) key = "ui.select_team.objetivo_europa";
-            else if (rank <= total - 5) key = "ui.select_team.objetivo_media";
-            else key = "ui.select_team.objetivo_permanencia";
-        }
-        else if (team.LeagueId == 2)
-        {
-            if (rank <= 2) key = "ui.select_team.objetivo_ascenso";
-            else if (rank <= 6) key = "ui.select_team.objetivo_playoff";
-            else if (rank <= total - 6) key = "ui.select_team.objetivo_media";
-            else key = "ui.select_team.objetivo_permanencia";
-        }
-        else
-        {
-            if (rank <= 2) key = "ui.select_team.objetivo_ascenso";
-            else if (rank <= 5) key = "ui.select_team.objetivo_playoff";
-            else if (rank <= total - 6) key = "ui.select_team.objetivo_media";
-            else key = "ui.select_team.objetivo_permanencia";
-        }
-
-        return LocalizationService.T(key);
+        return LocalizationService.T(SeasonObjective.KeyFor(team.LeagueId, rank, rivals.Count));
     }
 
     // ── Plantilla ─────────────────────────────────────────────────────────
