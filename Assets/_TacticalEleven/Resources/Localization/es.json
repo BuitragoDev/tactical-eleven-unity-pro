@@ -491,11 +491,11 @@
     },
     {
       "key": "ui.select_team.competicion",
-      "value": "COMPETICIÓN"
+      "value": "Competición"
     },
     {
       "key": "ui.select_team.conferencia",
-      "value": "COMPETICIÓN"
+      "value": "Competición"
     },
     {
       "key": "ui.select_team.defensa",
@@ -503,7 +503,7 @@
     },
     {
       "key": "ui.select_team.division",
-      "value": "FUNDACIÓN"
+      "value": "Fundación"
     },
     {
       "key": "ui.select_team.edad_anios",
@@ -515,7 +515,7 @@
     },
     {
       "key": "ui.select_team.estadio",
-      "value": "ESTADIO"
+      "value": "Estadio"
     },
     {
       "key": "ui.select_team.filial_no_seleccionable",
@@ -523,7 +523,7 @@
     },
     {
       "key": "ui.select_team.fundacion",
-      "value": "FUNDACIÓN"
+      "value": "Fundación"
     },
     {
       "key": "ui.select_team.header_mode",
@@ -543,7 +543,7 @@
     },
     {
       "key": "ui.select_team.masa_salarial",
-      "value": "MASA SALARIAL"
+      "value": "Masa salarial"
     },
     {
       "key": "ui.select_team.media",
@@ -583,15 +583,15 @@
     },
     {
       "key": "ui.select_team.pabellon",
-      "value": "ESTADIO"
+      "value": "Estadio"
     },
     {
       "key": "ui.select_team.pais",
-      "value": "PAÍS"
+      "value": "País"
     },
     {
       "key": "ui.select_team.presidente",
-      "value": "PAÍS"
+      "value": "País"
     },
     {
       "key": "ui.select_team.presupuesto",
@@ -603,7 +603,7 @@
     },
     {
       "key": "ui.select_team.propietario",
-      "value": "PAÍS"
+      "value": "País"
     },
     {
       "key": "ui.select_team.reputacion",
