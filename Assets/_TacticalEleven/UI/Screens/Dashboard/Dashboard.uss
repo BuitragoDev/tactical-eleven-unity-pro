@@ -515,7 +515,7 @@
 
 /* Right: Noticias */
 .panel-messages--col {
-    width: 450px;
+    width: 340px;
     flex-shrink: 0;
     margin-right: 0;
 }
