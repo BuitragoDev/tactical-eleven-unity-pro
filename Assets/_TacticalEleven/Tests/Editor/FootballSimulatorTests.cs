@@ -287,6 +287,8 @@ public class FootballSimulatorTests
         Assert.That(preRoot.Q<VisualElement>("MPVHomeStarters"), Is.Not.Null);
         Assert.That(preRoot.Q<VisualElement>("MPVAwayStarters"), Is.Not.Null);
         Assert.That(preRoot.Q<VisualElement>("MPVHomeBajas"), Is.Not.Null);
+        Assert.That(preRoot.Q<VisualElement>("MPVHomeBench"), Is.Null, "El banquillo ya no se muestra");
+        Assert.That(preRoot.Q<VisualElement>("MPVAwayBench"), Is.Null, "El banquillo ya no se muestra");
 
         var matchDay = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
             "Assets/_TacticalEleven/UI/Screens/MatchDay/MatchDay.uxml");

@@ -24,7 +24,6 @@ public class PreGameController : UIScreenController
     private VisualElement _homeAbsences, _awayAbsences;
     private Label _homeAbsencesTitle, _awayAbsencesTitle;
     private VisualElement _homeStarters, _awayStarters;
-    private VisualElement _homeBench, _awayBench;
     private VisualElement _keyRow1, _keyRow2, _keyRow3, _keyRow4;
     private Button _btnBack, _btnGoMatch;
     private Label _headerTitleType;
@@ -35,6 +34,7 @@ public class PreGameController : UIScreenController
     private List<GameDataDB> _regularGames = new();
     private List<TeamDataDB> _leagueTeams = new();
     private readonly Dictionary<string, Sprite> _logos = new();
+    private readonly Dictionary<int, (int Goals, int Assists)> _seasonStats = new();
 
     protected override void CacheReferences()
     {
@@ -62,8 +62,6 @@ public class PreGameController : UIScreenController
         _awayAbsencesTitle = Q<Label>("MPVAwayBajasTitle");
         _homeStarters = Q<VisualElement>("MPVHomeStarters");
         _awayStarters = Q<VisualElement>("MPVAwayStarters");
-        _homeBench = Q<VisualElement>("MPVHomeBench");
-        _awayBench = Q<VisualElement>("MPVAwayBench");
         _keyRow1 = Q<VisualElement>("MPVKeyRow1");
         _keyRow2 = Q<VisualElement>("MPVKeyRow2");
         _keyRow3 = Q<VisualElement>("MPVKeyRow3");
@@ -88,6 +86,11 @@ public class PreGameController : UIScreenController
         _leagueTeams = db.GetTeamsByLeague(_myTeam.LeagueId)
                          .Where(t => t.IsFilial == 0)
                          .ToList();
+
+        _seasonStats.Clear();
+        foreach (var stat in db.Db.Table<PlayerSeasonStatsDB>()
+                     .Where(st => st.SeasonYear == _season.YearStart).ToList())
+            _seasonStats[stat.PlayerId] = (stat.Goals, stat.Assists);
 
         _game = ResolveGame(db);
         if (_game == null) return;
@@ -146,11 +149,11 @@ public class PreGameController : UIScreenController
 
         FillTeam(_home, _homeLogo, _homeName, _homeRecord, _homeConf, _homeStreak,
             _homeAttack, _homeAttackRank, _homeDefense, _homeDefenseRank,
-            _homeAbsences, _homeAbsencesTitle, _homeStarters, _homeBench);
+            _homeAbsences, _homeAbsencesTitle, _homeStarters);
 
         FillTeam(_away, _awayLogo, _awayName, _awayRecord, _awayConf, _awayStreak,
             _awayAttack, _awayAttackRank, _awayDefense, _awayDefenseRank,
-            _awayAbsences, _awayAbsencesTitle, _awayStarters, _awayBench);
+            _awayAbsences, _awayAbsencesTitle, _awayStarters);
 
         if (_date != null) _date.text = GameDayRules.FormatLongDate(_game.MatchDate);
         if (_arena != null) _arena.text = _home.StadiumName;
@@ -166,7 +169,7 @@ public class PreGameController : UIScreenController
                           Label position, VisualElement streak,
                           Label attack, Label attackRank, Label defense, Label defenseRank,
                           VisualElement absences, Label absencesTitle,
-                          VisualElement starters, VisualElement bench)
+                          VisualElement starters)
     {
         SetLogo(logo, team);
         if (name != null) name.text = team.Name.ToUpperInvariant();
@@ -182,26 +185,24 @@ public class PreGameController : UIScreenController
 
         FillStreak(streak, team.Id);
         FillAbsences(absences, absencesTitle, team.Id);
-        FillLineup(team, starters, bench);
+        FillLineup(team, starters);
     }
 
-    private void FillLineup(TeamDataDB team, VisualElement starters, VisualElement bench)
+    private void FillLineup(TeamDataDB team, VisualElement starters)
     {
-        if (starters == null || bench == null) return;
+        if (starters == null) return;
         starters.Clear();
-        bench.Clear();
 
         var squad = DatabaseManager.Instance.GetPlayersByTeam(team.Id);
         var lineup = LineupBuilder.Build(team, squad);
 
         for (int i = 0; i < lineup.Starters.Count; i++)
         {
-            var slot = i < lineup.Slots.Count ? lineup.Slots[i] : (PlayerPosition)lineup.Starters[i].MainPosition;
-            starters.Add(StarterCard(lineup.Starters[i], slot));
+            var slot = i < lineup.Slots.Count
+                ? lineup.Slots[i]
+                : (PlayerPosition)lineup.Starters[i].MainPosition;
+            starters.Add(PlayerRow(lineup.Starters[i], slot));
         }
-
-        foreach (var player in lineup.Bench)
-            bench.Add(BenchCard(player));
 
         if (lineup.Starters.Count == 0)
         {
@@ -211,46 +212,23 @@ public class PreGameController : UIScreenController
         }
     }
 
-    private static VisualElement StarterCard(PlayerDataDB player, PlayerPosition slot)
-    {
-        var card = new VisualElement();
-        card.AddToClassList("mpv-starter-card");
-
-        var photo = new VisualElement();
-        photo.AddToClassList("mpv-starter-photo");
-
-        var position = new Label(PlayerPositionNames.ShortName((int)slot));
-        position.AddToClassList("mpv-starter-pos");
-
-        var name = new Label(ShortName(player));
-        name.AddToClassList("mpv-starter-name");
-
-        var overall = new Label(player.Overall.ToString());
-        overall.AddToClassList("mpv-starter-ovr");
-
-        card.Add(photo);
-        card.Add(position);
-        card.Add(name);
-        card.Add(overall);
-        return card;
-    }
-
-    private static VisualElement BenchCard(PlayerDataDB player)
+    /// <summary>Fila de lista del once (mismo formato que el antiguo banquillo).</summary>
+    private static VisualElement PlayerRow(PlayerDataDB player, PlayerPosition slot)
     {
         var card = new VisualElement();
         card.AddToClassList("mpv-bench-card");
 
+        var pos = new Label(PlayerPositionNames.ShortName((int)slot));
+        pos.AddToClassList("mpv-bench-pos");
+
         var name = new Label(ShortName(player));
         name.AddToClassList("mpv-bench-name");
-
-        var position = new Label(PlayerPositionNames.ShortName(player.MainPosition));
-        position.AddToClassList("mpv-bench-pos");
 
         var overall = new Label(player.Overall.ToString());
         overall.AddToClassList("mpv-bench-ovr");
 
+        card.Add(pos);
         card.Add(name);
-        card.Add(position);
         card.Add(overall);
         return card;
     }
@@ -418,8 +396,10 @@ public class PreGameController : UIScreenController
         var name = new Label(ShortName(player));
         name.AddToClassList("mpv-key-name");
 
-        var stat = new Label(player.Overall.ToString());
+        var stats = _seasonStats.TryGetValue(player.Id, out var value) ? value : (0, 0);
+        var stat = new Label(LocalizationService.T("ui.pre_game.key_stats", stats.Item1, stats.Item2));
         stat.AddToClassList("mpv-key-stat");
+        stat.AddToClassList("mpv-key-stat--wide");
 
         block.Add(photo);
         block.Add(name);

@@ -620,3 +620,10 @@
     width: 62px;
     font-size: 14px;
 }
+
+/* F8 — Jugadores clave: goles y asistencias */
+.mpv-key-stat--wide {
+    width: 170px;
+    font-size: 15px;
+    -unity-text-align: middle-right;
+}

@@ -58,9 +58,7 @@
 
                     <ui:VisualElement class="mpv-panel">
                         <ui:Label class="mpv-roster-title" text="{loc:ui.pre_game.once_inicial}" />
-                        <ui:VisualElement name="MPVHomeStarters" class="mpv-starter-row" />
-                        <ui:Label class="mpv-roster-title" text="{loc:ui.pre_game.banquillo}" />
-                        <ui:VisualElement name="MPVHomeBench" class="mpv-bench-list" />
+                        <ui:VisualElement name="MPVHomeStarters" class="mpv-bench-list" />
                     </ui:VisualElement>
                 </ui:VisualElement>
 
@@ -124,9 +122,7 @@
 
                     <ui:VisualElement class="mpv-panel">
                         <ui:Label class="mpv-roster-title" text="{loc:ui.pre_game.once_inicial}" />
-                        <ui:VisualElement name="MPVAwayStarters" class="mpv-starter-row" />
-                        <ui:Label class="mpv-roster-title" text="{loc:ui.pre_game.banquillo}" />
-                        <ui:VisualElement name="MPVAwayBench" class="mpv-bench-list" />
+                        <ui:VisualElement name="MPVAwayStarters" class="mpv-bench-list" />
                     </ui:VisualElement>
                 </ui:VisualElement>
 
