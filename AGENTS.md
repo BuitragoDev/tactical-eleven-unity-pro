@@ -97,7 +97,7 @@ fútbol en lugar de baloncesto.
 | **F8** | ⏭ **Siguiente** | **Motor de partido y pantallas de partido** |
 | F9…F18 | — | Competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
 
-**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (8 archivos, sin `.asmdef`; compilan en
+**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (9 archivos, sin `.asmdef`; compilan en
 `Assembly-CSharp-Editor`). Comando (con **Unity cerrado**):
 
 ```bash

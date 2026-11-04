@@ -6,8 +6,11 @@ using UnityEngine.UIElements;
 
 /// <summary>
 /// F6 — Pretemporada: elige hasta cuatro amistosos contra rivales de menor nivel
-/// y confirma el arranque de la temporada. El calendario de liga ya se generó al
-/// crear la partida (F6); aquí solo se guardan los amistosos elegidos.
+/// y confirma el arranque de la temporada.
+///
+/// Es el punto de **commit** de la partida (como en Tactical5): la temporada, el
+/// calendario y los metadatos del slot se crean al pulsar CONTINUAR. Si el jugador
+/// vuelve atrás antes, se descarta todo y no aparece en Cargar partida.
 /// </summary>
 public class PreseasonController : UIScreenController
 {
@@ -87,13 +90,14 @@ public class PreseasonController : UIScreenController
     protected override void LoadData()
     {
         base.LoadData();
-        if (_myTeam == null || _season == null) return;
+        if (_myTeam == null) return;
 
         LoadLogos();
 
         _allTeams = DatabaseManager.Instance.GetAllTeams();
 
-        int yearStart = _season.YearStart;
+        // La temporada aún no existe: se crea al confirmar en CONTINUAR.
+        int yearStart = _season?.YearStart ?? DatabaseManager.CurrentSeasonStartYear();
         if (_headerYear != null) _headerYear.text = yearStart.ToString();
         if (_infoBarSeason != null) _infoBarSeason.text = LocalizationService.T("ui.preseason.temporada", yearStart);
 
@@ -112,7 +116,12 @@ public class PreseasonController : UIScreenController
 
     protected override void RegisterCallbacks()
     {
-        _btnBack?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ScreenManager.Instance.GoTo(GameScreen.SelectTeam); });
+        _btnBack?.RegisterCallback<ClickEvent>(_ =>
+        {
+            PlayClick();
+            DiscardPendingGame();
+            ScreenManager.Instance.GoTo(GameScreen.SelectTeam);
+        });
         _btnContinue?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OnContinue(); });
         _btnHome?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SetLocation(true); });
         _btnAway?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SetLocation(false); });
@@ -380,7 +389,7 @@ public class PreseasonController : UIScreenController
         int index = _games.Count;
         var game = new GameDataDB
         {
-            SeasonId = _season.Id,
+            SeasonId = _season?.Id ?? 0,
             ManagerId = _manager?.Id ?? 0,
             MatchDay = -(MaxGames - index),
             MatchDate = _datesDb[index],
@@ -421,13 +430,39 @@ public class PreseasonController : UIScreenController
 
     private void OnContinue()
     {
-        if (_season == null || _myTeam == null) return;
+        if (_myTeam == null || _manager == null) return;
 
         var db = DatabaseManager.Instance;
+        int yearStart = _season?.YearStart ?? DatabaseManager.CurrentSeasonStartYear();
+
+        // 1. Crear la temporada en el commit (no al elegir equipo).
+        if (_season == null)
+            _season = db.CreateSeason(_manager.Id, _myTeam.LeagueId, yearStart);
+
+        if (_season == null)
+        {
+            Debug.LogError("[Preseason] No se pudo crear la temporada.");
+            ShowCommitError();
+            return;
+        }
+
+        // 2. Generar el calendario de liga. Sin calendario no hay partida.
+        if (db.GetGamesByType(_season.Id, DatabaseManager.GameTypeRegular).Count == 0)
+        {
+            int leagueGames = db.GenerateLeagueSchedule(_season);
+            if (leagueGames <= 0)
+            {
+                Debug.LogError("[Preseason] No se pudo generar el calendario de liga.");
+                ShowCommitError();
+                return;
+            }
+        }
+
+        // 3. Guardar los amistosos elegidos.
         ReindexGames();
         db.ReplacePreseasonGames(_season, _games);
 
-        // La temporada arranca en el primer amistoso (o en la jornada 1 si no hay).
+        // 4. Fecha de arranque y fase.
         var firstLeague = db.GetFirstLeagueGame(_season.Id);
         string startDate = _games.Count > 0
             ? _games[0].MatchDate
@@ -435,12 +470,14 @@ public class PreseasonController : UIScreenController
 
         _season.Phase = "preseason";
         _season.CurrentDate = startDate;
-        _season.CurrentMatchDay = CalendarHelper.DateToGameDay(_season.YearStart, ParseDate(startDate));
+        _season.CurrentMatchDay = CalendarHelper.DateToGameDay(
+            _season.YearStart, ParseDate(_season.YearStart, startDate));
         db.UpdateSeason(_season);
 
+        // 5. COMMIT: solo ahora la partida queda visible en Cargar partida.
         GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
 
-        Debug.Log($"[Preseason] {_games.Count} amistosos guardados. Temporada {_season.YearStart}-{_season.YearEnd} lista.");
+        Debug.Log($"[Preseason] Partida creada: {_games.Count} amistosos, temporada {_season.YearStart}-{_season.YearEnd}.");
 
         if (ScreenManager.Instance.IsRegistered(GameScreen.Dashboard))
         {
@@ -448,13 +485,24 @@ public class PreseasonController : UIScreenController
             return;
         }
 
-        // F7 aún no tiene Dashboard: la partida queda creada y guardada.
         if (_infoBarSeason != null)
             _infoBarSeason.text = LocalizationService.T("ui.preseason.partida_lista");
     }
 
-    private static DateTime ParseDate(string dbDate)
+    private void ShowCommitError()
+    {
+        if (_infoBarSeason != null)
+            _infoBarSeason.text = LocalizationService.T("ui.select_team.error_calendario");
+    }
+
+    /// <summary>Borra la partida a medias sin escribir metadatos de slot.</summary>
+    private static void DiscardPendingGame()
+    {
+        DatabaseManager.Instance?.DiscardPendingGame();
+    }
+
+    private static DateTime ParseDate(int yearStart, string dbDate)
         => CalendarHelper.TryParse(dbDate, out var date)
             ? date
-            : CalendarHelper.SeasonStart(DatabaseManager.CurrentSeasonStartYear());
+            : CalendarHelper.SeasonStart(yearStart);
 }

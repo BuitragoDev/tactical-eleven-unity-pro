@@ -191,7 +191,7 @@ public static class TeamSeeder
             {
                 Id = 12, Name = "RCD Espanyol", ShortName = "ESP",
                 City = "Barcelona", Country = "Spain", LeagueId = 1,
-                StadiumName = "Stage Front Stadium", StadiumCapacity = 40000,
+                StadiumName = "RCDE Stadium", StadiumCapacity = 40000,
                 YearFounded = 1900, PrimaryColor = "#FFFFFF", SecondaryColor = "#000000",
                 BankBalance = 55000000L, TransferBudget = 78000000L,
                 TotalWageBill = 35000000L, WageBudget = 420000000L,

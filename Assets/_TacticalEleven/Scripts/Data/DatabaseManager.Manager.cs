@@ -27,6 +27,13 @@ public partial class DatabaseManager
     }
 
     /// <summary>
+    /// Descarta una partida a medias (sin metadatos de slot): borra manager,
+    /// temporada y partidos. No toca `saves.json`, así que nunca aparece en
+    /// Cargar partida. Se usa al abandonar la creación antes del Dashboard.
+    /// </summary>
+    public void DiscardPendingGame() => ClearAllManagers();
+
+    /// <summary>
     /// Temporada de arranque (año de inicio): desde julio cuenta el año en curso.
     /// </summary>
     public static int CurrentSeasonStartYear()
