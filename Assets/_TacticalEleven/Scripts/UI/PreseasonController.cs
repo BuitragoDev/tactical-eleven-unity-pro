@@ -41,8 +41,6 @@ public class PreseasonController : UIScreenController
     private Button _filterChampions;
     private Button _filterEuropa;
     private Button _filterConference;
-    private int _filterLeagueId = PreseasonFilter.LaLiga;
-
     private const int FilterLaLiga = PreseasonFilter.LaLiga;
     private const int FilterLaLiga2 = PreseasonFilter.LaLiga2;
     private const int FilterRfef = PreseasonFilter.Rfef;
@@ -286,8 +284,6 @@ public class PreseasonController : UIScreenController
     /// <summary>Activa un filtro de competición y reconstruye la rejilla.</summary>
     private void SelectFilter(int leagueId)
     {
-        _filterLeagueId = leagueId;
-
         SetFilterActive(_filterLaliga, leagueId == FilterLaLiga);
         SetFilterActive(_filterLaliga2, leagueId == FilterLaLiga2);
         SetFilterActive(_filterRfef, leagueId == FilterRfef);
