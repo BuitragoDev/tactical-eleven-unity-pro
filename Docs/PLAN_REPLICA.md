@@ -659,6 +659,10 @@ Con F0-F9 se puede **jugar una temporada completa de liga** (sin copa ni Europa)
 - **Pantallas** (réplica de Tactical5 adaptada al fútbol): `PreGame` (onces, banquillos, bajas, forma, jugadores clave y pronóstico), `MatchDay` (marcador, estadísticas de equipo, cronología y estadísticas individuales) y `GameResults` (resto de la jornada, MVP y líderes de goleadores/asistentes/notas). Flujo: Dashboard → PreGame → MatchDay → GameResults → Dashboard.
 - **Pendiente de F8**: play-by-play interactivo, cambios en directo y vista 2D (F8b).
 
+> **F8b en pausa (decisión actual).** Antes de seguir con la simulación se implementan todas las
+> pantallas del sidebar. El plan detallado, con fases S0–S9 y checklist, está en
+> **`Docs/PLAN_PANTALLAS_SIDEBAR.md`**.
+
 ---
 
 ### F9 — Clasificaciones, resultados e info de competición

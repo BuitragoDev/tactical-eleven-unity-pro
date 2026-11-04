@@ -33,6 +33,7 @@ fútbol en lugar de baloncesto.
 | Doc / archivo | Contenido | Cuándo leerlo |
 |---|---|---|
 | **`Docs/PLAN_REPLICA.md`** | **Plan completo por fases (F0–F18)**, pantallas, modelo de datos, reglas de competición, decisiones y deudas | **Siempre, antes de empezar** |
+| **`Docs/PLAN_PANTALLAS_SIDEBAR.md`** | **Plan de las 33 pantallas del sidebar** por fases S0–S9, con checklist y cambios fútbol/NBA | Al implementar pantallas |
 | `AGENTS.md` (este) | Reglas rápidas, arquitectura e invariantes | Cada sesión (auto) |
 | `Assets/_TacticalEleven/Scripts/Core/UIScreenController.cs` | Pipeline base de todas las pantallas | Tareas de UI |
 | `Assets/_TacticalEleven/Scripts/Core/ScreenManager.cs` | Registro de pantallas y navegación | Añadir/cambiar pantallas |
@@ -94,7 +95,7 @@ fútbol en lugar de baloncesto.
 | F5 | ✅ | Selección de equipo (4 pestañas), filiales deshabilitados, ProManager (solo 1ª RFEF), manager + temporada, plantilla con banderas |
 | **F6** | ✅ | **Pretemporada y calendario de liga**: doble vuelta 38/42/38, parones FIFA/Navidad, 48 h de descanso, pretemporada vacía de hasta 4 amistosos con filtros y pantalla `Preseason` |
 | **F7** | ✅ | **Dashboard (réplica de Tactical5), header, sidebar y avance de día**: `LeagueTable`, `SeasonObjective`, `GameDayRules`, `DatabaseManager.AdvanceDay`, `SidebarController` y pantalla `Dashboard` con estadísticas de fútbol; tests `DashboardTests` |
-| **F8** | 🚧 **En curso** | **Motor de partido y pantallas**: `FootballSimulator`, `FormationRules`, `LineupBuilder`, `MatchupPreview`, persistencia (`DatabaseManager.MatchEngine`) y pantallas `PreGame`, `MatchDay` y `GameResults`. Pendiente el play-by-play interactivo y la vista 2D (F8b) |
+| **F8** | 🚧 **En curso** | **Motor de partido y pantallas**: motor, persistencia y pantallas `PreGame`/`MatchDay`/`GameResults`. **F8b (play-by-play y 2D) en pausa**: el foco pasa a las pantallas del sidebar (ver `Docs/PLAN_PANTALLAS_SIDEBAR.md`) |
 | F9…F18 | — | Competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
 
 **Tests:** `Assets/_TacticalEleven/Tests/Editor/` (10 archivos, sin `.asmdef`; compilan en
