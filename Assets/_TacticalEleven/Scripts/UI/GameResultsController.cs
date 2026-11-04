@@ -24,8 +24,20 @@ public class GameResultsController : UIScreenController
 
     private VisualElement _lbScorersBody, _lbAssistersBody, _lbRatedBody;
 
+    private const int CompetitionCopa = 8;
+    private const int CompetitionSupercopa = 9;
+    private const int CompetitionChampions = 5;
+    private const int CompetitionEuropa = 6;
+    private const int CompetitionConference = 7;
+
+    private Button _filterLiga, _filterCopa, _filterSupercopa;
+    private Button _filterChampions, _filterEuropa, _filterConference;
+
     private GameDataDB _game;
+    private List<GameDataDB> _seasonGames = new();
     private List<GameDataDB> _matchdayGames = new();
+    private int _filterCompetition;
+    private int _mvpGameId;
     private readonly Dictionary<int, TeamDataDB> _teams = new();
     private readonly Dictionary<int, PlayerDataDB> _players = new();
     private readonly Dictionary<string, Sprite> _logos = new();
@@ -53,6 +65,13 @@ public class GameResultsController : UIScreenController
         _lbAssistersBody = Q<VisualElement>("LbAssistersBody");
         _lbRatedBody = Q<VisualElement>("LbRatedBody");
 
+        _filterLiga = Q<Button>("FilterLiga");
+        _filterCopa = Q<Button>("FilterCopa");
+        _filterSupercopa = Q<Button>("FilterSupercopa");
+        _filterChampions = Q<Button>("FilterChampions");
+        _filterEuropa = Q<Button>("FilterEuropa");
+        _filterConference = Q<Button>("FilterConference");
+
         if (_loadingSpinner != null) _loadingSpinner.style.display = DisplayStyle.None;
     }
 
@@ -72,15 +91,15 @@ public class GameResultsController : UIScreenController
         foreach (var player in db.Db.Table<PlayerDataDB>().ToList())
             _players[player.Id] = player;
 
+        _seasonGames = db.GetGamesBySeason(_season.Id);
+
         _game = ResolveGame(db);
         if (_game == null) return;
 
-        _matchdayGames = db.GetGamesBySeason(_season.Id)
-            .Where(g => g.IsPlayed == 1
-                        && g.MatchDay == _game.MatchDay
-                        && g.GameType == _game.GameType)
-            .OrderBy(g => g.Id)
-            .ToList();
+        var league = db.GetLeagueById(_myTeam.LeagueId);
+        if (_filterLiga != null) _filterLiga.text = league?.ShortName ?? "LIGA";
+
+        _filterCompetition = _game.CompetitionId > 0 ? _game.CompetitionId : _myTeam.LeagueId;
     }
 
     private GameDataDB ResolveGame(DatabaseManager db)
@@ -103,6 +122,28 @@ public class GameResultsController : UIScreenController
         });
 
         RegisterHandCursor(_btnDashboard);
+
+        RegisterFilter(_filterLiga, _myTeam?.LeagueId ?? 1);
+        RegisterFilter(_filterCopa, CompetitionCopa);
+        RegisterFilter(_filterSupercopa, CompetitionSupercopa);
+        RegisterFilter(_filterChampions, CompetitionChampions);
+        RegisterFilter(_filterEuropa, CompetitionEuropa);
+        RegisterFilter(_filterConference, CompetitionConference);
+    }
+
+    private void RegisterFilter(Button button, int competitionId)
+    {
+        if (button == null) return;
+        button.RegisterCallback<ClickEvent>(_ =>
+        {
+            PlayClick();
+            ApplyFilter(competitionId);
+            RefreshHeader();
+            RefreshGames();
+            RefreshMvp();
+            RefreshLeaderboards();
+        });
+        RegisterHandCursor(button);
     }
 
     protected override void Refresh()
@@ -118,10 +159,62 @@ public class GameResultsController : UIScreenController
             return;
         }
 
+        ApplyFilter(_filterCompetition);
         RefreshHeader();
         RefreshGames();
         RefreshMvp();
         RefreshLeaderboards();
+    }
+
+    // ── FILTROS ────────────────────────────────────────────────────────────
+
+    private void ApplyFilter(int competitionId)
+    {
+        _filterCompetition = competitionId;
+
+        var played = _seasonGames
+            .Where(g => g.IsPlayed == 1 && g.CompetitionId == competitionId)
+            .ToList();
+
+        if (played.Count > 0)
+        {
+            int round = played.Max(g => g.MatchDay);
+            _matchdayGames = played
+                .Where(g => g.MatchDay == round)
+                .OrderBy(g => g.Id)
+                .ToList();
+        }
+        else
+        {
+            _matchdayGames = new List<GameDataDB>();
+        }
+
+        _mvpGameId = _matchdayGames
+            .Where(g => g.HomeTeamId == _myTeam.Id || g.AwayTeamId == _myTeam.Id)
+            .Select(g => g.Id)
+            .FirstOrDefault();
+
+        if (_mvpGameId == 0 && _matchdayGames.Count > 0)
+            _mvpGameId = _matchdayGames[0].Id;
+
+        UpdateFilterButtons();
+    }
+
+    private void UpdateFilterButtons()
+    {
+        SetFilterActive(_filterLiga, _filterCompetition == (_myTeam?.LeagueId ?? 1));
+        SetFilterActive(_filterCopa, _filterCompetition == CompetitionCopa);
+        SetFilterActive(_filterSupercopa, _filterCompetition == CompetitionSupercopa);
+        SetFilterActive(_filterChampions, _filterCompetition == CompetitionChampions);
+        SetFilterActive(_filterEuropa, _filterCompetition == CompetitionEuropa);
+        SetFilterActive(_filterConference, _filterCompetition == CompetitionConference);
+    }
+
+    private static void SetFilterActive(Button button, bool active)
+    {
+        if (button == null) return;
+        if (active) button.AddToClassList("gr-filter-btn--active");
+        else button.RemoveFromClassList("gr-filter-btn--active");
     }
 
     // ── HEADER ─────────────────────────────────────────────────────────────
@@ -137,11 +230,12 @@ public class GameResultsController : UIScreenController
         if (_headerSeason != null)
             _headerSeason.text = LocalizationService.T("ui.dashboard.temporada",
                 _season.YearStart, _season.YearEnd);
-        if (_headerDate != null) _headerDate.text = GameDayRules.FormatLongDate(_game.MatchDate);
+        var reference = _matchdayGames.FirstOrDefault() ?? _game;
+        if (_headerDate != null) _headerDate.text = GameDayRules.FormatLongDate(reference.MatchDate);
         if (_headerGameDay != null)
-            _headerGameDay.text = _game.GameType == DatabaseManager.GameTypePreseason
+            _headerGameDay.text = reference.GameType == DatabaseManager.GameTypePreseason
                 ? LocalizationService.T("ui.dashboard.amistoso")
-                : LocalizationService.T("ui.dashboard.jornada", _game.MatchDay);
+                : LocalizationService.T("ui.dashboard.jornada", reference.MatchDay);
     }
 
     // ── RESULTADOS DE LA JORNADA ───────────────────────────────────────────
@@ -150,6 +244,14 @@ public class GameResultsController : UIScreenController
     {
         if (_gamesBody == null) return;
         _gamesBody.Clear();
+
+        if (_matchdayGames.Count == 0)
+        {
+            var empty = new Label(LocalizationService.T("ui.game_results.sin_competicion"));
+            empty.AddToClassList("no-games-text");
+            _gamesBody.Add(empty);
+            return;
+        }
 
         foreach (var game in _matchdayGames)
             _gamesBody.Add(BuildGameCard(game));
@@ -227,7 +329,13 @@ public class GameResultsController : UIScreenController
 
     private void RefreshMvp()
     {
-        var stats = DatabaseManager.Instance.GetPlayerMatchStats(_game.Id)
+        if (_mvpGameId <= 0)
+        {
+            if (_mvpPanel != null) _mvpPanel.style.display = DisplayStyle.None;
+            return;
+        }
+
+        var stats = DatabaseManager.Instance.GetPlayerMatchStats(_mvpGameId)
             .OrderByDescending(s => s.Rating)
             .ThenByDescending(s => s.Goals)
             .FirstOrDefault();

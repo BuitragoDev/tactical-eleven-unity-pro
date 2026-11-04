@@ -874,6 +874,30 @@
       "value": "VOLVER AL DASHBOARD"
     },
     {
+      "key": "ui.game_results.filter_champions",
+      "value": "CHAMPIONS"
+    },
+    {
+      "key": "ui.game_results.filter_conference",
+      "value": "CONFERENCE"
+    },
+    {
+      "key": "ui.game_results.filter_copa",
+      "value": "COPA"
+    },
+    {
+      "key": "ui.game_results.filter_europa",
+      "value": "EUROPA"
+    },
+    {
+      "key": "ui.game_results.filter_liga",
+      "value": "LIGA"
+    },
+    {
+      "key": "ui.game_results.filter_supercopa",
+      "value": "SUPERCOPA"
+    },
+    {
       "key": "ui.game_results.goles",
       "value": "GOLES"
     },
@@ -912,6 +936,10 @@
     {
       "key": "ui.game_results.resultados",
       "value": "RESULTADOS DE LA JORNADA"
+    },
+    {
+      "key": "ui.game_results.sin_competicion",
+      "value": "Sin resultados en esta competición."
     },
     {
       "key": "ui.game_results.sin_resultados",

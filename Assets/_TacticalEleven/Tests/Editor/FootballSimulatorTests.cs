@@ -305,6 +305,10 @@ public class FootballSimulatorTests
         Assert.That(results, Is.Not.Null);
         var grRoot = results.CloneTree();
         Assert.That(grRoot.Q<VisualElement>("GamesBody"), Is.Not.Null);
+        Assert.That(grRoot.Q<VisualElement>("FiltersBar"), Is.Not.Null);
+        Assert.That(grRoot.Q<Button>("FilterLiga"), Is.Not.Null);
+        Assert.That(grRoot.Q<Button>("FilterCopa"), Is.Not.Null);
+        Assert.That(grRoot.Q<Button>("FilterChampions"), Is.Not.Null);
         Assert.That(grRoot.Q<VisualElement>("MvpPanel"), Is.Not.Null);
         Assert.That(grRoot.Q<VisualElement>("LbScorersBody"), Is.Not.Null);
         Assert.That(grRoot.Q<Label>("MvpVal"), Is.Not.Null);

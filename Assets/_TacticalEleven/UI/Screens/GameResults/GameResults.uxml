@@ -32,6 +32,20 @@
                             <ui:VisualElement class="gresults-section-header">
                                 <ui:Label text="{loc:ui.game_results.resultados}" class="gresults-section-title"/>
                             </ui:VisualElement>
+                            <ui:VisualElement name="FiltersBar" class="gr-filters">
+                                <ui:Button name="FilterLiga" class="gr-filter-btn gr-filter-btn--active"
+                                           text="{loc:ui.game_results.filter_liga}"/>
+                                <ui:Button name="FilterCopa" class="gr-filter-btn"
+                                           text="{loc:ui.game_results.filter_copa}"/>
+                                <ui:Button name="FilterSupercopa" class="gr-filter-btn"
+                                           text="{loc:ui.game_results.filter_supercopa}"/>
+                                <ui:Button name="FilterChampions" class="gr-filter-btn"
+                                           text="{loc:ui.game_results.filter_champions}"/>
+                                <ui:Button name="FilterEuropa" class="gr-filter-btn"
+                                           text="{loc:ui.game_results.filter_europa}"/>
+                                <ui:Button name="FilterConference" class="gr-filter-btn"
+                                           text="{loc:ui.game_results.filter_conference}"/>
+                            </ui:VisualElement>
                             <ui:VisualElement name="GamesBody" class="games-body"/>
                         </ui:VisualElement>
                         <ui:VisualElement class="gresults-right">

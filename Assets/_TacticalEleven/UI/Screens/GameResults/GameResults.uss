@@ -553,3 +553,36 @@
     text-align: right;
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
 }
+
+/* ══════════════════════════════════════════
+   F8 — FILTROS POR COMPETICIÓN
+   ══════════════════════════════════════════ */
+.gr-filters {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.gr-filter-btn {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    background-color: rgb(22, 26, 36);
+    border-width: 1px;
+    border-color: rgb(42, 51, 71);
+    border-radius: 6px;
+    color: rgb(122, 138, 170);
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin: 0 6px 6px 0;
+    -unity-text-align: middle-center;
+}
+.gr-filter-btn:hover {
+    color: rgb(208, 216, 232);
+    border-color: rgb(58, 74, 99);
+}
+.gr-filter-btn--active {
+    background-color: rgb(28, 33, 48);
+    border-color: rgb(212, 160, 23);
+    color: rgb(255, 255, 255);
+}
