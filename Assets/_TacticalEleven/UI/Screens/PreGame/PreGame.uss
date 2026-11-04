@@ -565,9 +565,9 @@
     display: none;
 }
 
-/* F8 — empate en la racha */
+/* F8 — empate en la racha (dorado) */
 .mpv-streak-dot--draw {
-    background-color: rgb(122, 138, 170);
+    background-color: rgb(212, 160, 23);
 }
 
 /* ══════════════════════════════════════════
