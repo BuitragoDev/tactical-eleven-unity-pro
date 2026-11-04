@@ -654,3 +654,11 @@
 .mpv-key-stat {
     width: 60px;
 }
+
+/* Valores dorados junto a la etiqueta central y más espacio para el nombre */
+.mpv-key-row .mpv-key-name {
+    flex-grow: 1;
+}
+.mpv-key-player--right {
+    justify-content: flex-start;
+}
