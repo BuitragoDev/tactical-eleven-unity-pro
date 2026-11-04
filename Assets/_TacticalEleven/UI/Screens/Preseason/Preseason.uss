@@ -350,6 +350,37 @@
     color: rgb(255, 255, 255);
 }
 
+/* ── FILTROS POR COMPETICIÓN ── */
+.filters-bar {
+    flex-direction: row;
+    flex-shrink: 0;
+    margin-bottom: 14px;
+    margin-left: 10px;
+}
+.filter-btn {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    background-color: rgb(22, 26, 36);
+    border-width: 1px;
+    border-color: rgb(42, 51, 71);
+    color: rgb(122, 138, 170);
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    margin-right: 8px;
+    -unity-text-align: middle-center;
+}
+.filter-btn:hover {
+    color: rgb(208, 216, 232);
+    border-color: rgb(58, 74, 99);
+}
+.filter-btn--active {
+    background-color: rgb(28, 33, 48);
+    border-color: rgb(42, 95, 201);
+    border-bottom-width: 2px;
+    color: rgb(255, 255, 255);
+}
+
 /* Scroll del grid (barra propia: viewport + content + track/thumb) */
 .teams-scroll-row {
     flex-direction: row;

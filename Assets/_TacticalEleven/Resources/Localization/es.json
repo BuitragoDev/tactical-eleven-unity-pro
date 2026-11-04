@@ -394,6 +394,30 @@
       "value": "TEMPORADA"
     },
     {
+      "key": "ui.preseason.filter_champions",
+      "value": "CHAMPIONS"
+    },
+    {
+      "key": "ui.preseason.filter_conference",
+      "value": "CONFERENCE"
+    },
+    {
+      "key": "ui.preseason.filter_europa",
+      "value": "EUROPA"
+    },
+    {
+      "key": "ui.preseason.filter_laliga",
+      "value": "LALIGA"
+    },
+    {
+      "key": "ui.preseason.filter_laliga2",
+      "value": "LALIGA 2"
+    },
+    {
+      "key": "ui.preseason.filter_rfef",
+      "value": "1ª RFEF"
+    },
+    {
       "key": "ui.preseason.local",
       "value": "LOCAL"
     },

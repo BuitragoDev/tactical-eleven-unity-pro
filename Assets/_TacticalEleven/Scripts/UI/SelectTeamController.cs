@@ -512,8 +512,6 @@ public class SelectTeamController : UIScreenController
             return;
         }
 
-        db.GeneratePreseasonSchedule(season, _selectedTeam.Id);
-
         GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
 
         Debug.Log($"[SelectTeam] {managerName} → {_selectedTeam.Name} (temporada {season.YearStart}-{season.YearEnd}, {leagueGames} partidos)");

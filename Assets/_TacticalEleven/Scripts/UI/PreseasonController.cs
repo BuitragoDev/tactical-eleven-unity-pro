@@ -34,6 +34,22 @@ public class PreseasonController : UIScreenController
     private Button _btnAway;
     private VisualElement _teamsGrid;
 
+    // Filtros por competición
+    private Button _filterLaliga;
+    private Button _filterLaliga2;
+    private Button _filterRfef;
+    private Button _filterChampions;
+    private Button _filterEuropa;
+    private Button _filterConference;
+    private int _filterLeagueId = PreseasonFilter.LaLiga;
+
+    private const int FilterLaLiga = PreseasonFilter.LaLiga;
+    private const int FilterLaLiga2 = PreseasonFilter.LaLiga2;
+    private const int FilterRfef = PreseasonFilter.Rfef;
+    private const int FilterChampions = PreseasonFilter.Champions;
+    private const int FilterEuropa = PreseasonFilter.Europa;
+    private const int FilterConference = PreseasonFilter.Conference;
+
     // Estado
     private List<TeamDataDB> _allTeams = new();
     private readonly List<GameDataDB> _games = new();
@@ -61,6 +77,13 @@ public class PreseasonController : UIScreenController
         _btnHome = _root.Q<Button>("BtnHome");
         _btnAway = _root.Q<Button>("BtnAway");
         _teamsGrid = _root.Q<VisualElement>("TeamsGrid");
+
+        _filterLaliga = _root.Q<Button>("FilterLaliga");
+        _filterLaliga2 = _root.Q<Button>("FilterLaliga2");
+        _filterRfef = _root.Q<Button>("FilterRfef");
+        _filterChampions = _root.Q<Button>("FilterChampions");
+        _filterEuropa = _root.Q<Button>("FilterEuropa");
+        _filterConference = _root.Q<Button>("FilterConference");
     }
 
     protected override void LoadData()
@@ -85,17 +108,8 @@ public class PreseasonController : UIScreenController
             _dates[i] = preseasonDates[i].ToString("dd MMM yyyy").ToUpperInvariant();
         }
 
-        // Amistosos ya generados al crear la partida (o los que haya guardados).
+        // La pretemporada empieza vacía: el usuario elige sus amistosos.
         _games.Clear();
-        var saved = DatabaseManager.Instance.GetGamesByType(_season.Id, DatabaseManager.GameTypePreseason);
-        foreach (var game in saved.OrderBy(g => g.MatchDate).ThenBy(g => g.MatchDay))
-        {
-            if (_games.Count >= MaxGames) break;
-            game.MatchDate = _datesDb[_games.Count];
-            _games.Add(game);
-        }
-
-        BuildTeamsGrid();
     }
 
     protected override void RegisterCallbacks()
@@ -105,10 +119,20 @@ public class PreseasonController : UIScreenController
         _btnHome?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SetLocation(true); });
         _btnAway?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SetLocation(false); });
 
+        _filterLaliga?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SelectFilter(FilterLaLiga); });
+        _filterLaliga2?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SelectFilter(FilterLaLiga2); });
+        _filterRfef?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SelectFilter(FilterRfef); });
+        _filterChampions?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SelectFilter(FilterChampions); });
+        _filterEuropa?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SelectFilter(FilterEuropa); });
+        _filterConference?.RegisterCallback<ClickEvent>(_ => { PlayClick(); SelectFilter(FilterConference); });
+
         RegisterHandCursor(_btnBack);
         RegisterHandCursor(_btnContinue);
         RegisterHandCursor(_btnHome);
         RegisterHandCursor(_btnAway);
+        foreach (var filter in new[] { _filterLaliga, _filterLaliga2, _filterRfef,
+                                       _filterChampions, _filterEuropa, _filterConference })
+            RegisterHandCursor(filter);
     }
 
     protected override void Refresh()
@@ -117,7 +141,7 @@ public class PreseasonController : UIScreenController
 
         SetLocation(true);
         RefreshSlots();
-        UpdateTeamsGridAvailability();
+        SelectFilter(FilterLaLiga);
         UpdateInfoBar();
     }
 
@@ -259,7 +283,30 @@ public class PreseasonController : UIScreenController
 
     // ── GRID DE EQUIPOS ────────────────────────────────────────────────────
 
-    private void BuildTeamsGrid()
+    /// <summary>Activa un filtro de competición y reconstruye la rejilla.</summary>
+    private void SelectFilter(int leagueId)
+    {
+        _filterLeagueId = leagueId;
+
+        SetFilterActive(_filterLaliga, leagueId == FilterLaLiga);
+        SetFilterActive(_filterLaliga2, leagueId == FilterLaLiga2);
+        SetFilterActive(_filterRfef, leagueId == FilterRfef);
+        SetFilterActive(_filterChampions, leagueId == FilterChampions);
+        SetFilterActive(_filterEuropa, leagueId == FilterEuropa);
+        SetFilterActive(_filterConference, leagueId == FilterConference);
+
+        BuildTeamsGrid(leagueId);
+        UpdateTeamsGridAvailability();
+    }
+
+    private static void SetFilterActive(Button button, bool active)
+    {
+        if (button == null) return;
+        if (active) button.AddToClassList("filter-btn--active");
+        else button.RemoveFromClassList("filter-btn--active");
+    }
+
+    private void BuildTeamsGrid(int leagueId)
     {
         if (_teamsGrid == null || _myTeam == null) return;
         _teamsGrid.Clear();
@@ -269,15 +316,15 @@ public class PreseasonController : UIScreenController
             _teamsScrollBar = CustomScrollbar.Bind(viewport, _teamsGrid,
                 _root.Q<VisualElement>("TeamsScrollTrack"), _root.Q<VisualElement>("TeamsScrollThumb"));
 
-        // Rivales propuestos: clubes de menor nivel, sin filiales.
-        var candidates = PreseasonPlanner.CandidateOpponents(_myTeam, _allTeams, 24);
-        var ordered = candidates
-            .Select(id => _allTeams.FirstOrDefault(t => t.Id == id))
-            .Where(t => t != null)
+        var teams = _allTeams
+            .Where(t => t != null
+                        && t.Id != _myTeam.Id
+                        && t.LeagueId > 0
+                        && PreseasonFilter.Matches(t.LeagueId, leagueId))
             .OrderByDescending(t => t.Overall)
             .ToList();
 
-        foreach (var team in ordered)
+        foreach (var team in teams)
             _teamsGrid.Add(CreateTeamItem(team));
     }
 

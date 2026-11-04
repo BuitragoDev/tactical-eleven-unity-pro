@@ -180,6 +180,42 @@ public class ScheduleTests
     // ── PERSISTENCIA ───────────────────────────────────────────────────────
 
     [Test]
+    public void PreseasonFilters_MatchThreeSpanishAndThreeEuropeanCompetitions()
+    {
+        // Tres españolas: LaLiga (1), Hypermotion (2) y 1ª RFEF (3+4).
+        Assert.That(PreseasonFilter.Matches(1, PreseasonFilter.LaLiga), Is.True);
+        Assert.That(PreseasonFilter.Matches(2, PreseasonFilter.LaLiga2), Is.True);
+        Assert.That(PreseasonFilter.Matches(3, PreseasonFilter.Rfef), Is.True);
+        Assert.That(PreseasonFilter.Matches(4, PreseasonFilter.Rfef), Is.True);
+        Assert.That(PreseasonFilter.Matches(1, PreseasonFilter.Rfef), Is.False);
+
+        // Tres europeas: Champions (5), Europa (6) y Conference (7).
+        Assert.That(PreseasonFilter.Matches(5, PreseasonFilter.Champions), Is.True);
+        Assert.That(PreseasonFilter.Matches(6, PreseasonFilter.Europa), Is.True);
+        Assert.That(PreseasonFilter.Matches(7, PreseasonFilter.Conference), Is.True);
+        Assert.That(PreseasonFilter.Matches(5, PreseasonFilter.Europa), Is.False);
+
+        // Cada filtro tiene clubes reales en el seed.
+        Assert.That(_db.GetTeamsByLeague(1).Count, Is.EqualTo(20));
+        Assert.That(_db.GetTeamsByLeague(2).Count, Is.EqualTo(22));
+        Assert.That(_db.GetTeamsByLeague(3).Count + _db.GetTeamsByLeague(4).Count, Is.EqualTo(40));
+        Assert.That(_db.GetTeamsByLeague(5).Count, Is.EqualTo(32));
+        Assert.That(_db.GetTeamsByLeague(6).Count, Is.EqualTo(34));
+        Assert.That(_db.GetTeamsByLeague(7).Count, Is.EqualTo(35));
+    }
+
+    [Test]
+    public void NewSeason_StartsWithNoPreseasonGames()
+    {
+        var manager = new ManagerDataDB { Name = "Test", TeamId = 1, LeagueId = 1, GameMode = "manager" };
+        _db.SaveManager(manager);
+        var season = _db.CreateSeason(manager.Id, 1, 2026);
+
+        Assert.That(_db.GetGamesByType(season.Id, DatabaseManager.GameTypePreseason), Is.Empty,
+            "La pretemporada debe empezar vacía: el usuario elige los amistosos");
+    }
+
+    [Test]
     public void GenerateLeagueSchedule_PersistsGames_AndIsIdempotent()
     {
         var manager = new ManagerDataDB { Name = "Test", TeamId = 1, LeagueId = 1, GameMode = "manager" };
