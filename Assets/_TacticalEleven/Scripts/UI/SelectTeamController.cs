@@ -158,7 +158,7 @@ public class SelectTeamController : UIScreenController
 
     protected override void RegisterCallbacks()
     {
-        _btnBack?.RegisterCallback<ClickEvent>(_ => { PlayClick(); DiscardPendingGame(); ScreenManager.Instance.GoTo(GameScreen.MainMenu); });
+        _btnBack?.RegisterCallback<ClickEvent>(_ => { PlayClick(); DiscardPendingGame(closeSlot: true); ScreenManager.Instance.GoTo(GameScreen.MainMenu); });
         _btnContinue?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OnContinue(); });
 
         _tabLiga?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ShowFilter("liga"); });
@@ -494,8 +494,8 @@ public class SelectTeamController : UIScreenController
     /// Borra la partida a medias (manager, temporada y partidos) sin escribir los
     /// metadatos del slot. Así no aparece en Cargar partida.
     /// </summary>
-    private static void DiscardPendingGame()
+    private static void DiscardPendingGame(bool closeSlot = false)
     {
-        DatabaseManager.Instance?.DiscardPendingGame();
+        DatabaseManager.Instance?.DiscardPendingGame(closeSlot);
     }
 }
