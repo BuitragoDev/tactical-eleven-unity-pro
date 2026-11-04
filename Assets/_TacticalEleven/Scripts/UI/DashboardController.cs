@@ -237,7 +237,7 @@ public class DashboardController : UIScreenController
         SidebarController.ScreenUnavailable = _ => ShowToast(
             LocalizationService.T("ui.dashboard.proximamente"));
         SidebarController.Attach(_root, ScreenId);
-        HeaderController.Attach(_root);
+        HeaderController.Attach(_root, this);
 
         _btnAction?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OnActionClicked(); });
         _configIcon?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OpenConfigModal(); });
@@ -297,7 +297,7 @@ public class DashboardController : UIScreenController
             _headerSeason.text = LocalizationService.T("ui.dashboard.temporada",
                 _season.YearStart, _season.YearEnd);
 
-        if (_headerDate != null) _headerDate.text = GameDayRules.FormatLongDate(_season.CurrentDate);
+        if (_headerDate != null) _headerDate.text = GameDayRules.FormatFullDateEs(_season.CurrentDate);
     }
 
     // ── ÚLTIMO PARTIDO ─────────────────────────────────────────────────────

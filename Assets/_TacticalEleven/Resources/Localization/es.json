@@ -78,6 +78,10 @@
       "value": "ELEVEN"
     },
     {
+      "key": "ui.core_header.menu_principal",
+      "value": "MENÚ PRINCIPAL"
+    },
+    {
       "key": "ui.core_header.presupuesto",
       "value": "Presupuesto"
     },

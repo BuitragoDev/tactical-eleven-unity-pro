@@ -215,6 +215,22 @@ public class CalendarScreenTests
         Assert.That(root.Q<Button>("BtnNextMonth"), Is.Not.Null);
         Assert.That(root.Q<VisualElement>("CalendarScreenIcon"), Is.Not.Null);
         Assert.That(root.Q<Label>("CalendarSubtitle"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("ConfigModalOverlay"), Is.Not.Null,
+            "El engranaje necesita el modal de configuración");
+    }
+
+    [Test]
+    public void CommonHeader_HasMainMenuButtonAndConfigIcon()
+    {
+        var uxml = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+            "Assets/_TacticalEleven/UI/Resources/UI/Core/Header.uxml");
+        Assert.That(uxml, Is.Not.Null);
+
+        var root = uxml.CloneTree();
+        Assert.That(root.Q<Button>("BtnMainMenu"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("ConfigIcon"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderChemistry"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderDate"), Is.Not.Null);
     }
 
     [Test]

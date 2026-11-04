@@ -23,5 +23,8 @@
             <ui:Label name="HeaderSeason" class="header-season-label" text="" />
             <ui:Label name="HeaderDate" class="header-date-label" text="" />
         </ui:VisualElement>
+        <ui:Button name="BtnMainMenu" class="header-main-menu-btn"
+                   text="{loc:ui.core_header.menu_principal}" />
+        <ui:VisualElement name="ConfigIcon" class="header-config-icon" />
     </ui:VisualElement>
 </ui:UXML>

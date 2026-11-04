@@ -17,6 +17,18 @@ public static class GameDayRules
         "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"
     };
 
+    private static readonly string[] WeekdaysFull =
+    {
+        "Domingo", "Lunes", "Martes", "Miércoles",
+        "Jueves", "Viernes", "Sábado"
+    };
+
+    private static readonly string[] MonthsFull =
+    {
+        "", "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    };
+
     /// <summary>Suma un día a una fecha `yyyy-MM-dd`.</summary>
     public static bool TryNextDate(string currentDate, out string nextDate)
     {
@@ -71,5 +83,13 @@ public static class GameDayRules
         if (!CalendarHelper.TryParse(dbDate, out var date)) return "";
         string[] days = { "DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB" };
         return $"{days[(int)date.DayOfWeek]} {date.Day:00} {Months[date.Month - 1]} {date.Year}";
+    }
+
+    /// <summary>Fecha larga en español: `Sábado 15 de agosto de 2026`.</summary>
+    public static string FormatFullDateEs(string dbDate)
+    {
+        if (!CalendarHelper.TryParse(dbDate, out var date)) return "";
+        return $"{WeekdaysFull[(int)date.DayOfWeek]} {date.Day} de " +
+               $"{MonthsFull[date.Month]} de {date.Year}";
     }
 }

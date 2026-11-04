@@ -63,6 +63,69 @@
 
             </ui:VisualElement>
         </ui:VisualElement>
+
+        <!-- MODAL DE CONFIGURACIÓN -->
+        <ui:VisualElement name="ConfigModalOverlay" class="modal-overlay">
+            <ui:VisualElement name="ConfigModalBox" class="modal-box">
+                <ui:Label text="{loc:ui.dashboard.configuracion}" class="modal-title"/>
+                <ui:VisualElement class="modal-body">
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.audio}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.dashboard.volumen_general}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderMaster" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillMaster" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerMaster" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelMaster" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.dashboard.musica}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderMusic" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillMusic" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerMusic" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelMusic" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.dashboard.efectos}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderSFX" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillSFX" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerSFX" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelSFX" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.graficos}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-quality-row">
+                            <ui:Label text="{loc:ui.dashboard.calidad}" class="settings-label"/>
+                            <ui:VisualElement class="settings-quality-options">
+                                <ui:Button name="ConfigBtnQualityLow" text="{loc:ui.dashboard.config_btn_quality_low}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityMedium" text="{loc:ui.dashboard.config_btn_quality_medium}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityHigh" text="{loc:ui.dashboard.config_btn_quality_high}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityUltra" text="{loc:ui.dashboard.config_btn_quality_ultra}" class="settings-quality-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.simulacion}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-quality-row">
+                            <ui:Label text="{loc:ui.dashboard.vista_de_partido}" class="settings-label"/>
+                            <ui:VisualElement class="settings-quality-options">
+                                <ui:Button name="ConfigBtnSimDirect" text="{loc:ui.dashboard.config_btn_sim_direct}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnSimPlay" text="{loc:ui.dashboard.config_btn_sim_play}" class="settings-quality-btn settings-quality-btn--wide"/>
+                                <ui:Button name="ConfigBtnSimVisual" text="{loc:ui.dashboard.config_btn_sim_visual}" class="settings-quality-btn settings-quality-btn--wide"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Button name="ConfigBtnCerrar" text="{loc:ui.dashboard.config_btn_cerrar}" class="modal-close"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 
 </ui:UXML>

@@ -184,6 +184,9 @@ public abstract class UIScreenController : MonoBehaviour
         UpdateConfigSimButtons(GetSimMode());
     }
 
+    /// <summary>Abre el modal de configuración (para el engranaje del header inyectado).</summary>
+    public void ShowConfigModal() => OpenConfigModal();
+
     protected virtual void OpenConfigModal()
     {
         if (_configModalOverlay == null) return;

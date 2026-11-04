@@ -13,7 +13,7 @@ public static class HeaderController
     private static VisualTreeAsset _template;
     private static Dictionary<string, Sprite> _logos;
 
-    public static void Attach(VisualElement root)
+    public static void Attach(VisualElement root, UIScreenController controller = null)
     {
         var template = GetTemplate();
         if (template == null || root == null) return;
@@ -38,6 +38,8 @@ public static class HeaderController
 
         // Si el header existe pero está anidado (p. ej. dentro de main-area),
         // se saca para colocarlo a todo el ancho.
+        bool injected = existing == null;
+
         VisualElement header;
         if (existing != null)
         {
@@ -87,6 +89,27 @@ public static class HeaderController
         container.style.flexDirection = FlexDirection.Column;
 
         Populate(header);
+
+        if (injected)
+            WireHeaderButtons(header, controller);
+    }
+
+    private static void WireHeaderButtons(VisualElement header, UIScreenController controller)
+    {
+        var configIcon = header.Q<VisualElement>("ConfigIcon");
+        if (configIcon != null && controller != null)
+        {
+            configIcon.RegisterCallback<ClickEvent>(_ => controller.ShowConfigModal());
+            CursorManager.Instance?.RegisterHandCursor(configIcon);
+        }
+
+        var mainMenu = header.Q<Button>("BtnMainMenu");
+        if (mainMenu != null)
+        {
+            mainMenu.RegisterCallback<ClickEvent>(_ =>
+                ScreenManager.Instance?.GoTo(GameScreen.MainMenu));
+            CursorManager.Instance?.RegisterHandCursor(mainMenu);
+        }
     }
 
     private static bool IsOverlay(VisualElement element)
@@ -114,13 +137,22 @@ public static class HeaderController
             LocalizationService.T("ui.common.manager", manager.Name));
 
         SetText(header, "HeaderBudget", $"{team.TransferBudget:N0} €");
-        SetText(header, "HeaderChemistry", $"{team.Chemistry}%");
+
+        var chemistry = header.Q<Label>("HeaderChemistry");
+        if (chemistry != null)
+        {
+            chemistry.text = $"{team.Chemistry}%";
+            chemistry.RemoveFromClassList("header-stat-value--negative");
+            chemistry.RemoveFromClassList("header-stat-value--gold");
+            if (team.Chemistry < 40) chemistry.AddToClassList("header-stat-value--negative");
+            else if (team.Chemistry < 70) chemistry.AddToClassList("header-stat-value--gold");
+        }
 
         if (season != null)
         {
             SetText(header, "HeaderSeason",
                 LocalizationService.T("ui.dashboard.temporada", season.YearStart, season.YearEnd));
-            SetText(header, "HeaderDate", GameDayRules.FormatLongDate(season.CurrentDate));
+            SetText(header, "HeaderDate", GameDayRules.FormatFullDateEs(season.CurrentDate));
         }
 
         var logo = header.Q<VisualElement>("HeaderTeamLogo");

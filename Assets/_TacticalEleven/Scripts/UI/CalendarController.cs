@@ -105,7 +105,7 @@ public class CalendarController : UIScreenController
     protected override void RegisterCallbacks()
     {
         SidebarController.Attach(_root, ScreenId);
-        HeaderController.Attach(_root);
+        HeaderController.Attach(_root, this);
 
         _scrollbar = CustomScrollbar.Bind(_gamesViewport, _selectedDayGames,
             _scrollTrack, _scrollThumb);

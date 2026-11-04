@@ -119,6 +119,8 @@ public class DashboardTests
 
         Assert.That(GameDayRules.FormatShortDate("2026-07-18"), Is.EqualTo("18 JUL 2026"));
         Assert.That(GameDayRules.FormatLongDate("2026-07-18"), Is.EqualTo("SÁB 18 JUL 2026"));
+        Assert.That(GameDayRules.FormatFullDateEs("2026-08-15"),
+            Is.EqualTo("Sábado 15 de agosto de 2026"));
         Assert.That(GameDayRules.FormatShortDate(""), Is.EqualTo(""));
     }
 
