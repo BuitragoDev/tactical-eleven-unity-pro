@@ -519,36 +519,44 @@ public class DashboardController : UIScreenController
 
     // ── ESTADÍSTICAS DE JUGADORES (FÚTBOL) ─────────────────────────────────
 
+    private static readonly string[] StatCardPrefixes =
+    {
+        "StatGoals", "StatAssists", "StatYellow", "StatRed", "StatMvp", "StatMinutes"
+    };
+
     private void RefreshPlayerStats()
     {
         if (_seasonStats.Count == 0)
         {
-            SetStatCard("StatGoals", "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
-            SetStatCard("StatAssists", "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
-            SetStatCard("StatRating", "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
-            SetStatCard("StatMvp", "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
-            SetStatCard("StatGames", "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
-            SetStatCard("StatCards", "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
+            foreach (string prefix in StatCardPrefixes)
+                SetStatCard(prefix, "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
             return;
         }
 
-        var goals = _seasonStats.OrderByDescending(s => s.Goals).ThenByDescending(s => s.Assists).First();
-        SetStatCard("StatGoals", goals.Goals.ToString(), PlayerName(goals.PlayerId), GamesText(goals.Appearances));
+        SetLeader("StatGoals", s => s.Goals);
+        SetLeader("StatAssists", s => s.Assists);
+        SetLeader("StatYellow", s => s.YellowCards);
+        SetLeader("StatRed", s => s.RedCards);
+        SetLeader("StatMvp", s => s.ManOfTheMatch);
+        SetLeader("StatMinutes", s => s.MinutesPlayed);
+    }
 
-        var assists = _seasonStats.OrderByDescending(s => s.Assists).ThenByDescending(s => s.Goals).First();
-        SetStatCard("StatAssists", assists.Assists.ToString(), PlayerName(assists.PlayerId), GamesText(assists.Appearances));
+    /// <summary>Líder del equipo en una estadística (goles, asistencias, tarjetas…).</summary>
+    private void SetLeader(string prefix, System.Func<PlayerSeasonStatsDB, int> selector)
+    {
+        var leader = _seasonStats
+            .OrderByDescending(selector)
+            .ThenByDescending(s => s.Appearances)
+            .First();
 
-        var rated = _seasonStats.OrderByDescending(s => s.AverageRating).ThenByDescending(s => s.Appearances).First();
-        SetStatCard("StatRating", rated.AverageRating.ToString("F2"), PlayerName(rated.PlayerId), GamesText(rated.Appearances));
+        int value = selector(leader);
+        if (value <= 0)
+        {
+            SetStatCard(prefix, "--", "", LocalizationService.T("ui.dashboard.sin_datos"));
+            return;
+        }
 
-        var mvp = _seasonStats.OrderByDescending(s => s.ManOfTheMatch).ThenByDescending(s => s.AverageRating).First();
-        SetStatCard("StatMvp", mvp.ManOfTheMatch.ToString(), PlayerName(mvp.PlayerId), GamesText(mvp.Appearances));
-
-        var games = _seasonStats.OrderByDescending(s => s.Appearances).First();
-        SetStatCard("StatGames", games.Appearances.ToString(), PlayerName(games.PlayerId), GamesText(games.Appearances));
-
-        var cards = _seasonStats.OrderByDescending(s => s.YellowCards).First();
-        SetStatCard("StatCards", cards.YellowCards.ToString(), PlayerName(cards.PlayerId), GamesText(cards.Appearances));
+        SetStatCard(prefix, value.ToString(), PlayerName(leader.PlayerId), GamesText(leader.Appearances));
     }
 
     private void SetStatCard(string prefix, string value, string playerName, string games)

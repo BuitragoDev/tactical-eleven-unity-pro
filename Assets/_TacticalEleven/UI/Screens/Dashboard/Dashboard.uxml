@@ -211,14 +211,26 @@
                                         </ui:VisualElement>
                                         <ui:VisualElement class="stat-card">
                                             <ui:VisualElement class="stat-card-photo-wrapper">
-                                                <ui:VisualElement name="StatRatingPhoto" class="stat-card-photo"/>
+                                                <ui:VisualElement name="StatYellowPhoto" class="stat-card-photo"/>
                                             </ui:VisualElement>
-                                            <ui:Label name="StatRatingIcon" text="{loc:ui.dashboard.stat_rating_icon}" class="stat-card-icon"/>
+                                            <ui:Label name="StatYellowIcon" text="{loc:ui.dashboard.stat_yellow_icon}" class="stat-card-icon"/>
                                             <ui:VisualElement class="stat-card-right">
-                                                <ui:Label text="{loc:ui.dashboard.valoracion}" class="stat-card-label"/>
-                                                <ui:Label name="StatRating" text="--" class="stat-card-val"/>
-                                                <ui:Label name="StatRatingName" text="" class="stat-card-player"/>
-                                                <ui:Label name="StatRatingGames" text="" class="stat-card-games"/>
+                                                <ui:Label text="{loc:ui.dashboard.tarjetas_amarillas}" class="stat-card-label"/>
+                                                <ui:Label name="StatYellow" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatYellowName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatYellowGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatRedPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatRedIcon" text="{loc:ui.dashboard.stat_red_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.tarjetas_rojas}" class="stat-card-label"/>
+                                                <ui:Label name="StatRed" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatRedName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatRedGames" text="" class="stat-card-games"/>
                                             </ui:VisualElement>
                                         </ui:VisualElement>
                                         <ui:VisualElement class="stat-card">
@@ -227,7 +239,7 @@
                                             </ui:VisualElement>
                                             <ui:Label name="StatMvpIcon" text="{loc:ui.dashboard.stat_mvp_icon}" class="stat-card-icon"/>
                                             <ui:VisualElement class="stat-card-right">
-                                                <ui:Label text="{loc:ui.dashboard.mvp}" class="stat-card-label"/>
+                                                <ui:Label text="{loc:ui.dashboard.mvps}" class="stat-card-label"/>
                                                 <ui:Label name="StatMvp" text="--" class="stat-card-val"/>
                                                 <ui:Label name="StatMvpName" text="" class="stat-card-player"/>
                                                 <ui:Label name="StatMvpGames" text="" class="stat-card-games"/>
@@ -235,26 +247,14 @@
                                         </ui:VisualElement>
                                         <ui:VisualElement class="stat-card">
                                             <ui:VisualElement class="stat-card-photo-wrapper">
-                                                <ui:VisualElement name="StatGamesPhoto" class="stat-card-photo"/>
+                                                <ui:VisualElement name="StatMinutesPhoto" class="stat-card-photo"/>
                                             </ui:VisualElement>
-                                            <ui:Label name="StatGamesIcon" text="{loc:ui.dashboard.stat_games_icon}" class="stat-card-icon"/>
+                                            <ui:Label name="StatMinutesIcon" text="{loc:ui.dashboard.stat_minutes_icon}" class="stat-card-icon"/>
                                             <ui:VisualElement class="stat-card-right">
-                                                <ui:Label text="{loc:ui.dashboard.partidos}" class="stat-card-label"/>
-                                                <ui:Label name="StatGames" text="--" class="stat-card-val"/>
-                                                <ui:Label name="StatGamesName" text="" class="stat-card-player"/>
-                                                <ui:Label name="StatGamesGames" text="" class="stat-card-games"/>
-                                            </ui:VisualElement>
-                                        </ui:VisualElement>
-                                        <ui:VisualElement class="stat-card">
-                                            <ui:VisualElement class="stat-card-photo-wrapper">
-                                                <ui:VisualElement name="StatCardsPhoto" class="stat-card-photo"/>
-                                            </ui:VisualElement>
-                                            <ui:Label name="StatCardsIcon" text="{loc:ui.dashboard.stat_cards_icon}" class="stat-card-icon"/>
-                                            <ui:VisualElement class="stat-card-right">
-                                                <ui:Label text="{loc:ui.dashboard.amarillas}" class="stat-card-label"/>
-                                                <ui:Label name="StatCards" text="--" class="stat-card-val"/>
-                                                <ui:Label name="StatCardsName" text="" class="stat-card-player"/>
-                                                <ui:Label name="StatCardsGames" text="" class="stat-card-games"/>
+                                                <ui:Label text="{loc:ui.dashboard.minutos}" class="stat-card-label"/>
+                                                <ui:Label name="StatMinutes" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatMinutesName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatMinutesGames" text="" class="stat-card-games"/>
                                             </ui:VisualElement>
                                         </ui:VisualElement>
                                     </ui:VisualElement>

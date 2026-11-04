@@ -390,6 +390,10 @@
       "value": "Media equipo"
     },
     {
+      "key": "ui.dashboard.minutos",
+      "value": "MINUTOS"
+    },
+    {
       "key": "ui.dashboard.moral_del_equipo",
       "value": "MORAL DEL EQUIPO"
     },
@@ -404,6 +408,10 @@
     {
       "key": "ui.dashboard.mvp",
       "value": "MVP"
+    },
+    {
+      "key": "ui.dashboard.mvps",
+      "value": "MVP'S"
     },
     {
       "key": "ui.dashboard.nav_actualidad",
@@ -746,6 +754,10 @@
       "value": "GO"
     },
     {
+      "key": "ui.dashboard.stat_minutes_icon",
+      "value": "MI"
+    },
+    {
       "key": "ui.dashboard.stat_mvp_icon",
       "value": "MV"
     },
@@ -754,8 +766,24 @@
       "value": "VA"
     },
     {
+      "key": "ui.dashboard.stat_red_icon",
+      "value": "TR"
+    },
+    {
+      "key": "ui.dashboard.stat_yellow_icon",
+      "value": "TA"
+    },
+    {
       "key": "ui.dashboard.tactical",
       "value": "TACTICAL"
+    },
+    {
+      "key": "ui.dashboard.tarjetas_amarillas",
+      "value": "TARJETAS AMARILLAS"
+    },
+    {
+      "key": "ui.dashboard.tarjetas_rojas",
+      "value": "TARJETAS ROJAS"
     },
     {
       "key": "ui.dashboard.te",

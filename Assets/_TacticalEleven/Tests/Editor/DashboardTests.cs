@@ -215,13 +215,17 @@ public class DashboardTests
         Assert.That(root.Q<VisualElement>("PanelBoard"), Is.Not.Null);
         Assert.That(root.Q<VisualElement>("PanelMessages"), Is.Not.Null);
 
-        // Estadísticas de fútbol (no de baloncesto)
+        // Estadísticas de fútbol: goles, asistencias, tarjetas, MVP y minutos.
         Assert.That(root.Q<Label>("StatGoals"), Is.Not.Null);
         Assert.That(root.Q<Label>("StatAssists"), Is.Not.Null);
-        Assert.That(root.Q<Label>("StatRating"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatYellow"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatRed"), Is.Not.Null);
         Assert.That(root.Q<Label>("StatMvp"), Is.Not.Null);
-        Assert.That(root.Q<Label>("StatGames"), Is.Not.Null);
-        Assert.That(root.Q<Label>("StatCards"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatMinutes"), Is.Not.Null);
+
+        Assert.That(root.Q<Label>("StatRating"), Is.Null, "La valoración ya no se muestra");
+        Assert.That(root.Q<Label>("StatGames"), Is.Null, "Los partidos ya no se muestran");
+        Assert.That(root.Q<Label>("StatCards"), Is.Null, "La tarjeta genérica se sustituye por amarillas/rojas");
 
         // Modales
         Assert.That(root.Q<VisualElement>("ConfigModalOverlay"), Is.Not.Null);
@@ -236,8 +240,8 @@ public class DashboardTests
             "Assets/_TacticalEleven/UI/Screens/Dashboard/Dashboard.uxml");
 
         foreach (string football in new[] { "ui.dashboard.goles", "ui.dashboard.asistencias",
-                                            "ui.dashboard.valoracion", "ui.dashboard.mvp",
-                                            "ui.dashboard.partidos", "ui.dashboard.amarillas" })
+                                            "ui.dashboard.tarjetas_amarillas", "ui.dashboard.tarjetas_rojas",
+                                            "ui.dashboard.mvps", "ui.dashboard.minutos" })
             Assert.That(text.Contains(football), Is.True, $"Falta {football}");
 
         foreach (string basketball in new[] { "ui.dashboard.puntos", "ui.dashboard.rebotes",
