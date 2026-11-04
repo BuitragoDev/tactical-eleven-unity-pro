@@ -371,7 +371,8 @@ public class GameResultsController : UIScreenController
 
         if (_mvpName != null) _mvpName.text = PlayerName(mvp.PlayerId);
         if (_mvpTeam != null) _mvpTeam.text = team?.Name ?? "";
-        if (_mvpVal != null) _mvpVal.text = mvp.Rating.ToString("F1");
+        if (_mvpVal != null)
+            _mvpVal.text = mvp.Rating.ToString("F1", System.Globalization.CultureInfo.InvariantCulture);
     }
 
     // ── LÍDERES DEL DÍA ────────────────────────────────────────────────────
@@ -393,7 +394,7 @@ public class GameResultsController : UIScreenController
         FillLeaderboard(_lbRatedBody, _leaderEntries
             .OrderByDescending(e => e.Rating)
             .ThenByDescending(e => e.Goals),
-            e => e.Rating.ToString("F1"));
+            e => e.Rating.ToString("F1", System.Globalization.CultureInfo.InvariantCulture));
     }
 
     private sealed class LeaderEntry

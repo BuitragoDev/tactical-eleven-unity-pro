@@ -449,7 +449,7 @@ public class PreGameController : UIScreenController
         nameBlock.Add(firstName);
         nameBlock.Add(lastName);
 
-        var stat = new Label(value.ToString(format));
+        var stat = new Label(value.ToString(format, System.Globalization.CultureInfo.InvariantCulture));
         stat.AddToClassList("mpv-key-stat");
         stat.AddToClassList(rightSide ? "mpv-key-stat--right" : "mpv-key-stat--left");
 

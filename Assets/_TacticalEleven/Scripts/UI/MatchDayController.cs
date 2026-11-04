@@ -310,7 +310,7 @@ public class MatchDayController : UIScreenController
             row.Add(Cell(stat.Saves.ToString(), "col-saves"));
             row.Add(Cell(stat.YellowCard.ToString(), "col-yellow"));
             row.Add(Cell(stat.RedCard.ToString(), "col-red"));
-            row.Add(Cell(stat.Rating.ToString("F1"), "col-rating"));
+            row.Add(Cell(stat.Rating.ToString("F1", System.Globalization.CultureInfo.InvariantCulture), "col-rating"));
 
             body.Add(row);
         }
