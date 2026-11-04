@@ -446,13 +446,14 @@ public class PreseasonController : UIScreenController
             return;
         }
 
-        // 2. Generar el calendario de liga. Sin calendario no hay partida.
+        // 2. Generar la temporada completa (ligas, Europa y Copa). Sin calendario
+        // no hay partida: no se escriben los metadatos del slot.
         if (db.GetGamesByType(_season.Id, DatabaseManager.GameTypeRegular).Count == 0)
         {
-            int leagueGames = db.GenerateLeagueSchedule(_season);
-            if (leagueGames <= 0)
+            int seasonGames = db.GenerateFullSeason(_season);
+            if (seasonGames <= 0)
             {
-                Debug.LogError("[Preseason] No se pudo generar el calendario de liga.");
+                Debug.LogError("[Preseason] No se pudo generar el calendario de la temporada.");
                 ShowCommitError();
                 return;
             }

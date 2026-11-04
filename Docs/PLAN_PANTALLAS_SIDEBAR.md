@@ -44,7 +44,7 @@
 | Fase | Contenido | Pantallas | Hechas |
 |---|---|---|---:|---:|
 | **S0** | Chasis común (header/sidebar, Dashboard) | 1 | 1 |
-| **S1** | Competiciones: calendario, resultados, clasificación, info | 4 | 0 |
+| **S1** | Competiciones: calendario, resultados, clasificación, info | 4 | 1 |
 | **S2** | Plantilla: jugadores, alineación, táctica, dorsales | 4 | 0 |
 | **S3** | Entrenamiento y salud: entrenamiento, cuerpo técnico, enfermería | 3 | 0 |
 | **S4** | Cantera y rivalidades: filial/cantera, rivalidades | 2 | 0 |
@@ -53,7 +53,7 @@
 | **S7** | Club: ciudad, estadio | 2 | 0 |
 | **S8** | Manager y actualidad: manager, logros, noticias, hilos | 4 | 0 |
 | **S9** | Estadísticas y palmarés: stats, palmarés, récords, premios, eliminatorias | 5 | 0 |
-| **Total** | | **33** | **1** |
+| **Total** | | **33** | **2** |
 
 ---
 
@@ -74,10 +74,13 @@
 **Reglas puras nuevas/necesarias:** `LeagueTable` (ya existe), desempate `particular → DG → GF`,
 zonas (Champions/Europa/Conference/descenso), formato por competición.
 
-- [ ] **Calendario** (`Calendar`)
+- [x] **Calendario** (`Calendar`)
   - Origen: `Tactical5/UI/Screens/Calendar`.
-  - Fútbol: 38/42/38 jornadas, sábados/domingos, parones FIFA/Navidad, Copa y Europa.
-  - Datos: `games` (`GetGamesBySeason`, filtros por mes/competición), `seasons`.
+  - Implementado: rejilla mensual, navegación por meses, puntos por competición, detalle del día
+    y partidos de todas las competiciones.
+  - Generación realista al confirmar la pretemporada: ligas en fin de semana, **Champions martes**,
+    **Europa miércoles**, **Conference jueves** y **Copa en martes/miércoles libres**.
+  - Datos: `games` (`GetGamesBySeason`), `seasons`.
 - [ ] **Resultados** (`Results`)
   - Origen: `Tactical5/UI/Screens/Results`.
   - Fútbol: resultados por jornada con todos los partidos; filtros por competición del día
@@ -96,6 +99,15 @@ zonas (Champions/Europa/Conference/descenso), formato por competición.
 
 **Aceptación S1:** clasificación correcta tras cualquier jornada; desempates probados; calendario
 navegable por meses; resultados filtrables por competición.
+
+**Notas de calendario (S1):**
+- La temporada se genera completa en `Preseason → CONTINUAR` con `DatabaseManager.GenerateFullSeason`.
+- `CompetitionCalendarRules` fija los días: ligas en fin de semana; Champions martes, Europa
+  miércoles y Conference jueves; Copa en martes/miércoles.
+- `EuropeScheduleGenerator` genera 8 jornadas de 36 equipos (cada club, 8 rivales distintos).
+- `CupScheduleGenerator` genera la **ronda preliminar** de Copa (82 clubes españoles → 64);
+  las rondas siguientes se crean en F13 cuando se conocen los clasificados.
+- El generador evita que un equipo juegue dos partidos con menos de **48 h** de descanso.
 
 ---
 

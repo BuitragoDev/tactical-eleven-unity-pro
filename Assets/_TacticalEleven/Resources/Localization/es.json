@@ -2,6 +2,74 @@
   "language": "es",
   "entries": [
     {
+      "key": "ui.calendar.amistoso",
+      "value": "AMISTOSO"
+    },
+    {
+      "key": "ui.calendar.calendario",
+      "value": "CALENDARIO"
+    },
+    {
+      "key": "ui.calendar.dom",
+      "value": "DOM"
+    },
+    {
+      "key": "ui.calendar.jue",
+      "value": "JUE"
+    },
+    {
+      "key": "ui.calendar.leyenda_champions",
+      "value": "CHAMPIONS"
+    },
+    {
+      "key": "ui.calendar.leyenda_conference",
+      "value": "CONFERENCE"
+    },
+    {
+      "key": "ui.calendar.leyenda_copa",
+      "value": "COPA"
+    },
+    {
+      "key": "ui.calendar.leyenda_europa",
+      "value": "EUROPA"
+    },
+    {
+      "key": "ui.calendar.leyenda_liga",
+      "value": "LIGA"
+    },
+    {
+      "key": "ui.calendar.lun",
+      "value": "LUN"
+    },
+    {
+      "key": "ui.calendar.mar",
+      "value": "MAR"
+    },
+    {
+      "key": "ui.calendar.mie",
+      "value": "MIÉ"
+    },
+    {
+      "key": "ui.calendar.no_games_text",
+      "value": "No hay partidos este día."
+    },
+    {
+      "key": "ui.calendar.sab",
+      "value": "SÁB"
+    },
+    {
+      "key": "ui.calendar.subtitle",
+      "value": "Temporada {0}-{1} · {2}"
+    },
+    {
+      "key": "ui.calendar.vie",
+      "value": "VIE"
+    },
+    {
+      "key": "ui.calendar.vs",
+      "value": "VS"
+    },
+    {
       "key": "ui.common.manager",
       "value": "Manager: {0}"
     },

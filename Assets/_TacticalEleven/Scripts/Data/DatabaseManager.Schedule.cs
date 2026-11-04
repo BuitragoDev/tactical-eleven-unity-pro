@@ -66,6 +66,108 @@ public partial class DatabaseManager
     }
 
     /// <summary>
+    /// Genera la temporada completa al confirmar la pretemporada: ligas españolas,
+    /// fase de liga europea (Champions martes, Europa miércoles, Conference jueves)
+    /// y ronda preliminar de Copa en martes/miércoles libres.
+    ///
+    /// Evita que un equipo juegue dos partidos con menos de 48 h de descanso.
+    /// </summary>
+    public int GenerateFullSeason(SeasonDataDB season, IRandomSource random = null)
+    {
+        if (!EnsureDb() || season == null) return -1;
+
+        // Fechas europeas y de Copa: las ligas evitarán esos miércoles (±1 día).
+        var europeDates = new List<DateTime>();
+        foreach (int competitionId in new[] { 5, 6, 7 })
+            europeDates.AddRange(CompetitionCalendarRules.EuropeRoundDates(season.YearStart, competitionId));
+
+        var cupDates = CompetitionCalendarRules.CupRoundDates(season.YearStart);
+
+        var avoidMidweek = new HashSet<DateTime>();
+        foreach (var date in europeDates.Concat(cupDates))
+        {
+            for (int offset = -1; offset <= 1; offset++)
+                avoidMidweek.Add(date.AddDays(offset));
+        }
+
+        // 1. Ligas españolas (1ª, 2ª y los dos grupos de 1ª RFEF).
+        var regularFixtures = new List<ScheduledFixture>();
+        foreach (int leagueId in new[] { 1, 2, 3, 4 })
+        {
+            var teamIds = GetTeamsByLeague(leagueId).Select(t => t.Id).ToList();
+            if (teamIds.Count < 2) continue;
+
+            regularFixtures.AddRange(
+                FootballScheduleGenerator.GenerateLeague(
+                    teamIds, season.YearStart, leagueId, random, avoidMidweek));
+        }
+
+        // 2. Europa: clubes de la competición + españoles clasificados.
+        var allTeams = GetAllTeams();
+        var europeFixtures = new List<ScheduledFixture>();
+
+        foreach (int competitionId in new[] { 5, 6, 7 })
+        {
+            var teamIds = GetTeamsByLeague(competitionId).Select(t => t.Id).ToList();
+            teamIds.AddRange(allTeams
+                .Where(t => t.EuropeanCompetitionId == competitionId && !teamIds.Contains(t.Id))
+                .Select(t => t.Id));
+
+            teamIds = teamIds.Distinct().ToList();
+            if (teamIds.Count < 4) continue;
+
+            europeFixtures.AddRange(
+                EuropeScheduleGenerator.Generate(teamIds, competitionId, season.YearStart, random));
+        }
+
+        // 3. Disponibilidad para colocar la Copa sin choques.
+        var availability = new Dictionary<int, List<DateTime>>();
+        AddAvailability(availability, regularFixtures);
+        AddAvailability(availability, europeFixtures);
+
+        var spanishTeams = new[] { 1, 2, 3, 4 }
+            .SelectMany(GetTeamsByLeague)
+            .ToList();
+
+        var cupFixtures = CupScheduleGenerator.GeneratePreliminary(
+            spanishTeams, season.YearStart, availability, random);
+
+        // 4. Persistencia por tipo de competición.
+        ReplaceGames(season.Id, GameTypeRegular,
+            regularFixtures.Select(f => ToGame(season, f)).ToList());
+        ReplaceGames(season.Id, GameTypeEurope,
+            europeFixtures.Select(f => ToGame(season, f)).ToList());
+        ReplaceGames(season.Id, GameTypeCup,
+            cupFixtures.Select(f => ToGame(season, f)).ToList());
+
+        season.TotalMatchDays = regularFixtures.Count > 0
+            ? regularFixtures.Max(f => f.MatchDay)
+            : 0;
+        UpdateSeason(season);
+
+        int total = regularFixtures.Count + europeFixtures.Count + cupFixtures.Count;
+        Debug.Log($"[Schedule] Temporada completa: {regularFixtures.Count} liga, " +
+                  $"{europeFixtures.Count} Europa, {cupFixtures.Count} Copa.");
+
+        return total;
+    }
+
+    private static void AddAvailability(IDictionary<int, List<DateTime>> availability,
+                                        IEnumerable<ScheduledFixture> fixtures)
+    {
+        foreach (var fixture in fixtures)
+        {
+            if (!availability.TryGetValue(fixture.HomeTeamId, out var home))
+                availability[fixture.HomeTeamId] = home = new List<DateTime>();
+            home.Add(fixture.Date);
+
+            if (!availability.TryGetValue(fixture.AwayTeamId, out var away))
+                availability[fixture.AwayTeamId] = away = new List<DateTime>();
+            away.Add(fixture.Date);
+        }
+    }
+
+    /// <summary>
     /// Genera y guarda los amistosos de pretemporada por defecto (4, contra
     /// rivales de menor nivel). Devuelve cuántos se guardaron.
     /// </summary>

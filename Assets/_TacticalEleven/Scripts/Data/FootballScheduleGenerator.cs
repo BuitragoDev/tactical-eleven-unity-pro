@@ -48,12 +48,13 @@ public static class FootballScheduleGenerator
         IList<int> teamIds,
         int yearStart,
         int competitionId,
-        IRandomSource random = null)
+        IRandomSource random = null,
+        ISet<DateTime> avoidMidweek = null)
     {
         var fixtures = GenerateDoubleRoundRobin(teamIds, random);
 
         int matchDays = fixtures.Count == 0 ? 0 : fixtures.Max(f => f.MatchDay);
-        var roundDates = FootballCalendar.LeagueRoundDates(yearStart, matchDays);
+        var roundDates = FootballCalendar.LeagueRoundDates(yearStart, matchDays, avoidMidweek);
 
         if (roundDates.Count < matchDays)
             throw new InvalidOperationException(

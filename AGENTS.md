@@ -93,7 +93,7 @@ fútbol en lugar de baloncesto.
 | F3 | ✅ | **4.184 jugadores**, `PlayerRating`, 437 finales, 69 premios y 32 Pichichis |
 | F4 | ✅ | Menú, modal de configuración, Cargar partida, aviso legal, salir |
 | F5 | ✅ | Selección de equipo (4 pestañas), filiales deshabilitados, ProManager (solo 1ª RFEF), manager + temporada, plantilla con banderas |
-| **F6** | ✅ | **Pretemporada y calendario de liga**: doble vuelta 38/42/38, parones FIFA/Navidad, 48 h de descanso, pretemporada vacía de hasta 4 amistosos con filtros y pantalla `Preseason` |
+| **F6** | ✅ | **Pretemporada y calendario**: doble vuelta 38/42/38, parones FIFA/Navidad, 48 h de descanso y **temporada completa al confirmar** (ligas + Champions martes + Europa miércoles + Conference jueves + Copa en martes/miércoles); pantalla `Preseason` |
 | **F7** | ✅ | **Dashboard (réplica de Tactical5), header, sidebar y avance de día**: `LeagueTable`, `SeasonObjective`, `GameDayRules`, `DatabaseManager.AdvanceDay`, `SidebarController` y pantalla `Dashboard` con estadísticas de fútbol; tests `DashboardTests` |
 | **F8** | 🚧 **En curso** | **Motor de partido y pantallas**: motor, persistencia y pantallas `PreGame`/`MatchDay`/`GameResults`. **F8b (play-by-play y 2D) en pausa**: el foco pasa a las pantallas del sidebar (ver `Docs/PLAN_PANTALLAS_SIDEBAR.md`) |
 | F9…F18 | — | Competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |

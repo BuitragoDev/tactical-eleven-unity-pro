@@ -84,7 +84,8 @@ public static class FootballCalendar
     /// Fechas ancla de todas las jornadas de liga (una por jornada), en orden.
     /// Los fines de semana son sábados; las jornadas entre semana, miércoles.
     /// </summary>
-    public static List<DateTime> LeagueRoundDates(int yearStart, int matchDays)
+    public static List<DateTime> LeagueRoundDates(int yearStart, int matchDays,
+                                                  ISet<DateTime> avoidMidweek = null)
     {
         if (matchDays <= 0) return new List<DateTime>();
 
@@ -105,6 +106,7 @@ public static class FootballCalendar
             {
                 if (date.DayOfWeek != DayOfWeek.Wednesday) continue;
                 if (IsBreak(date)) continue;
+                if (avoidMidweek != null && avoidMidweek.Contains(date.Date)) continue;
                 // Sin pegarse a un fin de semana ya ocupado (mínimo 48 h de descanso).
                 if (weekends.Any(s => Math.Abs((s - date).TotalDays) < 3)) continue;
                 midweek.Add(date);
