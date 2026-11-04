@@ -489,9 +489,11 @@ public class DashboardController : UIScreenController
         var element = new VisualElement();
         element.AddToClassList("standings-row");
 
+        if (position <= 4) element.AddToClassList("standings-row--champions");
+        else if (position <= 6) element.AddToClassList("standings-row--europa");
+        else if (position == 7) element.AddToClassList("standings-row--conference");
+
         if (row.TeamId == _myTeam.Id) element.AddToClassList("standings-row--my-team");
-        else if (position <= 6) element.AddToClassList("standings-row--playoff");
-        else if (position <= 10) element.AddToClassList("standings-row--playin");
 
         element.Add(Cell(position.ToString(), "col-rank"));
 

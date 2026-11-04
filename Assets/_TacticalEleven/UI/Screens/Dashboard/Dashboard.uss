@@ -824,13 +824,17 @@
     border-left-width: 3px;
     border-left-color: rgb(42, 95, 201);
 }
-.standings-row--playoff {
-    border-left-width: 2px;
-    border-left-color: rgb(39, 174, 96);
+.standings-row--champions {
+    border-left-width: 3px;
+    border-left-color: rgb(59, 130, 246);
 }
-.standings-row--playin {
+.standings-row--europa {
     border-left-width: 2px;
-    border-left-color: rgb(212, 160, 23);
+    border-left-color: rgb(245, 130, 32);
+}
+.standings-row--conference {
+    border-left-width: 2px;
+    border-left-color: rgb(34, 197, 94);
 }
 
 .col-rank {
