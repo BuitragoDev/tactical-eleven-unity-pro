@@ -418,6 +418,14 @@
       "value": "1ª RFEF"
     },
     {
+      "key": "ui.preseason.filtro_espana",
+      "value": "ESPAÑA"
+    },
+    {
+      "key": "ui.preseason.filtro_europa",
+      "value": "EUROPA"
+    },
+    {
       "key": "ui.preseason.local",
       "value": "LOCAL"
     },

@@ -356,6 +356,19 @@
     flex-shrink: 0;
     margin-bottom: 14px;
     margin-left: 10px;
+    align-items: center;
+}
+.filters-group-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgb(212, 160, 23);
+    margin-right: 10px;
+    -unity-text-align: middle-center;
+}
+.filters-group-label--europe {
+    margin-left: 20px;
 }
 .filter-btn {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");

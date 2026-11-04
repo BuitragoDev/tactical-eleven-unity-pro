@@ -51,12 +51,14 @@
 
             <!-- Filtros por competición -->
             <ui:VisualElement name="FiltersBar" class="filters-bar">
+                <ui:Label text="{loc:ui.preseason.filtro_espana}" class="filters-group-label" />
                 <ui:Button name="FilterLaliga" class="filter-btn filter-btn--active"
                            text="{loc:ui.preseason.filter_laliga}" />
                 <ui:Button name="FilterLaliga2" class="filter-btn"
                            text="{loc:ui.preseason.filter_laliga2}" />
                 <ui:Button name="FilterRfef" class="filter-btn"
                            text="{loc:ui.preseason.filter_rfef}" />
+                <ui:Label text="{loc:ui.preseason.filtro_europa}" class="filters-group-label filters-group-label--europe" />
                 <ui:Button name="FilterChampions" class="filter-btn"
                            text="{loc:ui.preseason.filter_champions}" />
                 <ui:Button name="FilterEuropa" class="filter-btn"
