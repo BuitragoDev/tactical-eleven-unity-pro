@@ -23,8 +23,14 @@ public static class HeaderController
 
         var existing = container.Q<VisualElement>("TopHeader");
 
-        // Ya está en la posición correcta (hijo directo del contenedor).
-        if (existing != null && existing.parent == container)
+        // Ya está en la posición correcta: hijo directo o dentro de su
+        // TemplateContainer (cuando el header se inyecta desde Header.uxml).
+        bool alreadyAtTop = existing != null
+            && (existing.parent == container
+                || (existing.parent is TemplateContainer templateParent
+                    && templateParent.parent == container));
+
+        if (alreadyAtTop)
         {
             Populate(existing);
             return;
@@ -51,7 +57,11 @@ public static class HeaderController
             container.RemoveAt(0);
         }
 
-        var sidebar = children.FirstOrDefault(c => c.name == "Sidebar");
+        // La sidebar se inyecta como TemplateContainer: su raíz real "Sidebar"
+        // está dentro, así que se busca por nombre en el subárbol.
+        var sidebar = children.FirstOrDefault(c =>
+            c.name == "Sidebar" || c.Q<VisualElement>("Sidebar") != null);
+
         var main = children.FirstOrDefault(c => c != sidebar && !IsOverlay(c));
         var rest = children.Where(c => c != sidebar && c != main).ToList();
 
