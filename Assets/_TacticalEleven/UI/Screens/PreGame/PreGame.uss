@@ -662,3 +662,17 @@
 .mpv-key-player--right {
     justify-content: flex-start;
 }
+
+/* Alineación fija de los valores: no depende del largo del nombre del jugador */
+.mpv-key-player {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
+}
+.mpv-key-row .mpv-key-name {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
+}
