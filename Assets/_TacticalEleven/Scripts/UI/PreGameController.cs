@@ -34,7 +34,7 @@ public class PreGameController : UIScreenController
     private List<GameDataDB> _regularGames = new();
     private List<TeamDataDB> _leagueTeams = new();
     private readonly Dictionary<string, Sprite> _logos = new();
-    private readonly Dictionary<int, (int TeamId, int Goals, int Assists)> _seasonStats = new();
+    private readonly Dictionary<int, (int TeamId, int Goals, int Assists, double Rating)> _seasonStats = new();
 
     protected override void CacheReferences()
     {
@@ -90,7 +90,7 @@ public class PreGameController : UIScreenController
         _seasonStats.Clear();
         foreach (var stat in db.Db.Table<PlayerSeasonStatsDB>()
                      .Where(st => st.SeasonYear == _season.YearStart).ToList())
-            _seasonStats[stat.PlayerId] = (stat.TeamId, stat.Goals, stat.Assists);
+            _seasonStats[stat.PlayerId] = (stat.TeamId, stat.Goals, stat.Assists, stat.AverageRating);
 
         _game = ResolveGame(db);
         if (_game == null) return;
@@ -368,44 +368,45 @@ public class PreGameController : UIScreenController
         var rows = new[] { _keyRow1, _keyRow2, _keyRow3, _keyRow4 };
         foreach (var row in rows) row?.Clear();
 
-        // Dos filas: goles y asistencias. Cada una enfrenta al mejor de cada equipo.
-        FillKeyRow(_keyRow1, "ui.pre_game.key_goals", stat => stat.Goals);
-        FillKeyRow(_keyRow2, "ui.pre_game.key_assists", stat => stat.Assists);
+        // Goles, asistencias y mejor nota media.
+        FillKeyRow(_keyRow1, "ui.pre_game.key_goals", stat => stat.Goals, "0");
+        FillKeyRow(_keyRow2, "ui.pre_game.key_assists", stat => stat.Assists, "0");
+        FillKeyRow(_keyRow3, "ui.pre_game.key_rating", stat => stat.Rating, "F1");
 
-        SetVisible(_keyRow3, false);
         SetVisible(_keyRow4, false);
     }
 
     private void FillKeyRow(VisualElement row, string labelKey,
-                            System.Func<(int TeamId, int Goals, int Assists), int> selector)
+                            System.Func<(int TeamId, int Goals, int Assists, double Rating), double> selector,
+                            string format)
     {
         if (row == null) return;
 
         var home = BestBy(_home, selector);
         var away = BestBy(_away, selector);
 
-        AddKeySide(row, home.Player, _home, home.Value, false);
+        AddKeySide(row, home.Player, _home, home.Value, format, false);
 
         var label = new Label(LocalizationService.T(labelKey));
         label.AddToClassList("mpv-key-label");
         row.Add(label);
 
-        AddKeySide(row, away.Player, _away, away.Value, true);
+        AddKeySide(row, away.Player, _away, away.Value, format, true);
     }
 
-    private (PlayerDataDB Player, int Value) BestBy(
-        TeamDataDB team, System.Func<(int TeamId, int Goals, int Assists), int> selector)
+    private (PlayerDataDB Player, double Value) BestBy(
+        TeamDataDB team, System.Func<(int TeamId, int Goals, int Assists, double Rating), double> selector)
     {
         var players = DatabaseManager.Instance.GetPlayersByTeam(team.Id);
         if (players.Count == 0) return (null, 0);
 
         PlayerDataDB best = null;
-        int bestValue = -1;
+        double bestValue = -1;
 
         foreach (var player in players)
         {
             if (!_seasonStats.TryGetValue(player.Id, out var stat)) continue;
-            int value = selector(stat);
+            double value = selector(stat);
             if (value > bestValue)
             {
                 bestValue = value;
@@ -424,7 +425,7 @@ public class PreGameController : UIScreenController
     }
 
     private void AddKeySide(VisualElement row, PlayerDataDB player, TeamDataDB team,
-                            int value, bool rightSide)
+                            double value, string format, bool rightSide)
     {
         if (row == null || player == null) return;
 
@@ -448,7 +449,7 @@ public class PreGameController : UIScreenController
         nameBlock.Add(firstName);
         nameBlock.Add(lastName);
 
-        var stat = new Label(value.ToString());
+        var stat = new Label(value.ToString(format));
         stat.AddToClassList("mpv-key-stat");
         stat.AddToClassList(rightSide ? "mpv-key-stat--right" : "mpv-key-stat--left");
 

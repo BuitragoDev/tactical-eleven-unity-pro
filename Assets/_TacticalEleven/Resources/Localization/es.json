@@ -1626,6 +1626,10 @@
       "value": "GOLES"
     },
     {
+      "key": "ui.pre_game.key_rating",
+      "value": "MEJOR NOTA"
+    },
+    {
       "key": "ui.pre_game.key_stats",
       "value": "Goles: {0} · Asist: {1}"
     },
