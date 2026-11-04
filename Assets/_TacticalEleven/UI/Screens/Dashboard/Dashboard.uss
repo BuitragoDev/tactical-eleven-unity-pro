@@ -2864,12 +2864,12 @@
     flex-basis: 450px;
 }
 .panel-messages--col {
-    width: 340px;
-    min-width: 340px;
-    max-width: 340px;
+    width: 380px;
+    min-width: 380px;
+    max-width: 380px;
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 340px;
+    flex-basis: 380px;
 }
 .center-column {
     flex-grow: 1;
