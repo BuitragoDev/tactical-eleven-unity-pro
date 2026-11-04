@@ -183,20 +183,80 @@ public class DashboardTests
     // ── PANTALLA ───────────────────────────────────────────────────────────
 
     [Test]
-    public void DashboardUxml_HasHeaderSidebarCardsAndDayButton()
+    public void DashboardUxml_ReplicatesTactical5Layout()
     {
         var uxml = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
             "Assets/_TacticalEleven/UI/Screens/Dashboard/Dashboard.uxml");
         Assert.That(uxml, Is.Not.Null, "Falta Dashboard.uxml o no importa como VisualTreeAsset");
 
         var root = uxml.CloneTree();
-        Assert.That(root.Q<VisualElement>("HeaderLogo"), Is.Not.Null);
-        Assert.That(root.Q<Label>("HeaderDate"), Is.Not.Null);
+
+        // Header
+        Assert.That(root.Q<VisualElement>("HeaderTeamLogo"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderTeamName"), Is.Not.Null);
         Assert.That(root.Q<Label>("HeaderBudget"), Is.Not.Null);
-        Assert.That(root.Q<VisualElement>("SidebarContent"), Is.Not.Null);
-        Assert.That(root.Q<VisualElement>("StandingsBody"), Is.Not.Null);
-        Assert.That(root.Q<Label>("ObjectiveValue"), Is.Not.Null);
-        Assert.That(root.Q<Button>("BtnAdvance"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderPayroll"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderReputation"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderChemistry"), Is.Not.Null);
+        Assert.That(root.Q<Button>("BtnAction"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("ConfigIcon"), Is.Not.Null);
+
+        // Paneles
+        Assert.That(root.Q<VisualElement>("PanelLastGame"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("PanelNextGame"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("PanelTeamStats"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("PanelStandings"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("PanelPlayerStats"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("PanelBoard"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("PanelMessages"), Is.Not.Null);
+
+        // Estadísticas de fútbol (no de baloncesto)
+        Assert.That(root.Q<Label>("StatGoals"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatAssists"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatRating"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatMvp"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatGames"), Is.Not.Null);
+        Assert.That(root.Q<Label>("StatCards"), Is.Not.Null);
+
+        // Modales
         Assert.That(root.Q<VisualElement>("ConfigModalOverlay"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("ConfigMainMenuConfirmOverlay"), Is.Not.Null);
+        Assert.That(root.Q<VisualElement>("ConfigExitConfirmOverlay"), Is.Not.Null);
+    }
+
+    [Test]
+    public void DashboardUxml_UsesFootballStatsInsteadOfBasketball()
+    {
+        string text = System.IO.File.ReadAllText(
+            "Assets/_TacticalEleven/UI/Screens/Dashboard/Dashboard.uxml");
+
+        foreach (string football in new[] { "ui.dashboard.goles", "ui.dashboard.asistencias",
+                                            "ui.dashboard.valoracion", "ui.dashboard.mvp",
+                                            "ui.dashboard.partidos", "ui.dashboard.amarillas" })
+            Assert.That(text.Contains(football), Is.True, $"Falta {football}");
+
+        foreach (string basketball in new[] { "ui.dashboard.puntos", "ui.dashboard.rebotes",
+                                              "ui.dashboard.robos", "ui.dashboard.tapones" })
+            Assert.That(text.Contains(basketball), Is.False, $"No debe quedar {basketball}");
+    }
+
+    [Test]
+    public void SidebarUxml_UsesFootballNavigationAndEstadio()
+    {
+        const string path = "Assets/_TacticalEleven/UI/Resources/UI/Core/Sidebar.uxml";
+        string text = System.IO.File.ReadAllText(path);
+
+        Assert.That(text.Contains("{loc:ui.core_sidebar.estadio}"), Is.True,
+            "La sidebar debe llamar Estadio al recinto");
+        Assert.That(text.Contains("Pabellón") || text.Contains("pabellon"), Is.False,
+            "No debe quedar 'Pabellón' en la sidebar");
+        Assert.That(text.Contains("Quinteto") || text.Contains("quinteto"), Is.False,
+            "No debe quedar 'Quinteto' en la sidebar");
+        Assert.That(text.Contains("{loc:ui.core_sidebar.alineacion}"), Is.True);
+        Assert.That(text.Contains("{loc:ui.core_sidebar.tactica}"), Is.True);
+        Assert.That(text.Contains("{loc:ui.core_sidebar.filial}"), Is.True);
+
+        Assert.That(LocalizationService.T("ui.core_sidebar.estadio"), Is.EqualTo("ESTADIO"));
+        Assert.That(LocalizationService.T("ui.core_sidebar.alineacion"), Is.EqualTo("ALINEACIÓN"));
     }
 }

@@ -1,504 +1,1814 @@
 /* ══════════════════════════════════════════
-   F7 — DASHBOARD (header, sidebar y hub)
+   DASHBOARD — Dashboard.uss
    ══════════════════════════════════════════ */
 
-.dash-root {
-    flex-grow: 1;
-    background-color: rgb(11, 16, 23);
-    flex-direction: column;
+/* ── ROOT ── */
+.dashboard-root {
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(15, 17, 23);
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
 }
 
-/* ── HEADER ── */
-.dash-header {
+/* ══════════════════════════════════════════
+   SIDEBAR
+   ══════════════════════════════════════════ */
+.sidebar {
+    width: 200px;
+    height: 100%;
+    flex-shrink: 0;
+    flex-direction: column;
+    background-color: rgb(11, 14, 20);
+    border-right-width: 1px;
+    border-right-color: rgb(28, 33, 48);
+}
+
+.sidebar-logo {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+    height: 100px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(28, 33, 48);
+    flex-shrink: 0;
+}
+.sidebar-logo-icon {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    background-color: rgb(212, 160, 23);
+    color: rgb(0, 0, 0);
+    font-size: 28px;
+    padding: 4px 8px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+.sidebar-logo-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+}
+.sidebar-logo-text-gold {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: rgb(212, 160, 23);
+    text-transform: uppercase;
+}
+
+.sidebar-nav {
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 8px 0;
+    overflow: hidden;
+    background-color: rgb(0, 0, 0);
+}
+
+.nav-item {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 12px;
+    border-width: 0;
+    background-color: rgb(0, 0, 0);
+}
+.nav-item:hover {
+    background-color: rgb(22, 26, 36);
+}
+.nav-item--active {
+    background-color: rgb(20, 28, 48);
+    border-left-width: 3px;
+    border-left-color: rgb(42, 95, 201);
+}
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 0;
+}
+.nav-label {
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    margin-left: 18px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.nav-item:hover .nav-label {
+    color: rgb(208, 216, 232);
+}
+.nav-item--active .nav-label {
+    color: rgb(255, 255, 255);
+}
+.nav-arrow {
+    font-size: 10px;
+    color: rgb(122, 138, 170);
+    margin-left: auto;
+    -unity-text-align: middle-right;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+}
+.nav-item:hover .nav-arrow {
+    color: rgb(208, 216, 232);
+}
+.nav-item--active .nav-arrow {
+    color: rgb(255, 255, 255);
+}
+.nav-item:hover {
+    background-color: rgb(22, 26, 36);
+}
+
+/* ── SUBMENÚS ── */
+.nav-submenu {
+    display: none;
+    flex-direction: column;
+    background-color: rgb(8, 10, 14);
+}
+.nav-submenu--visible {
+    display: flex;
+}
+.nav-submenu-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 12px 10px 54px;
+    border-width: 0;
+    background-color: transparent;
+}
+.nav-submenu-item:hover {
+    background-color: rgb(22, 26, 36);
+}
+.nav-submenu-item--active {
+    background-color: rgb(20, 28, 48);
+    border-left-width: 3px;
+    border-left-color: rgb(42, 95, 201);
+}
+.nav-submenu-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    -unity-text-align: middle-left;
+    color: rgb(100, 116, 148);
+}
+.nav-submenu-item:hover .nav-submenu-label {
+    color: rgb(208, 216, 232);
+}
+.nav-submenu-item--active .nav-submenu-label {
+    color: rgb(255, 255, 255);
+}
+.nav-item--active {
+    background-color: rgb(20, 28, 48);
+    border-left-width: 3px;
+    border-left-color: rgb(42, 95, 201);
+}
+.nav-icon {
+    width: 32px;
+    height: 32px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ══════════════════════════════════════════
+   MAIN AREA
+   ══════════════════════════════════════════ */
+.main-area {
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* ── TOP HEADER ── */
+.top-header {
+    flex-direction: row;
+    align-items: center;
+    height: 100px;
+    padding: 0 24px;
+    background-color: rgb(17, 24, 34);
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(42, 51, 71);
+    flex-shrink: 0;
+}
+
+.header-brand {
     flex-direction: row;
     align-items: center;
     flex-shrink: 0;
-    height: 84px;
-    padding: 10px 24px;
-    background-color: rgb(17, 24, 34);
-    border-bottom-width: 1px;
-    border-bottom-color: rgb(30, 45, 61);
+    margin-right: 24px;
 }
-.dash-header-logo {
-    width: 58px;
-    height: 58px;
+.header-brand-icon {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    background-color: rgb(212, 160, 23);
+    color: rgb(0, 0, 0);
+    font-size: 28px;
+    padding: 4px 8px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+.header-brand-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+}
+.header-brand-text-gold {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: rgb(212, 160, 23);
+    text-transform: uppercase;
+}
+
+.header-team-logo {
+    width: 64px;
+    height: 64px;
     margin-right: 14px;
-    background-size: contain;
-    -unity-background-image-tint-color: rgb(255, 255, 255);
     flex-shrink: 0;
 }
-.dash-header-team {
+.header-team-info {
     flex-direction: column;
-    justify-content: center;
-    min-width: 260px;
+    margin-right: 32px;
+    flex-shrink: 0;
 }
-.dash-header-team-name {
+.header-team-name {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 28px;
-    letter-spacing: 1px;
+    font-size: 24px;
+    letter-spacing: 2px;
     color: rgb(255, 255, 255);
+    text-transform: uppercase;
 }
-.dash-header-team-league {
+.header-manager-name {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: rgb(122, 138, 170);
+}
+
+.header-stat {
+    flex-direction: column;
+    margin-right: 28px;
+    flex-shrink: 0;
+}
+.header-stat-label {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
     font-size: 16px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgb(212, 160, 23);
-}
-.dash-header-sep {
-    width: 1px;
-    height: 46px;
-    margin: 0 22px;
-    background-color: rgb(42, 51, 71);
-    flex-shrink: 0;
-}
-.dash-header-meta {
-    flex-direction: column;
-    justify-content: center;
-    margin-right: 30px;
-}
-.dash-header-meta-label {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
     color: rgb(85, 102, 119);
 }
-.dash-header-meta-value {
+.header-stat-value {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 20px;
-    color: rgb(208, 216, 232);
-    white-space: nowrap;
+    font-size: 22px;
+    color: rgb(39, 174, 96);
 }
-.dash-header-settings {
-    margin-left: auto;
-    width: 120px;
-    height: 40px;
+.header-stat-value--negative {
+    color: rgb(192, 57, 43);
+}
+.header-stat-value--neutral {
+    color: rgb(208, 216, 232);
+}
+.header-stat-value--gold {
+    color: rgb(212, 160, 23);
+}
+
+.header-spacer {
+    flex-grow: 1;
+}
+
+.header-config-icon {
+    width: 32px;
+    height: 32px;
+    margin-left: 18px;
+    background-image: url("project://database/Assets/_TacticalEleven/Art/Resources/Icons/configuracion.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+.header-config-icon:hover {
+    opacity: 0.7;
+}
+
+.header-season-info {
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 24px;
+    flex-shrink: 0;
+}
+.header-season-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: rgb(212, 160, 23);
+    text-transform: uppercase;
+}
+.header-date-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: rgb(122, 138, 170);
+}
+
+/* Anillo de carga giratorio */
+.loading-spinner {
+    width: 28px;
+    height: 28px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-top-color: rgb(212, 160, 23);
+    border-right-color: rgb(30, 35, 45);
+    border-bottom-color: rgb(30, 35, 45);
+    border-left-color: rgb(30, 35, 45);
+    border-radius: 14px;
+    flex-shrink: 0;
+    margin: auto 10px auto 0;
+}
+
+/* Transición Previa → MatchDay */
+.match-transition-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgb(15, 17, 23);
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+.match-transition-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.match-transition-spinner {
+    width: 48px;
+    height: 48px;
+    margin: 0 0 22px 0;
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-radius: 24px;
+}
+.match-transition-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 30px;
+    letter-spacing: 3px;
+    color: rgb(212, 160, 23);
+    text-transform: uppercase;
+    -unity-text-align: middle-center;
+}
+.match-transition-subtitle {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: rgb(179, 190, 214);
+    margin-top: 8px;
+    -unity-text-align: middle-center;
+}
+
+/* Botón acción principal */
+.btn-action {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    width: 250px;
+    background-color: rgb(20, 28, 45);
+    border-width: 2px;
+    border-color: rgb(42, 95, 201);
+    color: rgb(120, 160, 230);
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+.btn-action:hover {
+    background-color: rgb(24, 40, 71);
+    color: rgb(150, 190, 255);
+}
+.btn-action--match {
+    background-color: rgb(37, 35, 28);
+    border-color: rgb(212, 160, 23);
+    color: rgb(212, 160, 23);
+}
+.btn-action--match:hover {
+    background-color: rgb(66, 56, 27);
+    color: rgb(240, 192, 64);
+}
+.btn-action--simulate {
+    background-color: rgb(20, 28, 45);
+    border-width: 2px;
+    border-color: rgb(42, 95, 201);
+    color: rgb(120, 160, 230);
+}
+.btn-action--simulate:hover {
+    background-color: rgb(24, 40, 71);
+}
+
+/* ── CONTENT AREA ── */
+.content-area {
+    flex-grow: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.content-scroll {
+    flex-grow: 1;
+    min-height: 0;
+}
+.content-scroll > #unity-content-viewport > #unity-content-container {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* ── GRID DE PANELS ── */
+.panels-grid {
+    flex-direction: column;
+    padding: 16px 20px 20px 20px;
+    flex-grow: 1;
+}
+
+.panels-row {
+    flex-direction: row;
+    margin-bottom: 16px;
+    align-items: stretch;
+    flex-shrink: 0;
+}
+
+/* Panel base */
+.panel {
+    flex-direction: column;
     background-color: rgb(22, 26, 36);
     border-width: 1px;
     border-color: rgb(42, 51, 71);
-    border-radius: 6px;
-    color: rgb(122, 138, 170);
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    -unity-text-align: middle-center;
-}
-.dash-header-settings:hover {
-    color: rgb(208, 216, 232);
-    border-color: rgb(58, 74, 99);
-}
-
-/* ── CUERPO ── */
-.dash-body {
-    flex-direction: row;
-    flex-grow: 1;
-    min-height: 0;
-}
-
-/* ── SIDEBAR ── */
-.dash-sidebar {
-    width: 252px;
-    min-width: 252px;
-    flex-shrink: 0;
-    flex-direction: row;
-    background-color: rgb(14, 19, 27);
-    border-right-width: 1px;
-    border-right-color: rgb(30, 45, 61);
-}
-.dash-sidebar-viewport {
-    flex-grow: 1;
-    min-height: 0;
+    border-radius: 2px;
+    margin-right: 16px;
+    padding: 0;
     overflow: hidden;
-    position: relative;
-}
-.dash-sidebar-content {
-    flex-direction: column;
-    padding: 14px 12px 20px 12px;
-}
-.dash-sidebar-scrollbar {
-    width: 8px;
-    min-width: 8px;
-    flex-shrink: 0;
-    align-self: stretch;
-    margin: 6px 2px;
-    background-color: rgb(18, 24, 34);
-    border-radius: 4px;
-    position: relative;
-}
-.dash-sidebar-scrollbar-thumb {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background-color: rgb(58, 74, 99);
-    border-radius: 4px;
-}
-.dash-nav-group {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgb(85, 102, 119);
-    margin: 14px 8px 6px 8px;
-}
-.dash-nav-btn {
-    height: 30px;
-    margin-bottom: 1px;
-    padding-left: 12px;
-    background-color: transparent;
-    border-width: 0;
-    color: rgb(136, 153, 170);
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 17px;
-    -unity-text-align: middle-left;
-}
-.dash-nav-btn:hover {
-    color: rgb(208, 216, 232);
-    background-color: rgb(22, 30, 42);
-}
-.dash-nav-btn--active {
-    color: rgb(255, 255, 255);
-    background-color: rgb(28, 33, 48);
-    border-left-width: 2px;
-    border-left-color: rgb(42, 95, 201);
-    padding-left: 10px;
-}
-
-/* ── CONTENIDO ── */
-.dash-main {
-    flex-grow: 1;
-    min-width: 0;
-    padding: 18px 20px 14px 20px;
-    flex-direction: column;
-}
-.dash-row {
-    flex-direction: row;
     min-height: 0;
 }
-.dash-row--top {
-    flex-shrink: 0;
-    height: 190px;
-    margin-bottom: 14px;
+.panel:last-child {
+    margin-right: 0;
 }
-.dash-row--mid {
+
+/* ── Panel brown/gold header variant ── */
+.panel--gold {
+    border-color: rgb(120, 95, 30);
+    background-color: rgb(18, 21, 28);
+}
+.panel--gold .panel-header {
+    background-color: rgb(33, 32, 28);
+    border-bottom-color: rgb(120, 95, 30);
+}
+.panel--gold .panel-title {
+    color: rgb(212, 160, 23);
+}
+.panel--gold .panel-date {
+    color: rgb(180, 140, 40);
+}
+
+/* Row 1: Game panels wider, team stats narrower */
+.panel-game--third {
+    flex: 1 1 0%;
+    flex-shrink: 1;
+    min-width: 0;
+}
+.panel-game--third:last-child {
+    margin-right: 0;
+}
+.panel-team-stats--third {
+    flex: 0 0 420px;
+    min-width: 420px;
+    margin-right: 0;
+}
+
+/* Row 2: 3-column layout with center vertical container */
+.panels-row--grow {
+    flex-direction: row;
+    flex-wrap: nowrap;
     flex-grow: 1;
-    margin-bottom: 14px;
+    min-height: 0;
+    align-items: stretch;
 }
-.dash-row--bottom {
+
+/* Left: Clasificación */
+.panel-standings--col {
+    width: 450px;
     flex-shrink: 0;
-    height: 132px;
+    margin-right: 16px;
 }
-.dash-col {
-    width: 470px;
-    min-width: 470px;
+
+/* Center: vertical stack (PlayerStats + Relaciones) */
+.center-column {
+    flex-grow: 1;
+    flex-shrink: 1;
     flex-direction: column;
-    margin-left: 14px;
+    min-width: 0;
+    margin-right: 16px;
 }
 
-/* ── TARJETAS ── */
-.dash-card {
-    background-color: rgb(20, 30, 42);
-    border-width: 1px;
-    border-color: rgb(30, 45, 61);
-    border-radius: 8px;
-    padding: 12px 16px;
-    border-top-width: 2px;
-    border-top-color: rgb(42, 95, 201);
+/* Right: Noticias */
+.panel-messages--col {
+    width: 450px;
+    flex-shrink: 0;
+    margin-right: 0;
 }
-.dash-card-title {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 15px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgb(122, 138, 170);
-    margin-bottom: 8px;
+.center-column > .panel {
+    margin-right: 0;
 }
-.dash-empty {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 16px;
-    color: rgb(85, 102, 119);
-    display: none;
+.panel-player-stats--center {
+    flex: 1 1 0%;
+    min-height: 0;
+    margin-bottom: 16px;
+}
+.panel-board--center {
+    flex: 0 0 auto;
+    margin-right: 0;
 }
 
-/* Próximo partido */
-.dash-next {
-    flex-grow: 1;
+.panel-game .panel-body {
+    padding: 4px 18px 0 18px;
 }
-.dash-next-body {
+.panel-header {
     flex-direction: row;
     align-items: center;
-    flex-grow: 1;
-}
-.dash-next-logo {
-    width: 92px;
-    height: 92px;
-    margin-right: 18px;
-    background-size: contain;
-    flex-shrink: 0;
-}
-.dash-next-info {
-    flex-direction: column;
-    justify-content: center;
-}
-.dash-next-rival {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 30px;
-    color: rgb(255, 255, 255);
-}
-.dash-next-venue {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 17px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgb(212, 160, 23);
-    margin-top: 2px;
-}
-.dash-next-date {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 19px;
-    color: rgb(208, 216, 232);
-    margin-top: 6px;
-}
-.dash-next-comp {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 15px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgb(122, 138, 170);
-    margin-top: 2px;
-}
-
-/* Último resultado */
-.dash-last {
-    width: 330px;
-    min-width: 330px;
-    margin-left: 14px;
-}
-.dash-last-score {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 38px;
-    color: rgb(255, 255, 255);
-    -unity-text-align: middle-left;
-}
-.dash-last-rival {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 17px;
-    color: rgb(208, 216, 232);
-}
-.dash-last-date {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgb(122, 138, 170);
-    margin-top: 2px;
-}
-
-/* Clasificación */
-.dash-standings {
-    flex-grow: 1;
-    min-width: 0;
-}
-.dash-table-head {
-    flex-direction: row;
-    padding: 2px 6px 6px 6px;
+    justify-content: space-between;
+    padding: 8px 18px;
     border-bottom-width: 1px;
     border-bottom-color: rgb(42, 51, 71);
-}
-.dash-table-body {
-    flex-direction: column;
-    margin-top: 2px;
-}
-.dash-table-row {
-    flex-direction: row;
-    padding: 3px 6px;
-    border-bottom-width: 1px;
-    border-bottom-color: rgb(26, 36, 48);
-}
-.dash-table-row--me {
-    background-color: rgb(28, 40, 56);
-    border-left-width: 2px;
-    border-left-color: rgb(42, 95, 201);
-    padding-left: 4px;
-}
-.dash-cell {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 16px;
-    color: rgb(136, 153, 170);
-}
-.dash-cell--pos {
-    width: 38px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
     flex-shrink: 0;
-    -unity-text-align: middle-center;
-    color: rgb(122, 138, 170);
 }
-.dash-cell--team {
-    flex-grow: 1;
-    -unity-text-align: middle-left;
-    padding-left: 6px;
+.panel-header-left {
+    flex-direction: row;
+    align-items: center;
+}
+.panel-more-btn {
+    width: 18px;
+    height: 18px;
+    margin-right: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.panel-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
     color: rgb(208, 216, 232);
 }
-.dash-cell--num {
-    width: 52px;
-    flex-shrink: 0;
-    -unity-text-align: middle-right;
-}
-.dash-table-row--me .dash-cell {
-    color: rgb(255, 255, 255);
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-}
-
-/* Objetivo */
-.dash-objective {
-    flex-grow: 0;
-    margin-bottom: 14px;
-}
-.dash-objective-value {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 26px;
-    color: rgb(212, 160, 23);
-}
-.dash-objective-hint {
+.panel-date {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 14px;
-    color: rgb(122, 138, 170);
-    margin-top: 4px;
-    white-space: normal;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: rgb(85, 102, 119);
 }
-
-/* Finanzas */
-.dash-finance {
+.panel-body {
+    flex-direction: column;
+    padding: 16px 18px;
     flex-grow: 1;
 }
-.dash-row-line {
+
+/* Panel footer */
+.panel-footer {
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-top-width: 1px;
+    border-top-color: rgb(42, 51, 71);
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.panel-footer:hover {
+    background-color: rgb(20, 27, 42);
+}
+.panel-footer-link {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgb(42, 95, 201);
+}
+.panel-footer-arrow {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    color: rgb(42, 95, 201);
+    margin-left: 6px;
+}
+
+/* ══════════════════════════════════════════
+   PANEL ÚLTIMO / PRÓXIMO PARTIDO
+   ══════════════════════════════════════════ */
+.panel-game {
+    flex: 1 1 0%;
+    min-width: 0;
+}
+
+.game-result {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 18px 12px 18px;
+}
+.game-team-block {
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    flex-shrink: 0;
+}
+.game-team-logo-lg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+}
+.game-team-name-lg {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgb(208, 216, 232);
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+.game-team-record {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(85, 102, 119);
+    -unity-text-align: middle-center;
+    margin-top: 2px;
+}
+.game-score-block {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 150px;
+    flex-shrink: 0;
+}
+.game-score-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 40px;
+    letter-spacing: 4px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    min-width: 60px;
+}
+.game-score-sep {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 20px;
+    color: rgb(58, 74, 99);
+    -unity-text-align: middle-center;
+    margin: 0 4px;
+    flex-shrink: 0;
+}
+.game-vs-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 24px;
+    letter-spacing: 4px;
+    color: rgb(58, 74, 99);
+    -unity-text-align: middle-center;
+}
+.game-time-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    -unity-text-align: middle-center;
+    margin-top: 4px;
+}
+.game-result-badge {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    -unity-text-align: middle-center;
+    margin-top: 4px;
+}
+.badge-win {
+    background-color: rgb(39, 174, 96);
+    color: rgb(255, 255, 255);
+}
+.badge-loss {
+    background-color: rgb(192, 57, 43);
+    color: rgb(255, 255, 255);
+}
+
+.no-games-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgb(58, 74, 99);
+    -unity-text-align: middle-center;
+    padding: 24px;
+    flex-grow: 1;
+}
+
+/* ── GAME META ROW ── */
+.game-meta-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top-width: 1px;
+    border-top-color: rgb(42, 51, 71);
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+.panel-game .game-meta-row {
+    margin-top: 12px;
+    padding: 0;
+    border-top-width: 1px;
+    border-top-color: rgb(42, 51, 71);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    flex-direction: row;
+    align-items: stretch;
+}
+.game-meta-arena {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    -unity-text-align: middle-left;
+    flex-grow: 1;
+    padding-left: 18px;
+}
+.game-meta-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 8px 18px;
+    background-color: rgb(16, 19, 26);
+    border-left-width: 1px;
+    border-left-color: rgb(42, 51, 71);
+}
+.game-meta-footer:hover {
+    background-color: rgb(20, 27, 42);
+    border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════
+   PANEL CLASIFICACIÓN
+   ══════════════════════════════════════════ */
+.panel-standings {
+    flex: 1 1 0%;
+    min-width: 500px;
+}
+
+.conf-tabs {
+    flex-direction: row;
+}
+.conf-tab {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    background-color: rgb(22, 26, 36);
+    border-width: 1px;
+    border-color: rgb(42, 51, 71);
+    color: rgb(122, 138, 170);
+    -unity-text-align: middle-center;
+    margin-right: 4px;
+}
+.conf-tab:hover {
+    color: rgb(208, 216, 232);
+}
+.conf-tab--active {
+    background-color: rgb(28, 33, 48);
+    border-color: rgb(42, 95, 201);
+    color: rgb(255, 255, 255);
+}
+
+.standings-table {
+    flex-direction: column;
+    flex-grow: 1;
+}
+.standings-header-row {
+    flex-direction: row;
+    padding: 6px 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(42, 51, 71);
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+.standings-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 7px 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(28, 33, 48);
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+.standings-row--my-team {
+    background-color: rgb(20, 28, 48);
+    border-left-width: 3px;
+    border-left-color: rgb(42, 95, 201);
+}
+.standings-row--playoff {
+    border-left-width: 2px;
+    border-left-color: rgb(39, 174, 96);
+}
+.standings-row--playin {
+    border-left-width: 2px;
+    border-left-color: rgb(212, 160, 23);
+}
+
+.col-rank {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    width: 24px;
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+}
+.col-team-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    overflow: hidden;
+    -unity-background-scale-mode: scale-and-crop;
+}
+.col-team-name {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    flex-grow: 1;
+    font-size: 16px;
+    color: rgb(208, 216, 232);
+    -unity-text-align: middle-left;
+    text-transform: uppercase;
+}
+.col-stat {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    width: 36px;
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+}
+.col-stat--header {
+    color: rgb(58, 74, 99);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+.col-wins {
+    color: rgb(39, 174, 96);
+}
+.col-losses {
+    color: rgb(192, 57, 43);
+}
+.col-streak {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    width: 55px;
+    font-size: 16px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+}
+.streak-win  { color: rgb(39, 174, 96); }
+.streak-loss { color: rgb(192, 57, 43); }
+.streak-none { color: rgb(58, 74, 99); }
+
+/* ══════════════════════════════════════════
+   PANEL ESTADÍSTICAS JUGADORES
+   ══════════════════════════════════════════ */
+.panel-player-stats {
+    min-height: 350px;
+}
+.stats-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.stat-card {
+    width: 49%;
+    padding: 0;
+    margin: 2px;
+    background-color: rgb(17, 24, 34);
+    border-color: rgb(28, 40, 56);
+    border-width: 1px;
+    border-radius: 6px;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.stat-card-photo-wrapper {
+    width: 80px;
+    border-radius: 6px 0 0 6px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-right-color: rgb(28, 40, 56);
+    border-width: 1px;
+    align-self: stretch;
+}
+
+.stat-card-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.stat-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    border-width: 2px;
+    border-color: rgb(212, 160, 23);
+    margin: 10px 10px 10px 10px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: rgb(212, 160, 23);
+    -unity-text-align: middle-center;
+}
+
+.stat-card-right {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 8px 10px 8px 0;
+}
+
+.stat-card-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgb(80, 130, 220);
+}
+
+.stat-card-val {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 28px;
+    color: rgb(212, 160, 23);
+    margin: -8px 0 -8px 0;
+    line-height: 1;
+}
+
+.stat-card-player {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    color: rgb(230, 236, 248);
+    line-height: 1;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stat-card-games {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 13px;
+    color: rgb(80, 130, 220);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 1px;
+    line-height: 1;
+}
+
+/* ══════════════════════════════════════════
+   PANEL MENSAJES
+   ══════════════════════════════════════════ */
+.panel-messages {
+    flex: 1 1 0%;
+    min-width: 600px;
+    min-height: 180px;
+}
+.messages-scroll {
+    flex-grow: 1;
+    min-height: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.messages-scroll .unity-scroll-view__content-viewport {
+    overflow: hidden;
+    padding: 0 0 8px 0;
+}
+.messages-scroll .unity-scroll-view__content-container {
+    flex-grow: 1;
+}
+.messages-body {
+    flex-direction: column;
+    padding: 2px 18px 8px 18px;
+}
+.message-item {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-shrink: 0;
+    min-height: 70px;
     padding: 3px 0;
+    margin-bottom: 8px;
     border-bottom-width: 1px;
     border-bottom-color: rgb(28, 33, 48);
 }
-.dash-row-label {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 16px;
-    color: rgb(122, 138, 170);
+.message-item-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    overflow: hidden;
+    align-self: center;
 }
-.dash-row-value {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 17px;
-    color: rgb(208, 216, 232);
-}
-
-/* Plantilla */
-.dash-squad {
-    flex-grow: 1;
-}
-.dash-squad-grid {
-    flex-direction: row;
-    flex-grow: 1;
-}
-.dash-squad-cell {
-    flex-grow: 1;
+.message-item-text {
     flex-direction: column;
-    justify-content: center;
-    border-right-width: 1px;
-    border-right-color: rgb(28, 33, 48);
-    padding-left: 4px;
+    flex-grow: 1;
+    min-width: 0;
 }
-.dash-squad-cell:last-child {
-    border-right-width: 0;
-}
-.dash-squad-value {
+.message-item-subject {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 28px;
-    color: rgb(255, 255, 255);
-}
-.dash-squad-label {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 13px;
+    font-size: 16px;
     letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgb(122, 138, 170);
+    color: rgb(212, 160, 23);
+    margin-bottom: 2px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-/* Noticias */
-.dash-news {
-    width: 470px;
-    min-width: 470px;
-    margin-left: 14px;
-}
-.dash-news-text {
+.message-item-body {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
     font-size: 16px;
-    color: rgb(208, 216, 232);
+    color: rgb(122, 138, 170);
     white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Barra de avance */
-.dash-daybar {
+/* ══════════════════════════════════════════
+   PANEL ESTADÍSTICAS DEL EQUIPO
+   ══════════════════════════════════════════ */
+.panel-team-stats {
+    min-height: 0;
+}
+.panel-team-stats > .panel-body {
+    flex-grow: 0;
+    padding: 4px 18px 12px 18px;
+}
+.panel-team-stats > .panel-body > .team-stat-row--last {
+    border-bottom-width: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.panel-team-stats > .panel-body > .team-stat-row--last > .team-stat-right-group,
+.panel-team-stats > .panel-body > .team-stat-row--last > .team-stat-info {
+    margin-bottom: -4px;
+}
+.team-stat-row {
     flex-direction: row;
     align-items: center;
+    padding: 10px 0;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(28, 33, 45);
+}
+.team-stat-icon-bg {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: rgb(212, 160, 23);
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
     flex-shrink: 0;
-    margin-top: 14px;
-    padding: 10px 16px;
-    background-color: rgb(17, 24, 34);
-    border-width: 1px;
-    border-color: rgb(30, 45, 61);
-    border-radius: 8px;
 }
-.dash-day-status {
-    flex-grow: 1;
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 17px;
-    letter-spacing: 1px;
-    color: rgb(136, 153, 170);
-}
-.dash-advance {
-    width: 220px;
-    height: 44px;
-    background-color: rgb(42, 95, 201);
-    border-width: 1px;
-    border-color: rgb(59, 130, 246);
-    border-radius: 6px;
+.team-stat-icon-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 12px;
     color: rgb(255, 255, 255);
+}
+.team-stat-arena-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/_TacticalEleven/Art/Resources/Icons/arena.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+.team-stat-trophy-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/_TacticalEleven/Art/Resources/Icons/trofeo.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+.team-stat-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+.team-stat-info {
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+}
+.team-stat-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 18px;
+    color: rgb(208, 216, 232);
+    letter-spacing: 0.5px;
+}
+.team-stat-subtitle {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(122, 138, 170);
+    margin-top: 1px;
+}
+.team-stat-value {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 16px;
+    color: rgb(208, 216, 232);
+    -unity-text-align: middle-right;
+    min-width: 32px;
+    flex-shrink: 0;
+}
+.team-stat-value--green {
+    color: rgb(39, 174, 96);
+}
+.team-stat-value--red {
+    color: rgb(192, 57, 43);
+}
+.team-stat-status-icon {
+    width: 32px;
+    height: 32px;
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 0;
+    margin-right: 5px;
+}
+.team-stat-ring {
+    width: 42px;
+    height: 42px;
+    border-radius: 18px;
+    border-width: 3px;
+    border-color: rgb(212, 160, 23);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.team-stat-ring-val {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
     font-size: 18px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    -unity-text-align: middle-center;
+    color: rgb(208, 216, 232);
 }
-.dash-advance:hover {
-    background-color: rgb(52, 112, 226);
+.team-stat-stars {
+    flex-direction: row;
+    flex-shrink: 0;
 }
-.dash-advance--match {
-    background-color: rgb(212, 160, 23);
-    border-color: rgb(245, 196, 64);
-    color: rgb(20, 20, 20);
+.team-stat-right-group {
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
 }
-.dash-advance--match:hover {
-    background-color: rgb(232, 180, 43);
+.team-stat-capacity {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    margin-top: 4px;
+}
+.team-stat-star {
+    font-size: 14px;
+    margin-right: 2px;
 }
 
-/* Aviso */
-.dash-toast {
+/* ══════════════════════════════════════════
+   PANEL RELACIONES
+   ══════════════════════════════════════════ */
+.panel-board {
+}
+.board-columns {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0;
+}
+.board-col {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+.board-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50px;
+    border-width: 3px;
+    border-color: rgb(212, 160, 23);
+    background-color: rgb(47, 42, 27);
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+.board-circle-val {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    color: rgb(208, 216, 232);
+    -unity-text-align: middle-center;
+}
+.board-col-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: rgb(122, 138, 170);
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+.board-col-sep {
+    width: 0px;
+    height: 0px;
+    background-color: rgb(42, 51, 71);
+    flex-shrink: 0;
+}
+
+/* ══ FIRED MODAL ══ */
+
+.fired-modal-overlay {
     position: absolute;
-    bottom: 92px;
-    left: 50%;
-    translate: -50% 0;
-    padding: 10px 24px;
-    background-color: rgb(20, 36, 35);
-    border-width: 1px;
-    border-color: rgb(39, 174, 96);
-    border-radius: 8px;
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
-    font-size: 18px;
-    color: rgb(100, 200, 140);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgb(3, 3, 4);
+    align-items: center;
+    justify-content: center;
     display: none;
 }
 
-/* ── Configuración (modal compartido) ── */
+.fired-modal-box {
+    width: 720px;
+    background-color: rgb(13, 14, 18);
+    border-width: 1px;
+    border-color: rgb(192, 57, 43);
+    border-radius: 12px;
+    padding: 32px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fired-modal-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+    background-image: url("project://database/Assets/_TacticalEleven/Art/Resources/Icons/boton-x.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.fired-modal-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 34px;
+    letter-spacing: 2px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 16px;
+    -unity-text-align: middle-center;
+}
+
+.fired-modal-title--negative {
+    color: rgb(192, 57, 43);
+}
+
+.fired-modal-results {
+    width: 100%;
+    margin-bottom: 24px;
+    align-items: center;
+}
+
+.fired-modal-result-line {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 20px;
+    width: 100%;
+    white-space: normal;
+    -unity-text-align: middle-center;
+    margin-bottom: 4px;
+}
+
+.fired-modal-result-line--positive {
+    color: rgb(46, 204, 113);
+}
+
+.fired-modal-result-line--negative {
+    color: rgb(231, 76, 60);
+}
+
+.fired-modal-result-line--neutral {
+    color: rgb(179, 190, 214);
+}
+
+.fired-modal-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(179, 190, 214);
+    -unity-text-align: middle-center;
+    margin-bottom: 0;
+    white-space: normal;
+}
+
+.fired-modal-btn {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 2px;
+    background-color: rgb(20, 28, 45);
+    border-width: 2px;
+    border-color: rgb(42, 95, 201);
+    color: rgb(120, 160, 230);
+    border-radius: 8px;
+    padding: 12px 32px;
+    cursor: pointer;
+}
+
+.fired-modal-btn:hover {
+    background-color: rgb(24, 40, 71);
+    color: rgb(150, 190, 255);
+}
+
+.fired-modal-box--warning {
+    border-color: rgb(212, 160, 23);
+}
+
+.fired-modal-title--warning {
+    color: rgb(212, 160, 23);
+}
+
+.fired-modal-box--positive {
+    border-color: rgb(39, 174, 96);
+}
+.fired-modal-title--positive {
+    color: rgb(39, 174, 96);
+}
+.fired-modal-btn--positive {
+    background-color: rgb(20, 36, 35);
+    border-color: rgb(39, 174, 96);
+    color: rgb(100, 200, 140);
+}
+.fired-modal-btn--positive:hover {
+    background-color: rgb(23, 59, 45);
+    color: rgb(150, 220, 180);
+}
+.fired-modal-btn--warning {
+    background-color: rgb(37, 35, 28);
+    border-color: rgb(212, 160, 23);
+    color: rgb(212, 160, 23);
+}
+.fired-modal-btn--warning:hover {
+    background-color: rgb(66, 56, 27);
+    color: rgb(230, 190, 60);
+}
+.fired-modal-btn--danger {
+    background-color: rgb(35, 25, 30);
+    border-color: rgb(192, 57, 43);
+    color: rgb(230, 120, 100);
+}
+.fired-modal-btn--danger:hover {
+    background-color: rgb(62, 30, 32);
+    color: rgb(240, 145, 125);
+}
+
+/* ══ FIRED MODALS (modern header+body) ══ */
+
+/* ── Shared button styles (matching Market/Roster pattern) ── */
+
+.btn-modal-cancel {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 12px 20px;
+    background-color: rgb(26, 30, 38);
+    border-width: 2px;
+    border-color: rgb(100, 110, 130);
+    color: rgb(160, 170, 190);
+    border-radius: 8px;
+    cursor: pointer;
+    -unity-text-align: middle-center;
+}
+.btn-modal-cancel:hover {
+    background-color: rgb(38, 43, 54);
+    color: rgb(200, 210, 230);
+}
+
+.btn-modal-confirm {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 12px 20px;
+    background-color: rgb(20, 36, 35);
+    border-width: 2px;
+    border-color: rgb(39, 174, 96);
+    color: rgb(100, 200, 140);
+    border-radius: 8px;
+    cursor: pointer;
+    -unity-text-align: middle-center;
+}
+.btn-modal-confirm:hover {
+    background-color: rgb(23, 59, 45);
+}
+
+/* Red de seguridad: una variante usada sin la clase base debe seguir siendo visible
+   (padding, borde y alineación). No toca color/fondo, que los define cada variante. */
+.btn-modal-confirm--danger,
+.btn-modal-confirm--gold,
+.btn-modal-confirm--blue {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    letter-spacing: 1px;
+    padding: 12px 20px;
+    border-width: 2px;
+    border-radius: 8px;
+    -unity-text-align: middle-center;
+    cursor: pointer;
+}
+
+.btn-modal-confirm--danger {
+    background-color: rgb(35, 25, 30);
+    border-color: rgb(192, 57, 43);
+    color: rgb(230, 120, 100);
+    font-size: 18px;
+}
+.btn-modal-confirm--danger:hover {
+    background-color: rgb(62, 30, 32);
+    color: rgb(240, 145, 125);
+}
+
+.btn-modal-confirm--gold {
+    background-color: rgb(37, 35, 28);
+    border-color: rgb(212, 160, 23);
+    color: rgb(212, 160, 23);
+    font-size: 18px;
+}
+.btn-modal-confirm--gold:hover {
+    background-color: rgb(66, 56, 27);
+    color: rgb(230, 190, 60);
+}
+
+.btn-modal-confirm--blue {
+    background-color: rgb(20, 28, 45);
+    border-color: rgb(42, 95, 201);
+    color: rgb(100, 150, 230);
+    font-size: 18px;
+}
+.btn-modal-confirm--blue:hover {
+    background-color: rgb(24, 40, 71);
+    color: rgb(130, 180, 255);
+}
+
+.fired-modal-box--modern {
+    width: 650px;
+    background-color: rgb(13, 14, 18);
+    border-width: 1px;
+    border-radius: 12px;
+    padding: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.fired-modal-header {
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 10px 24px;
+    background-color: rgb(44, 26, 30);
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(192, 57, 43);
+}
+
+.fired-modal-header--warning {
+    background-color: rgb(47, 42, 27);
+    border-bottom-color: rgb(212, 160, 23);
+}
+
+.fired-modal-header--green {
+    background-color: rgb(21, 44, 38);
+    border-bottom-color: rgb(39, 174, 96);
+}
+
+.fired-modal-header--blue {
+    background-color: rgb(22, 32, 54);
+    border-bottom-color: rgb(42, 95, 201);
+}
+
+.fired-modal-header .fired-modal-title {
+    margin-bottom: 0;
+    -unity-text-align: middle-left;
+    font-size: 28px;
+}
+
+.fired-modal-body {
+    flex-shrink: 0;
+    padding: 20px 24px;
+}
+
+.fired-modal-actions {
+    flex-direction: row;
+    flex-shrink: 0;
+    padding: 0 24px 24px 24px;
+}
+
+.fired-modal-actions .btn-modal-cancel,
+.fired-modal-actions .btn-modal-confirm {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    margin-left: 6px;
+    margin-right: 6px;
+    min-width: 0;
+    min-height: 44px;
+}
+
+/* ══ OFFER RESULT MODAL (modern) ══ */
+
+.offer-result-modal-box {
+    border-color: rgb(58, 74, 99);
+    border-top-color: rgb(58, 74, 99);
+}
+.offer-result-modal-box--positive {
+    border-color: rgb(39, 174, 96);
+    border-top-color: rgb(39, 174, 96);
+}
+.offer-result-modal-box--warning {
+    border-color: rgb(212, 160, 23);
+    border-top-color: rgb(212, 160, 23);
+}
+.offer-result-modal-box--negative {
+    border-color: rgb(192, 57, 43);
+    border-top-color: rgb(192, 57, 43);
+}
+
+.offer-result-modal-subtitle {
+    color: rgb(122, 138, 170);
+}
+.offer-result-modal-subtitle--positive {
+    color: rgb(39, 174, 96);
+}
+.offer-result-modal-subtitle--warning {
+    color: rgb(212, 160, 23);
+}
+.offer-result-modal-subtitle--negative {
+    color: rgb(192, 57, 43);
+}
+
+.offer-result-modal-title {
+    color: rgb(255, 255, 255);
+}
+.offer-result-modal-title--positive {
+    color: rgb(39, 174, 96);
+}
+.offer-result-modal-title--warning {
+    color: rgb(212, 160, 23);
+}
+.offer-result-modal-title--negative {
+    color: rgb(192, 57, 43);
+}
+
+.offer-result-modal-op-list {
+    padding: 0 32px;
+    max-height: 420px;
+    overflow: scroll;
+    overflow-clip: initial;
+}
+
+.offer-result-modal-op-card {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(25, 28, 35);
+    border-left-width: 3px;
+    border-left-color: rgb(58, 74, 99);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+}
+.offer-result-modal-op-card--positive {
+    border-left-color: rgb(39, 174, 96);
+}
+.offer-result-modal-op-card--negative {
+    border-left-color: rgb(192, 57, 43);
+}
+.offer-result-modal-op-card--warning {
+    border-left-color: rgb(212, 160, 23);
+}
+.offer-result-modal-op-card--neutral {
+    border-left-color: rgb(58, 74, 99);
+}
+
+.offer-result-modal-op-card .offer-result-modal-op-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(179, 190, 214);
+    white-space: normal;
+    flex-grow: 1;
+}
+.offer-result-modal-op-card--positive .offer-result-modal-op-text {
+    color: rgb(46, 204, 113);
+}
+.offer-result-modal-op-card--negative .offer-result-modal-op-text {
+    color: rgb(231, 76, 60);
+}
+.offer-result-modal-op-card--warning .offer-result-modal-op-text {
+    color: rgb(212, 160, 23);
+}
+
+.offer-result-modal-op-badge {
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+.offer-result-modal-op-badge--positive {
+    background-color: rgb(21, 44, 38);
+}
+.offer-result-modal-op-badge--negative {
+    background-color: rgb(44, 26, 30);
+}
+.offer-result-modal-op-badge--warning {
+    background-color: rgb(47, 42, 27);
+}
+
+.offer-result-modal-op-badge-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+.offer-result-modal-op-badge-text--positive {
+    color: rgb(46, 204, 113);
+}
+.offer-result-modal-op-badge-text--negative {
+    color: rgb(231, 76, 60);
+}
+.offer-result-modal-op-badge-text--warning {
+    color: rgb(212, 160, 23);
+}
+
+/* ══ DEADLINE DAY MODAL ══ */
+
+.deadline-modal-box {
+    border-color: rgb(212, 160, 23);
+}
+
+.deadline-modal-subtitle {
+    color: rgb(212, 160, 23);
+}
+
+.deadline-modal-op-list {
+    max-height: 420px;
+    overflow: scroll;
+    overflow-clip: initial;
+}
+
+.deadline-modal-card {
+    border-color: rgb(66, 56, 27);
+}
+
+.deadline-modal-icon {
+    background-color: rgb(37, 35, 28);
+}
+
+.deadline-modal-icon-text {
+    font-size: 32px;
+    -unity-text-align: middle-center;
+}
+
+.deadline-modal-badge {
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.deadline-modal-badge--trade {
+    background-color: rgb(22, 32, 54);
+    border-width: 1px;
+    border-color: rgb(42, 95, 201);
+}
+
+.deadline-modal-badge--fa {
+    background-color: rgb(47, 42, 27);
+    border-width: 1px;
+    border-color: rgb(212, 160, 23);
+}
+
+.deadline-modal-badge--sat {
+    background-color: rgb(39, 31, 51);
+    border-width: 1px;
+    border-color: rgb(155, 89, 182);
+}
+
+.deadline-modal-badge-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: rgb(200, 210, 230);
+}
+
+.deadline-modal-empty {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(140, 150, 175);
+    -unity-text-align: middle-center;
+    padding: 16px 0;
+}
+
+.deadline-modal-hint {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 15px;
+    color: rgb(140, 150, 175);
+    -unity-text-align: middle-center;
+    padding: 16px 0 0 0;
+    white-space: normal;
+}
+
+/* ══ INJURED LINEUP MODAL ══ */
+
+.injured-modal-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 20px;
+    color: rgb(179, 190, 214);
+    -unity-text-align: middle-center;
+    margin-bottom: 8px;
+    white-space: normal;
+}
+
+.injured-modal-list {
+    margin: 8px 0 16px 0;
+    padding: 8px 16px;
+    background-color: rgb(25, 20, 20);
+    border-radius: 4px;
+    align-self: stretch;
+}
+
+.injured-modal-player-row {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(192, 57, 43);
+    padding: 2px 0;
+}
+
+.injured-modal-btn-group {
+    flex-direction: row;
+    align-self: stretch;
+}
+
+.injured-modal-btn {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 20px;
+    letter-spacing: 2px;
+    background-color: rgb(42, 51, 71);
+    color: white;
+    border-width: 1px;
+    border-color: rgb(58, 74, 99);
+    border-radius: 4px;
+    padding: 12px 16px;
+    cursor: pointer;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    margin-right: 6px;
+}
+
+.injured-modal-btn--primary {
+    background-color: rgb(192, 57, 43);
+    border-color: rgb(192, 57, 43);
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+/* Botones del modal de GESTIÓN DE DESCANSO (load management).
+   Solo se aplican dentro de ShowLoadManagementModal para no
+   alterar el modal de quinteto con lesionados. */
+.load-mgmt-modal-box {
+    width: 870px;
+}
+.injured-modal-btn.load-mgmt-modal-btn--blue {
+    background-color: rgb(42, 95, 201);
+    border-color: rgb(42, 95, 201);
+}
+.injured-modal-btn.load-mgmt-modal-btn--green {
+    background-color: rgb(39, 174, 96);
+    border-color: rgb(39, 174, 96);
+}
+
+/* ══ Config modal settings styles (inlined from Settings.uss) ══ */
+
 .settings-section {
     -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
     font-size: 16px;
@@ -518,11 +1828,11 @@
     font-size: 18px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgb(212, 160, 23);
+    color: rgb(150, 160, 180);
     margin-bottom: 16px;
     padding-bottom: 8px;
     border-bottom-width: 1px;
-    border-bottom-color: rgb(120, 95, 30);
+    border-bottom-color: rgb(42, 51, 71);
 }
 .settings-row {
     flex-direction: row;
@@ -536,6 +1846,7 @@
     color: rgb(208, 216, 232);
 }
 .custom-slider {
+    cursor: pointer;
     position: relative;
     flex-grow: 1;
     height: 30px;
@@ -564,6 +1875,7 @@
     border-bottom-left-radius: 2px;
 }
 .custom-slider-dragger {
+    cursor: pointer;
     position: absolute;
     top: 7px;
     width: 16px;
@@ -591,6 +1903,7 @@
     justify-content: flex-end;
 }
 .settings-quality-btn {
+    cursor: pointer;
     width: 70px;
     height: 36px;
     margin-left: 6px;
@@ -604,6 +1917,8 @@
     letter-spacing: 1px;
     -unity-text-align: middle-center;
     text-transform: uppercase;
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.15s;
 }
 .settings-quality-btn:hover {
     background-color: rgb(40, 45, 56);
@@ -615,6 +1930,885 @@
     border-color: rgb(120, 125, 140);
     color: rgb(255, 255, 255);
 }
+.settings-quality-btn--active:hover {
+    background-color: rgb(70, 75, 88);
+    border-color: rgb(140, 145, 160);
+}
 .settings-quality-btn--wide {
     width: 130px;
+}
+.settings-btn {
+    cursor: pointer;
+    height: 48px;
+    width: 100%;
+    border-width: 2px;
+    border-radius: 8px;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 1px;
+    -unity-text-align: middle-center;
+    text-transform: uppercase;
+    margin-top: 8px;
+    align-self: center;
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.15s;
+}
+.settings-btn--secondary {
+    background-color: rgb(26, 30, 38);
+    border-color: rgb(100, 110, 130);
+    color: rgb(160, 170, 190);
+}
+.settings-btn--secondary:hover {
+    background-color: rgb(38, 43, 54);
+    color: rgb(200, 210, 230);
+}
+.settings-btn--danger {
+    background-color: rgb(35, 25, 30);
+    border-color: rgb(192, 57, 43);
+    color: rgb(230, 120, 100);
+}
+.settings-btn--danger:hover {
+    background-color: rgb(62, 30, 32);
+    color: rgb(240, 145, 125);
+}
+
+/* ══ MAIN MENU CONFIRM MODAL ══ */
+#ConfigMainMenuConfirmBox {
+    width: 650px;
+}
+
+/* ══ EXIT CONFIRM MODAL (rojo) ══ */
+#ConfigExitConfirmBox {
+    width: 650px;
+    background-color: rgb(13, 14, 18);
+    border-width: 1px;
+    border-color: rgb(192, 57, 43);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+}
+#ConfigExitConfirmBox .modal-title {
+    padding: 10px 24px;
+    background-color: rgb(44, 26, 30);
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(192, 57, 43);
+}
+#ConfigExitConfirmBox .fired-modal-actions {
+    width: auto;
+    align-self: stretch;
+    justify-content: space-between;
+}
+#ConfigBtnExitYes {
+    flex-grow: 1;
+    min-width: 0;
+    background-color: rgb(35, 25, 30);
+    border-color: rgb(192, 57, 43);
+    color: rgb(230, 120, 100);
+}
+#ConfigBtnExitYes:hover {
+    background-color: rgb(62, 30, 32);
+    color: rgb(240, 145, 125);
+}
+#ConfigBtnExitNo {
+    flex-grow: 1;
+    min-width: 0;
+    background-color: rgb(26, 30, 38);
+    border-color: rgb(100, 110, 130);
+    color: rgb(160, 170, 190);
+}
+#ConfigBtnExitNo:hover {
+    background-color: rgb(38, 43, 54);
+    color: rgb(200, 210, 230);
+}
+
+/* ══ TRADE OFFER MODAL (moderno) ══ */
+
+.trade-modal-box {
+    width: 1060px;
+    background-color: rgb(13, 14, 18);
+    border-width: 1px;
+    border-color: rgb(180, 140, 40);
+    border-radius: 12px;
+    padding: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ── Header ── */
+.trade-modal-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px 0 32px;
+}
+
+.trade-modal-header-left {
+    flex-direction: column;
+}
+
+.trade-modal-subtitle {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: rgb(122, 138, 170);
+    margin-bottom: 2px;
+}
+
+.trade-modal-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 34px;
+    letter-spacing: 2px;
+    color: rgb(255, 255, 255);
+}
+
+.trade-modal-header-right {
+    flex-direction: row;
+    align-items: center;
+}
+
+.trade-modal-phase-badge {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: rgb(180, 190, 210);
+    background-color: rgb(32, 35, 42);
+    border-radius: 4px;
+    padding: 6px 14px;
+    margin-right: 16px;
+}
+
+.trade-modal-close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    background-color: rgb(37, 40, 46);
+    border-width: 1px;
+    border-color: rgb(54, 56, 62);
+    color: rgb(200, 205, 220);
+    font-size: 18px;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    -unity-text-align: middle-center;
+}
+
+.trade-modal-close-btn:hover {
+    background-color: rgb(54, 56, 62);
+}
+
+/* ── Teams row ── */
+.trade-modal-teams {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 32px 0 32px;
+}
+
+/* Cuerpo del modal de propuesta de intercambio: menos aire bajo la cabecera */
+.trade-offer-body {
+    padding-top: 10px;
+}
+
+.trade-modal-team-panel {
+    flex-direction: column;
+    width: 440px;
+}
+
+.trade-modal-team-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.trade-modal-team-logo {
+    width: 56px;
+    height: 56px;
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.trade-modal-team-info {
+    flex-direction: column;
+}
+
+.trade-modal-team-name {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: rgb(255, 255, 255);
+}
+
+.trade-modal-team-action {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(46, 204, 113);
+    margin-top: 2px;
+}
+
+/* ── Swap arrows ── */
+.trade-modal-swap {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: 40px;
+    -unity-background-scale-mode: scale-to-fit;
+    opacity: 0.7;
+}
+
+/* ── Player cards ── */
+.trade-modal-player-card {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(22, 24, 30);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(32, 36, 48);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+}
+
+.trade-modal-player-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background-color: rgb(34, 36, 42);
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 0;
+}
+/* Propuesta de intercambio: fichas más compactas (el modal no cabe con muchas piezas) */
+.trade-modal-team-panel .trade-modal-player-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+}
+
+.trade-modal-player-info {
+    flex-direction: column;
+    margin-left: 12px;
+    flex-grow: 1;
+}
+
+.trade-modal-player-name-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.trade-modal-player-name {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.trade-modal-player-meta {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(140, 150, 175);
+    margin-top: 1px;
+}
+
+.trade-modal-player-contract {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(140, 150, 175);
+    margin-top: 1px;
+}
+
+.trade-modal-player-salary {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 15px;
+    color: rgb(46, 204, 113);
+    margin-top: 2px;
+}
+
+.trade-modal-player-ovr-col {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.trade-modal-player-ovr {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 30px;
+}
+
+.trade-modal-player-ovr-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: rgb(140, 150, 175);
+}
+
+/* ── Salary summary bar ── */
+.trade-modal-salary-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(18, 20, 26);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(32, 36, 48);
+    padding: 12px 16px;
+    margin-top: 6px;
+}
+
+.trade-modal-salary-item {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.trade-modal-salary-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: rgb(140, 150, 175);
+}
+
+.trade-modal-salary-value {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 22px;
+    margin-top: 2px;
+}
+
+.trade-modal-salary-value--positive {
+    color: rgb(46, 204, 113);
+}
+
+.trade-modal-salary-value--negative {
+    color: rgb(231, 76, 60);
+}
+
+/* ── Picks section ── */
+.trade-modal-picks-section {
+    margin-top: 8px;
+}
+
+.trade-modal-picks-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 16px;
+    color: rgb(212, 160, 23);
+    background-color: rgb(41, 38, 27);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(66, 56, 27);
+    padding: 0 14px;
+    margin-bottom: 6px;
+}
+
+/* ── Analysis section ── */
+.trade-modal-analysis {
+    margin: 20px 32px 0 32px;
+}
+
+.trade-modal-analysis-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: rgb(140, 150, 175);
+    -unity-text-align: middle-center;
+    margin-bottom: 12px;
+}
+
+.trade-modal-analysis-row {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trade-modal-analysis-card {
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(18, 20, 26);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(32, 36, 48);
+    padding: 16px 12px;
+    flex-grow: 1;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.trade-modal-analysis-card:first-child {
+    margin-left: 0;
+}
+
+.trade-modal-analysis-card:last-child {
+    margin-right: 0;
+}
+
+.trade-modal-analysis-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: rgb(140, 150, 175);
+    margin-bottom: 8px;
+}
+
+.trade-modal-analysis-value {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 28px;
+}
+
+.trade-modal-analysis-value--positive {
+    color: rgb(46, 204, 113);
+}
+
+.trade-modal-analysis-value--negative {
+    color: rgb(231, 76, 60);
+}
+
+.trade-modal-analysis-value--neutral {
+    color: rgb(180, 190, 210);
+}
+
+.trade-modal-analysis-desc {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(140, 150, 175);
+    margin-top: 6px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+/* ── Chemistry gauge ── */
+.trade-modal-chem-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    border-width: 4px;
+    border-color: rgb(212, 160, 23);
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(34, 32, 28);
+}
+
+.trade-modal-chem-value {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 20px;
+    color: rgb(212, 160, 23);
+}
+
+/* ── Buttons ── */
+.trade-modal-buttons {
+    flex-direction: row;
+    justify-content: center;
+    padding: 24px 32px 24px 32px;
+}
+
+.trade-modal-btn {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding: 14px 48px;
+    border-radius: 8px;
+    border-width: 2px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.trade-modal-btn--reject {
+    background-color: rgb(35, 25, 30);
+    border-color: rgb(192, 57, 43);
+    color: rgb(231, 76, 60);
+}
+
+.trade-modal-btn--reject:hover {
+    background-color: rgb(62, 30, 32);
+}
+
+.trade-modal-btn--accept {
+    background-color: rgb(39, 174, 96);
+    border-color: rgb(39, 174, 96);
+    color: rgb(255, 255, 255);
+}
+
+.trade-modal-btn--accept:hover {
+    background-color: rgb(46, 204, 113);
+}
+
+.trade-modal-btn--manual {
+    background-color: rgb(20, 28, 45);
+    border-color: rgb(42, 95, 201);
+    color: rgb(120, 160, 230);
+}
+
+.trade-modal-btn--manual:hover {
+    background-color: rgb(24, 40, 71);
+}
+
+/* ── Resumen de simulación rápida ── */
+.fastsim-summary-box {
+    max-height: 600px;
+    border-top-color: rgb(42, 95, 201);
+}
+
+.fastsim-summary-title {
+    color: rgb(255, 255, 255);
+}
+
+.fastsim-summary-btn {
+    border-radius: 0;
+    flex-grow: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px 40px;
+}
+
+/* ── Toast de logro desbloqueado ── */
+.toast-achievement-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+}
+
+.toast-achievement-desc {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    -unity-font-style: bold;
+}
+
+/* ══ INJURY MODAL ══ */
+
+.injury-modal-box {
+    border-color: rgb(192, 57, 43);
+}
+
+.injury-modal-player-list {
+    flex-direction: column;
+    padding: 0 32px;
+}
+
+.injury-modal-card {
+    border-left: 3px solid rgb(192, 57, 43);
+}
+
+.injury-modal-badge {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(44, 26, 30);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 6px;
+}
+
+.injury-modal-badge-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 18px;
+    color: rgb(231, 76, 60);
+}
+
+.injury-modal-badge-days {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    color: rgb(231, 76, 60);
+    margin-left: 8px;
+}
+
+.injury-modal-slot {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: rgb(140, 150, 175);
+    margin-top: 4px;
+}
+
+.injury-modal-slot--starter {
+    color: rgb(231, 76, 60);
+}
+
+.injury-modal-text-lg {
+    font-size: 18px;
+}
+
+.injury-modal-treat-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: rgb(231, 76, 60);
+    background-color: rgb(44, 28, 32);
+    color: rgb(231, 76, 60);
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 14px;
+    letter-spacing: 1px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    margin-left: 12px;
+    align-self: center;
+}
+
+.injury-modal-treat-btn:hover {
+    background-color: rgb(71, 35, 36);
+}
+
+.injury-modal-treat-btn--done {
+    border-color: rgb(100, 110, 135);
+    background-color: rgb(26, 30, 39);
+    color: rgb(100, 110, 135);
+}
+
+/* Botón de tratamiento con icono: la caja conserva su tamaño y dentro va la imagen 40x40 */
+.injury-modal-treat-btn--icon {
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+}
+.injury-modal-treat-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.injury-modal-treat-btn--done:hover {
+    background-color: rgb(26, 30, 39);
+}
+
+/* ══ Recovery modal (green theme) ══ */
+
+.recovery-modal-box {
+    border-color: rgb(39, 174, 96);
+    border-top-color: rgb(39, 174, 96);
+}
+
+.recovery-modal-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: rgb(39, 174, 96);
+    margin-bottom: 4px;
+    -unity-text-align: middle-center;
+}
+
+.recovery-modal-subtitle {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: rgb(39, 174, 96);
+    margin-bottom: 12px;
+    -unity-text-align: middle-left;
+}
+
+.recovery-modal-card {
+    border-left: 3px solid rgb(39, 174, 96);
+}
+
+.recovery-modal-badge {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(21, 44, 38);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 6px;
+}
+
+.recovery-modal-badge-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 18px;
+    color: rgb(46, 204, 113);
+}
+
+/* ══ Empty lineup modal (red/urgent theme) ══ */
+
+.empty-modal-box {
+    border-color: rgb(192, 57, 43);
+    border-top-color: rgb(192, 57, 43);
+}
+
+.empty-modal-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: rgb(192, 57, 43);
+    margin-bottom: 4px;
+    -unity-text-align: middle-center;
+}
+
+.empty-modal-subtitle {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: rgb(192, 57, 43);
+    margin-bottom: 12px;
+    -unity-text-align: middle-left;
+}
+
+.empty-modal-card {
+    border-left: 3px solid rgb(192, 57, 43);
+}
+
+.empty-modal-slot-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border-width: 2px;
+    border-color: rgb(192, 57, 43);
+    background-color: rgb(32, 24, 29);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.empty-modal-slot-icon-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 24px;
+    color: rgb(192, 57, 43);
+    -unity-text-align: middle-center;
+}
+
+.empty-modal-badge {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(44, 26, 30);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 6px;
+}
+
+.empty-modal-badge-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 18px;
+    color: rgb(231, 76, 60);
+}
+
+/* ══ Fast-sim summary modal (blue theme) ══ */
+
+.fastsim-modal-box {
+    border-color: rgb(42, 95, 201);
+    border-top-color: rgb(42, 95, 201);
+}
+
+.fastsim-modal-title {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 0;
+    -unity-text-align: middle-left;
+}
+
+.fastsim-modal-subtitle {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: rgb(42, 95, 201);
+    margin-bottom: 12px;
+    -unity-text-align: middle-left;
+}
+
+.fastsim-modal-dates {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(20, 28, 45);
+    border-width: 1px;
+    border-color: rgb(24, 40, 71);
+    border-radius: 6px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    align-self: stretch;
+}
+
+.fastsim-modal-dates-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: rgb(208, 216, 232);
+}
+
+.fastsim-modal-dates-text {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-SemiBold.ttf");
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: rgb(208, 216, 232);
+    -unity-text-align: middle-center;
+}
+
+.fastsim-modal-stats {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.fastsim-modal-stat-col {
+    align-items: center;
+    padding: 0 24px;
+}
+
+.fastsim-modal-stat-num {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 48px;
+    letter-spacing: 2px;
+    -unity-text-align: middle-center;
+}
+
+.fastsim-modal-stat-num--win {
+    color: rgb(39, 174, 96);
+}
+
+.fastsim-modal-stat-num--loss {
+    color: rgb(192, 57, 43);
+}
+
+.fastsim-modal-stat-sep {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 36px;
+    color: rgb(100, 110, 135);
+    padding: 0 4px;
+    align-self: center;
+    margin-top: -8px;
+}
+
+.fastsim-modal-stat-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: rgb(140, 150, 175);
+    -unity-text-align: middle-center;
+    margin-top: 2px;
+}
+
+.fastsim-modal-detail {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    color: rgb(140, 150, 175);
+    -unity-text-align: middle-center;
+    margin-bottom: 20px;
+}
+
+/* ── BADGE DE HILO NARRATIVO ACTIVO (panel de noticias) ── */
+.storyline-badge {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: rgb(248, 196, 64);
+    background-color: rgb(47, 42, 27);
+    border-width: 1px;
+    border-color: rgb(212, 160, 23);
+    border-radius: 6px;
+    padding: 2px 8px;
+    margin-left: 8px;
+}
+
+/* ── Aviso temporal del Dashboard ── */
+.dashboard-toast {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    translate: -50% 0;
+    padding: 10px 24px;
+    background-color: rgb(20, 36, 35);
+    border-width: 1px;
+    border-color: rgb(39, 174, 96);
+    border-radius: 8px;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(100, 200, 140);
 }
