@@ -299,7 +299,7 @@
     },
     {
       "key": "ui.dashboard.clasificacion",
-      "value": "Clasificación"
+      "value": "CLASIFICACIÓN"
     },
     {
       "key": "ui.dashboard.confianza_directiva",
@@ -723,7 +723,7 @@
     },
     {
       "key": "ui.dashboard.noticias",
-      "value": "Noticias"
+      "value": "NOTICIAS"
     },
     {
       "key": "ui.dashboard.objetivo",
@@ -787,7 +787,7 @@
     },
     {
       "key": "ui.dashboard.proximo_partido",
-      "value": "Próximo partido"
+      "value": "PRÓXIMO PARTIDO"
     },
     {
       "key": "ui.dashboard.pts",
