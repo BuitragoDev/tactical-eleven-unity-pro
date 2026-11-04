@@ -306,6 +306,10 @@
       "value": "EQUIPO"
     },
     {
+      "key": "ui.dashboard.error_partido",
+      "value": "No se pudo simular el partido."
+    },
+    {
       "key": "ui.dashboard.espectadores",
       "value": "{0:N0} espectadores"
     },
@@ -708,6 +712,10 @@
     {
       "key": "ui.dashboard.reputacion",
       "value": "Reputación"
+    },
+    {
+      "key": "ui.dashboard.resultado_partido",
+      "value": "Resultado: {0} - {1}"
     },
     {
       "key": "ui.dashboard.salir_del_juego",

@@ -114,7 +114,16 @@ public enum MatchEventType
     PenaltyMissed,
     OwnGoal,
     Save,
-    CleanSheet
+    CleanSheet,
+    // F8 — eventos de crónica (se añaden al final para no alterar los valores previos).
+    Chance,
+    Woodwork,
+    Corner,
+    Foul,
+    Offside,
+    AddedTime,
+    KickOff,
+    FullTime
 }
 
 [System.Flags]

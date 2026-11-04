@@ -702,16 +702,30 @@ public class DashboardController : UIScreenController
     {
         if (ScreenManager.NavigationLocked) return;
 
-        if (_matchToday != null)
-        {
-            ShowToast(LocalizationService.T("ui.dashboard.motor_f8"));
-            return;
-        }
-
         var db = DatabaseManager.Instance;
         ScreenManager.NavigationLocked = true;
         try
         {
+            // Día de partido: simular el encuentro (y el resto de la jornada).
+            if (_matchToday != null)
+            {
+                if (db.PlayToday(_season, _myTeam.Id, out var match))
+                {
+                    GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
+                    ReloadGames();
+                    Refresh();
+
+                    ShowToast(LocalizationService.T("ui.dashboard.resultado_partido",
+                        match.HomeScore, match.AwayScore));
+                }
+                else
+                {
+                    ShowToast(LocalizationService.T("ui.dashboard.error_partido"));
+                }
+
+                return;
+            }
+
             var result = db.AdvanceDay(_season, _myTeam.Id, out _);
             GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
             ReloadGames();
