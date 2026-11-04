@@ -20,6 +20,9 @@ public class UiSmokeTests
     private const string PreseasonPath = "Assets/_TacticalEleven/UI/Screens/Preseason/Preseason.uxml";
     private const string DashboardPath = "Assets/_TacticalEleven/UI/Screens/Dashboard/Dashboard.uxml";
     private const string SidebarPath = "Assets/_TacticalEleven/UI/Resources/UI/Core/Sidebar.uxml";
+    private const string PreGamePath = "Assets/_TacticalEleven/UI/Screens/PreGame/PreGame.uxml";
+    private const string MatchDayPath = "Assets/_TacticalEleven/UI/Screens/MatchDay/MatchDay.uxml";
+    private const string GameResultsPath = "Assets/_TacticalEleven/UI/Screens/GameResults/GameResults.uxml";
 
     private static readonly Regex TokenRegex = new Regex(@"\{loc:([A-Za-z0-9_.-]+)\}");
 
@@ -59,6 +62,9 @@ public class UiSmokeTests
     [TestCase(PreseasonPath)]
     [TestCase(DashboardPath)]
     [TestCase(SidebarPath)]
+    [TestCase(PreGamePath)]
+    [TestCase(MatchDayPath)]
+    [TestCase(GameResultsPath)]
     public void UxmlTokens_ExistInSpanishTable(string path)
     {
         var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
@@ -82,6 +88,9 @@ public class UiSmokeTests
     [TestCase(PreseasonPath)]
     [TestCase(DashboardPath)]
     [TestCase(SidebarPath)]
+    [TestCase(PreGamePath)]
+    [TestCase(MatchDayPath)]
+    [TestCase(GameResultsPath)]
     public void UxmlTexts_AreResolvedAfterApply(string path)
     {
         var tree = Load(path);

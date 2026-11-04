@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// F8 — Motor de partido: formaciones, alineación automática, determinismo,
@@ -250,6 +251,78 @@ public class FootballSimulatorTests
 
         Assert.That(preview.HomeWin, Is.GreaterThan(preview.AwayWin));
         Assert.That(preview.HomeWin + preview.Draw + preview.AwayWin, Is.EqualTo(1f).Within(0.001f));
+    }
+
+    // ── PANTALLAS DE PARTIDO ───────────────────────────────────────────────
+
+    [Test]
+    public void MatchContext_KeepsGameAndResultBetweenScreens()
+    {
+        MatchContext.Clear();
+        Assert.That(MatchContext.HasGame, Is.False);
+
+        var game = new GameDataDB { Id = 42, SeasonId = 7 };
+        MatchContext.Set(game);
+
+        Assert.That(MatchContext.HasGame, Is.True);
+        Assert.That(MatchContext.GameId, Is.EqualTo(42));
+        Assert.That(MatchContext.SeasonId, Is.EqualTo(7));
+
+        MatchContext.Result = new MatchSimulationResult { HomeScore = 2, AwayScore = 1 };
+        Assert.That(MatchContext.Result.HomeScore, Is.EqualTo(2));
+
+        MatchContext.Clear();
+        Assert.That(MatchContext.HasGame, Is.False);
+        Assert.That(MatchContext.Result, Is.Null);
+    }
+
+    [Test]
+    public void MatchScreens_HaveTheirCoreElements()
+    {
+        var preGame = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+            "Assets/_TacticalEleven/UI/Screens/PreGame/PreGame.uxml");
+        Assert.That(preGame, Is.Not.Null);
+        var preRoot = preGame.CloneTree();
+        Assert.That(preRoot.Q<Button>("BtnGoMatch"), Is.Not.Null);
+        Assert.That(preRoot.Q<VisualElement>("MPVHomeStarters"), Is.Not.Null);
+        Assert.That(preRoot.Q<VisualElement>("MPVAwayStarters"), Is.Not.Null);
+        Assert.That(preRoot.Q<VisualElement>("MPVHomeBajas"), Is.Not.Null);
+
+        var matchDay = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+            "Assets/_TacticalEleven/UI/Screens/MatchDay/MatchDay.uxml");
+        Assert.That(matchDay, Is.Not.Null);
+        var mdRoot = matchDay.CloneTree();
+        Assert.That(mdRoot.Q<Label>("HomeScore"), Is.Not.Null);
+        Assert.That(mdRoot.Q<Label>("AwayScore"), Is.Not.Null);
+        Assert.That(mdRoot.Q<VisualElement>("TimelineBody"), Is.Not.Null);
+        Assert.That(mdRoot.Q<VisualElement>("HomeBoxBody"), Is.Not.Null);
+        Assert.That(mdRoot.Q<Button>("BtnContinue"), Is.Not.Null);
+
+        var results = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+            "Assets/_TacticalEleven/UI/Screens/GameResults/GameResults.uxml");
+        Assert.That(results, Is.Not.Null);
+        var grRoot = results.CloneTree();
+        Assert.That(grRoot.Q<VisualElement>("GamesBody"), Is.Not.Null);
+        Assert.That(grRoot.Q<VisualElement>("MvpPanel"), Is.Not.Null);
+        Assert.That(grRoot.Q<VisualElement>("LbScorersBody"), Is.Not.Null);
+        Assert.That(grRoot.Q<Button>("BtnDashboard"), Is.Not.Null);
+    }
+
+    [Test]
+    public void Scene_HasTheThreeMatchScreensWired()
+    {
+        string scene = System.IO.File.ReadAllText("Assets/_TacticalEleven/Scenes/MainMenu.unity");
+
+        Assert.That(scene.Contains("m_Name: PreGameDocument"), Is.True);
+        Assert.That(scene.Contains("m_Name: MatchDayDocument"), Is.True);
+        Assert.That(scene.Contains("m_Name: GameResultsDocument"), Is.True);
+
+        Assert.That(System.Text.RegularExpressions.Regex.IsMatch(
+            scene, @"preGameDocument: \{fileID: (?!0\})"), Is.True);
+        Assert.That(System.Text.RegularExpressions.Regex.IsMatch(
+            scene, @"matchDayDocument: \{fileID: (?!0\})"), Is.True);
+        Assert.That(System.Text.RegularExpressions.Regex.IsMatch(
+            scene, @"gameResultsDocument: \{fileID: (?!0\})"), Is.True);
     }
 
     // ── PERSISTENCIA ───────────────────────────────────────────────────────

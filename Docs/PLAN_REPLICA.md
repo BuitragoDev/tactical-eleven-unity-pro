@@ -656,7 +656,8 @@ Con F0-F9 se puede **jugar una temporada completa de liga** (sin copa ni Europa)
 - **`MatchupPreview`**: probabilidades local/empate/visitante por Poisson con ventaja de campo.
 - **`DatabaseManager.MatchEngine`**: `SimulateGame` persiste resultado, eventos, estadísticas individuales y acumulados de temporada; `PlayToday` simula la **jornada completa** (mismo tipo y número) para que la clasificación sea coherente.
 - **Dashboard**: el botón JUGAR PARTIDO ya simula el encuentro y muestra el resultado; después CONTINUAR avanza el día.
-- **Pendiente de F8**: pantallas `PreGame`, `MatchDay` y `GameResults`, crónica en vivo y cambios interactivos.
+- **Pantallas** (réplica de Tactical5 adaptada al fútbol): `PreGame` (onces, banquillos, bajas, forma, jugadores clave y pronóstico), `MatchDay` (marcador, estadísticas de equipo, cronología y estadísticas individuales) y `GameResults` (resto de la jornada, MVP y líderes de goleadores/asistentes/notas). Flujo: Dashboard → PreGame → MatchDay → GameResults → Dashboard.
+- **Pendiente de F8**: play-by-play interactivo, cambios en directo y vista 2D (F8b).
 
 ---
 

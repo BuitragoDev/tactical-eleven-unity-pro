@@ -1,0 +1,159 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../Dashboard/Dashboard.uss" />
+    <Style src="MatchDay.uss" />
+
+    <ui:VisualElement name="MatchDayRoot" class="matchday-root">
+
+        <ui:VisualElement class="matchday-main">
+
+            <!-- TOP HEADER -->
+            <ui:VisualElement name="TopHeader" class="top-header">
+                <ui:VisualElement class="header-left">
+                    <ui:VisualElement name="HeaderTeamLogo" class="header-team-logo" />
+                    <ui:VisualElement class="header-team-info">
+                        <ui:VisualElement class="header-team-name-row">
+                            <ui:Label name="HeaderTeamName" class="header-team-name" text="" />
+                            <ui:Label name="HeaderSubtitle" class="header-subtitle" text="{loc:ui.match_day.header_subtitle}" />
+                        </ui:VisualElement>
+                        <ui:Label name="HeaderManagerName" class="header-manager-name" text="" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="header-right-group">
+                    <ui:VisualElement class="header-season-info">
+                        <ui:Label name="HeaderSeason" class="header-season-label" text="" />
+                    </ui:VisualElement>
+                    <ui:Label name="HeaderDate" class="header-date-label" text="" />
+                    <ui:Label name="HeaderGameDay" class="header-game-day-label" text="" />
+                    <ui:Button name="BtnContinue" class="btn-action" text="{loc:ui.match_day.btn_continue}" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- CONTENT -->
+            <ui:ScrollView class="matchday-scroll"
+                           horizontal-scrolling-enabled="false"
+                           mode="Vertical">
+                <ui:VisualElement class="matchday-content">
+
+                    <!-- Match Banner -->
+                    <ui:VisualElement name="MatchBanner" class="match-banner">
+                        <ui:VisualElement class="match-teams">
+                            <ui:VisualElement name="HomeTeamBlock" class="match-team">
+                                <ui:VisualElement name="HomeLogo" class="match-team-logo" />
+                                <ui:Label name="HomeName" class="match-team-name" text="" />
+                                <ui:Label name="HomeMyTeamBadge" class="my-team-badge" text="{loc:ui.match_day.home_my_team_badge}" style="display: none;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="match-score">
+                                <ui:Label name="HomeScore" class="score-home" text="" />
+                                <ui:Label class="score-sep" text="-" />
+                                <ui:Label name="AwayScore" class="score-away" text="" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="AwayTeamBlock" class="match-team">
+                                <ui:VisualElement name="AwayLogo" class="match-team-logo" />
+                                <ui:Label name="AwayName" class="match-team-name" text="" />
+                                <ui:Label name="AwayMyTeamBadge" class="my-team-badge" text="{loc:ui.match_day.away_my_team_badge}" style="display: none;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="match-venue">
+                            <ui:Label name="VenueLabel" class="match-venue-label" text="" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:Label name="MatchStatus" class="md-status" text="" />
+
+                    <!-- Team stats -->
+                    <ui:VisualElement class="md-stats-row">
+                        <ui:VisualElement class="md-stat">
+                            <ui:Label name="StatPossessionHome" class="md-stat-value md-stat-value--home" text="0" />
+                            <ui:Label class="md-stat-label" text="{loc:ui.match_day.posesion}" />
+                            <ui:Label name="StatPossessionAway" class="md-stat-value" text="0" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="md-stat">
+                            <ui:Label name="StatShotsHome" class="md-stat-value md-stat-value--home" text="0" />
+                            <ui:Label class="md-stat-label" text="{loc:ui.match_day.tiros}" />
+                            <ui:Label name="StatShotsAway" class="md-stat-value" text="0" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="md-stat">
+                            <ui:Label name="StatOnTargetHome" class="md-stat-value md-stat-value--home" text="0" />
+                            <ui:Label class="md-stat-label" text="{loc:ui.match_day.a_puerta}" />
+                            <ui:Label name="StatOnTargetAway" class="md-stat-value" text="0" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="md-stat">
+                            <ui:Label name="StatCornersHome" class="md-stat-value md-stat-value--home" text="0" />
+                            <ui:Label class="md-stat-label" text="{loc:ui.match_day.corners}" />
+                            <ui:Label name="StatCornersAway" class="md-stat-value" text="0" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="md-stat">
+                            <ui:Label name="StatFoulsHome" class="md-stat-value md-stat-value--home" text="0" />
+                            <ui:Label class="md-stat-label" text="{loc:ui.match_day.faltas}" />
+                            <ui:Label name="StatFoulsAway" class="md-stat-value" text="0" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="md-stat">
+                            <ui:Label name="StatYellowHome" class="md-stat-value md-stat-value--home" text="0" />
+                            <ui:Label class="md-stat-label" text="{loc:ui.match_day.amarillas}" />
+                            <ui:Label name="StatYellowAway" class="md-stat-value" text="0" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <!-- Timeline -->
+                    <ui:VisualElement class="md-timeline-panel">
+                        <ui:Label class="md-panel-title" text="{loc:ui.match_day.cronologia}" />
+                        <ui:VisualElement name="TimelineBody" class="md-timeline-body" />
+                    </ui:VisualElement>
+
+                    <!-- Box Scores -->
+                    <ui:VisualElement class="box-scores">
+                        <ui:VisualElement name="HomeBoxScore" class="box-score-panel" style="margin-right: 20px;">
+                            <ui:VisualElement class="box-score-header">
+                                <ui:VisualElement name="HomeBoxLogo" class="box-logo" />
+                                <ui:Label name="HomeBoxName" class="box-team-name" text="" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="box-table-wrapper">
+                                <ui:VisualElement class="box-table-header">
+                                    <ui:Label class="col-player col-stat--header" text="{loc:ui.match_day.jugador}" />
+                                    <ui:Label class="col-min col-stat--header" text="{loc:ui.match_day.min}" />
+                                    <ui:Label class="col-goals col-stat--header" text="{loc:ui.match_day.goles}" />
+                                    <ui:Label class="col-assists col-stat--header" text="{loc:ui.match_day.asistencias}" />
+                                    <ui:Label class="col-shots col-stat--header" text="{loc:ui.match_day.tiros_col}" />
+                                    <ui:Label class="col-saves col-stat--header" text="{loc:ui.match_day.paradas}" />
+                                    <ui:Label class="col-yellow col-stat--header" text="{loc:ui.match_day.ta}" />
+                                    <ui:Label class="col-red col-stat--header" text="{loc:ui.match_day.tr}" />
+                                    <ui:Label class="col-rating col-stat--header" text="{loc:ui.match_day.nota}" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="HomeBoxBody" class="box-table-body" />
+                                <ui:VisualElement name="HomeBoxFooter" class="box-table-footer" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="AwayBoxScore" class="box-score-panel">
+                            <ui:VisualElement class="box-score-header">
+                                <ui:VisualElement name="AwayBoxLogo" class="box-logo" />
+                                <ui:Label name="AwayBoxName" class="box-team-name" text="" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="box-table-wrapper">
+                                <ui:VisualElement class="box-table-header">
+                                    <ui:Label class="col-player col-stat--header" text="{loc:ui.match_day.jugador}" />
+                                    <ui:Label class="col-min col-stat--header" text="{loc:ui.match_day.min}" />
+                                    <ui:Label class="col-goals col-stat--header" text="{loc:ui.match_day.goles}" />
+                                    <ui:Label class="col-assists col-stat--header" text="{loc:ui.match_day.asistencias}" />
+                                    <ui:Label class="col-shots col-stat--header" text="{loc:ui.match_day.tiros_col}" />
+                                    <ui:Label class="col-saves col-stat--header" text="{loc:ui.match_day.paradas}" />
+                                    <ui:Label class="col-yellow col-stat--header" text="{loc:ui.match_day.ta}" />
+                                    <ui:Label class="col-red col-stat--header" text="{loc:ui.match_day.tr}" />
+                                    <ui:Label class="col-rating col-stat--header" text="{loc:ui.match_day.nota}" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="AwayBoxBody" class="box-table-body" />
+                                <ui:VisualElement name="AwayBoxFooter" class="box-table-footer" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+            </ui:ScrollView>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>
