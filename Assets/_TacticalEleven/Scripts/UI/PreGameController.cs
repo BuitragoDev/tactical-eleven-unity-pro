@@ -34,7 +34,7 @@ public class PreGameController : UIScreenController
     private List<GameDataDB> _regularGames = new();
     private List<TeamDataDB> _leagueTeams = new();
     private readonly Dictionary<string, Sprite> _logos = new();
-    private readonly Dictionary<int, (int Goals, int Assists)> _seasonStats = new();
+    private readonly Dictionary<int, (int TeamId, int Goals, int Assists)> _seasonStats = new();
 
     protected override void CacheReferences()
     {
@@ -90,7 +90,7 @@ public class PreGameController : UIScreenController
         _seasonStats.Clear();
         foreach (var stat in db.Db.Table<PlayerSeasonStatsDB>()
                      .Where(st => st.SeasonYear == _season.YearStart).ToList())
-            _seasonStats[stat.PlayerId] = (stat.Goals, stat.Assists);
+            _seasonStats[stat.PlayerId] = (stat.TeamId, stat.Goals, stat.Assists);
 
         _game = ResolveGame(db);
         if (_game == null) return;
@@ -368,22 +368,65 @@ public class PreGameController : UIScreenController
         var rows = new[] { _keyRow1, _keyRow2, _keyRow3, _keyRow4 };
         foreach (var row in rows) row?.Clear();
 
-        var homeStars = DatabaseManager.Instance.GetPlayersByTeam(_home.Id)
-            .OrderByDescending(p => p.Overall).Take(2).ToList();
-        var awayStars = DatabaseManager.Instance.GetPlayersByTeam(_away.Id)
-            .OrderByDescending(p => p.Overall).Take(2).ToList();
+        // Dos filas: goles y asistencias. Cada una enfrenta al mejor de cada equipo.
+        FillKeyRow(_keyRow1, "ui.pre_game.key_goals", stat => stat.Goals);
+        FillKeyRow(_keyRow2, "ui.pre_game.key_assists", stat => stat.Assists);
 
-        int index = 0;
-        foreach (var player in homeStars)
-            if (index < rows.Length) AddKeyPlayer(rows[index++], player, _home, false);
-
-        foreach (var player in awayStars)
-            if (index < rows.Length) AddKeyPlayer(rows[index++], player, _away, true);
+        SetVisible(_keyRow3, false);
+        SetVisible(_keyRow4, false);
     }
 
-    private void AddKeyPlayer(VisualElement row, PlayerDataDB player, TeamDataDB team, bool rightSide)
+    private void FillKeyRow(VisualElement row, string labelKey,
+                            System.Func<(int TeamId, int Goals, int Assists), int> selector)
     {
         if (row == null) return;
+
+        var home = BestBy(_home, selector);
+        var away = BestBy(_away, selector);
+
+        AddKeySide(row, home.Player, _home, home.Value, false);
+
+        var label = new Label(LocalizationService.T(labelKey));
+        label.AddToClassList("mpv-key-label");
+        row.Add(label);
+
+        AddKeySide(row, away.Player, _away, away.Value, true);
+    }
+
+    private (PlayerDataDB Player, int Value) BestBy(
+        TeamDataDB team, System.Func<(int TeamId, int Goals, int Assists), int> selector)
+    {
+        var players = DatabaseManager.Instance.GetPlayersByTeam(team.Id);
+        if (players.Count == 0) return (null, 0);
+
+        PlayerDataDB best = null;
+        int bestValue = -1;
+
+        foreach (var player in players)
+        {
+            if (!_seasonStats.TryGetValue(player.Id, out var stat)) continue;
+            int value = selector(stat);
+            if (value > bestValue)
+            {
+                bestValue = value;
+                best = player;
+            }
+        }
+
+        // Sin estadísticas todavía: se usa el mejor jugador de la plantilla con 0.
+        if (best == null)
+        {
+            best = players.OrderByDescending(p => p.Overall).First();
+            bestValue = 0;
+        }
+
+        return (best, bestValue);
+    }
+
+    private void AddKeySide(VisualElement row, PlayerDataDB player, TeamDataDB team,
+                            int value, bool rightSide)
+    {
+        if (row == null || player == null) return;
 
         var block = new VisualElement();
         block.AddToClassList("mpv-key-player");
@@ -396,15 +439,23 @@ public class PreGameController : UIScreenController
         var name = new Label(ShortName(player));
         name.AddToClassList("mpv-key-name");
 
-        var stats = _seasonStats.TryGetValue(player.Id, out var value) ? value : (0, 0);
-        var stat = new Label(LocalizationService.T("ui.pre_game.key_stats", stats.Item1, stats.Item2));
+        var stat = new Label(value.ToString());
         stat.AddToClassList("mpv-key-stat");
-        stat.AddToClassList("mpv-key-stat--wide");
 
-        block.Add(photo);
-        block.Add(name);
+        if (rightSide)
+        {
+            block.Add(stat);
+            block.Add(name);
+            block.Add(photo);
+        }
+        else
+        {
+            block.Add(photo);
+            block.Add(name);
+            block.Add(stat);
+        }
+
         row.Add(block);
-        row.Add(stat);
     }
 
     // ── UTILIDADES ─────────────────────────────────────────────────────────

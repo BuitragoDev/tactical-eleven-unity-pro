@@ -1482,6 +1482,14 @@
       "value": "JUGADORES CLAVE"
     },
     {
+      "key": "ui.pre_game.key_assists",
+      "value": "ASISTENCIAS"
+    },
+    {
+      "key": "ui.pre_game.key_goals",
+      "value": "GOLES"
+    },
+    {
       "key": "ui.pre_game.key_stats",
       "value": "Goles: {0} · Asist: {1}"
     },
