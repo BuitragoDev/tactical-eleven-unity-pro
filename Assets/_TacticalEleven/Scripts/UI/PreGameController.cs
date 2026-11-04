@@ -221,7 +221,7 @@ public class PreGameController : UIScreenController
         var pos = new Label(PlayerPositionNames.ShortName((int)slot));
         pos.AddToClassList("mpv-bench-pos");
 
-        var name = new Label(ShortName(player));
+        var name = new Label(FullName(player));
         name.AddToClassList("mpv-bench-name");
 
         var overall = new Label(player.Overall.ToString());
@@ -490,6 +490,14 @@ public class PreGameController : UIScreenController
     {
         if (player == null) return "";
         if (!string.IsNullOrEmpty(player.CommonName)) return player.CommonName;
-        return $"{player.FirstName} {player.LastName}".Trim();
+        return FullName(player);
+    }
+
+    /// <summary>Nombre completo: nombre de pila + apellido.</summary>
+    private static string FullName(PlayerDataDB player)
+    {
+        if (player == null) return "";
+        string full = $"{player.FirstName} {player.LastName}".Trim();
+        return string.IsNullOrEmpty(full) ? player.CommonName ?? "" : full;
     }
 }
