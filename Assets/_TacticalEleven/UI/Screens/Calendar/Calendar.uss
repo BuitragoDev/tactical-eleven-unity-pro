@@ -497,3 +497,49 @@
 .selected-game-team--right .selected-game-team-name {
     -unity-text-align: middle-right;
 }
+
+/* ══════════════════════════════════════════
+   S1 — SCROLL DE LA LISTA DEL DÍA Y ESCUDOS
+   ══════════════════════════════════════════ */
+.selected-day-games-scroll-row {
+    flex-direction: row;
+    flex-grow: 1;
+    min-height: 0;
+}
+.selected-day-games-viewport {
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+}
+.selected-day-scrollbar {
+    width: 12px;
+    min-width: 12px;
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 4px 2px;
+    background-color: rgb(18, 24, 34);
+    border-radius: 6px;
+    position: relative;
+}
+.selected-day-scrollbar-thumb {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 0;
+    height: 40px;
+    background-color: rgb(42, 95, 201);
+    border-radius: 4px;
+}
+.selected-day-scrollbar:hover .selected-day-scrollbar-thumb {
+    background-color: rgb(70, 130, 230);
+}
+
+.calendar-day-logo {
+    width: 72px;
+    height: 72px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}

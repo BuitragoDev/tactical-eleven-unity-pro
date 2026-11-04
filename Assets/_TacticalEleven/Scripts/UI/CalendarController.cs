@@ -26,12 +26,17 @@ public class CalendarController : UIScreenController
     private VisualElement _calendarDays;
     private Label _selectedDayTitle;
     private VisualElement _selectedDayGames;
+    private VisualElement _gamesViewport;
+    private VisualElement _scrollTrack;
+    private VisualElement _scrollThumb;
+    private CustomScrollbar.Handle _scrollbar;
     private Label _noGamesText;
 
     private readonly List<GameDataDB> _games = new();
     private readonly Dictionary<string, List<GameDataDB>> _gamesByDate = new();
     private readonly Dictionary<int, TeamDataDB> _teams = new();
     private readonly Dictionary<string, Sprite> _logos = new();
+    private readonly Dictionary<string, Sprite> _logosLarge = new();
     private readonly Dictionary<DateTime, VisualElement> _dayCells = new();
 
     private DateTime _currentMonthDate;
@@ -46,6 +51,9 @@ public class CalendarController : UIScreenController
         _calendarDays = Q<VisualElement>("CalendarDays");
         _selectedDayTitle = Q<Label>("SelectedDayTitle");
         _selectedDayGames = Q<VisualElement>("SelectedDayGames");
+        _gamesViewport = Q<VisualElement>("SelectedDayGamesViewport");
+        _scrollTrack = Q<VisualElement>("SelectedDayScrollTrack");
+        _scrollThumb = Q<VisualElement>("SelectedDayScrollThumb");
         _noGamesText = Q<Label>("NoGamesText");
     }
 
@@ -74,6 +82,9 @@ public class CalendarController : UIScreenController
         foreach (var sprite in Resources.LoadAll<Sprite>("Teams/Logos/64x64"))
             _logos[sprite.name] = sprite;
 
+        foreach (var sprite in Resources.LoadAll<Sprite>("Teams/Logos/120x120"))
+            _logosLarge[sprite.name] = sprite;
+
         var current = CalendarHelper.TryParse(_season.CurrentDate, out var date)
             ? date
             : new DateTime(_season.YearStart, 7, 15);
@@ -90,6 +101,10 @@ public class CalendarController : UIScreenController
     protected override void RegisterCallbacks()
     {
         SidebarController.Attach(_root, ScreenId);
+        HeaderController.Attach(_root);
+
+        _scrollbar = CustomScrollbar.Bind(_gamesViewport, _selectedDayGames,
+            _scrollTrack, _scrollThumb);
 
         _btnPrevMonth?.RegisterCallback<ClickEvent>(_ =>
         {
@@ -177,8 +192,19 @@ public class CalendarController : UIScreenController
             number.AddToClassList("calendar-day-number--top-right");
             cell.Add(number);
 
-            if (dayGames.Count > 0)
-                cell.Add(BuildDots(dayGames));
+            if (isMyGame)
+            {
+                var myGame = dayGames.First(g =>
+                    g.HomeTeamId == _myTeam.Id || g.AwayTeamId == _myTeam.Id);
+                int rivalId = myGame.HomeTeamId == _myTeam.Id
+                    ? myGame.AwayTeamId
+                    : myGame.HomeTeamId;
+
+                var crest = new VisualElement();
+                crest.AddToClassList("calendar-day-logo");
+                SetLargeLogo(crest, TeamOf(rivalId));
+                cell.Add(crest);
+            }
 
             _dayCells[date] = cell;
 
@@ -201,34 +227,6 @@ public class CalendarController : UIScreenController
         }
     }
 
-    private static VisualElement BuildDots(List<GameDataDB> dayGames)
-    {
-        var container = new VisualElement();
-        container.AddToClassList("calendar-day-dots");
-
-        foreach (int competitionId in dayGames
-                     .Select(g => g.CompetitionId)
-                     .Distinct()
-                     .Take(4))
-        {
-            var dot = new VisualElement();
-            dot.AddToClassList("calendar-day-dot");
-            dot.AddToClassList(DotClass(competitionId));
-            container.Add(dot);
-        }
-
-        return container;
-    }
-
-    private static string DotClass(int competitionId) => competitionId switch
-    {
-        5 => "calendar-day-dot--champions",
-        6 => "calendar-day-dot--europa",
-        7 => "calendar-day-dot--conference",
-        8 or 9 => "calendar-day-dot--cup",
-        _ => "calendar-day-dot--league"
-    };
-
     // ── DETALLE DEL DÍA ────────────────────────────────────────────────────
 
     private void ShowDay(DateTime date)
@@ -245,6 +243,7 @@ public class CalendarController : UIScreenController
 
         bool hasGames = dayGames.Count > 0;
         SetVisible(_noGamesText, !hasGames);
+        CustomScrollbar.Reset(_scrollbar);
 
         if (!hasGames) return;
 
@@ -254,6 +253,8 @@ public class CalendarController : UIScreenController
         {
             _selectedDayGames.Add(BuildGameRow(game));
         }
+
+        CustomScrollbar.Refresh(_scrollbar);
     }
 
     private VisualElement BuildGameRow(GameDataDB game)
@@ -333,5 +334,15 @@ public class CalendarController : UIScreenController
         string key = string.IsNullOrEmpty(team.Logo) ? team.Id.ToString() : team.Logo;
         if (_logos.TryGetValue(key, out var sprite))
             element.style.backgroundImage = new StyleBackground(sprite);
+    }
+
+    private void SetLargeLogo(VisualElement element, TeamDataDB team)
+    {
+        if (element == null || team == null) return;
+        string key = string.IsNullOrEmpty(team.Logo) ? team.Id.ToString() : team.Logo;
+        if (_logosLarge.TryGetValue(key, out var sprite))
+            element.style.backgroundImage = new StyleBackground(sprite);
+        else if (_logos.TryGetValue(key, out var small))
+            element.style.backgroundImage = new StyleBackground(small);
     }
 }

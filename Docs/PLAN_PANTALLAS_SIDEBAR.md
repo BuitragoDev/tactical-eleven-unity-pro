@@ -62,6 +62,7 @@
 - [x] **Dashboard** — réplica de `Tactical5/UI/Screens/Dashboard`; header, sidebar inyectada,
   tarjetas, avance de día y estadísticas de fútbol.
 - [x] `SidebarController` + `UI/Resources/UI/Core/Sidebar.uxml`.
+- [x] `HeaderController` + `UI/Resources/UI/Core/Header.uxml` (header común inyectado en las pantallas del sidebar).
 - [x] `ScreenManager` con los 51 campos y navegación.
 - [x] Textos base, tema y estilos compartidos.
 

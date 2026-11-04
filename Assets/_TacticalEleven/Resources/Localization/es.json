@@ -74,6 +74,26 @@
       "value": "Manager: {0}"
     },
     {
+      "key": "ui.core_header.eleven",
+      "value": "ELEVEN"
+    },
+    {
+      "key": "ui.core_header.presupuesto",
+      "value": "Presupuesto"
+    },
+    {
+      "key": "ui.core_header.quimica_de_equipo",
+      "value": "Química de equipo"
+    },
+    {
+      "key": "ui.core_header.tactical",
+      "value": "TACTICAL"
+    },
+    {
+      "key": "ui.core_header.te",
+      "value": "TE"
+    },
+    {
       "key": "ui.core_sidebar.actualidad",
       "value": "ACTUALIDAD"
     },
