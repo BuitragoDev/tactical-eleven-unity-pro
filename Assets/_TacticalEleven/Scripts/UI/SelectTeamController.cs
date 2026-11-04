@@ -294,8 +294,8 @@ public class SelectTeamController : UIScreenController
         SetText(_detailCountry, CountryCodes.GetNameEs(team.Country));
         SetText(_detailStadium, team.StadiumName);
         SetText(_detailCapacity, team.StadiumCapacity > 0 ? team.StadiumCapacity.ToString("N0") : "—");
-        SetText(_detailBudget, $"{team.TransferBudget:N0} $");
-        SetText(_detailWageBill, $"{team.TotalWageBill:N0} $");
+        SetText(_detailBudget, $"{team.TransferBudget:N0} €");
+        SetText(_detailWageBill, $"{team.TotalWageBill:N0} €");
         SetText(_detailAttack, team.Attack.ToString());
         SetText(_detailDefense, team.Defense.ToString());
         SetText(_detailOverall, team.Overall.ToString());
