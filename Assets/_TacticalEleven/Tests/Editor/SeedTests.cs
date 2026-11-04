@@ -106,8 +106,6 @@ public class SeedTests
         Assert.That(a.Length, Is.EqualTo(32), "MD5 en hex");
     }
 
-    // ── SLOT ───────────────────────────────────────────────────────────────
-
     [Test]
     public void InitSaveSlot_SeedsCompetitionsTeamsAndFingerprint()
     {
@@ -122,6 +120,31 @@ public class SeedTests
         var issues = SeedAudit.Validate(db.Db);
         Assert.That(issues.Any(i => i.Severity == "ERROR"), Is.False,
             string.Join(" | ", issues.Where(i => i.Severity == "ERROR").Select(i => i.Message)));
+    }
+
+    // ── PRESUPUESTOS ───────────────────────────────────────────────────────
+
+    [Test]
+    public void Budgets_OfFirstAndSecondDivision_AreRealisticAndRounded()
+    {
+        var db = DatabaseManager.Instance;
+        Assert.That(db.InitSaveSlot(1), Is.True, db.LastInitError);
+
+        var teams = db.GetTeamsByLeague(1).Concat(db.GetTeamsByLeague(2)).ToList();
+        Assert.That(teams.Count, Is.EqualTo(42));
+
+        foreach (var team in teams)
+        {
+            Assert.That(team.TransferBudget % 500_000, Is.EqualTo(0),
+                $"{team.Name}: el presupuesto debe ser múltiplo de 500.000 €");
+            Assert.That(team.TransferBudget, Is.GreaterThan(0));
+        }
+
+        // Escala real 2026: el Madrid supera los 1.000 M€ y el último de 2ª no llega a 20 M€.
+        Assert.That(db.GetTeamsByLeague(1).Max(t => t.TransferBudget),
+            Is.GreaterThanOrEqualTo(1_000_000_000));
+        Assert.That(db.GetTeamsByLeague(2).Min(t => t.TransferBudget),
+            Is.LessThan(20_000_000));
     }
 
     [Test]

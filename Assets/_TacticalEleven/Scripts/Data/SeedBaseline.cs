@@ -41,7 +41,8 @@ public static class SeedBaseline
                 sb.Append(t.Id).Append('|').Append(t.Name).Append('|').Append(t.ShortName)
                   .Append('|').Append(t.LeagueId).Append('|').Append(t.StadiumCapacity)
                   .Append('|').Append(t.Overall).Append('|').Append(t.IsFilial)
-                  .Append('|').Append(t.ParentClubId).Append(';');
+                  .Append('|').Append(t.ParentClubId)
+                  .Append('|').Append(t.TransferBudget).Append(';');
 
             foreach (var f in PalmaresSeeder.FinalsData)
                 sb.Append(f.Season).Append('|').Append(f.CompetitionId).Append('|')
@@ -69,7 +70,8 @@ public static class SeedBaseline
             sb.Append(t.Id).Append('|').Append(t.Name).Append('|').Append(t.ShortName)
               .Append('|').Append(t.LeagueId).Append('|').Append(t.StadiumCapacity)
               .Append('|').Append(t.Overall).Append('|').Append(t.IsFilial)
-              .Append('|').Append(t.ParentClubId).Append(';');
+              .Append('|').Append(t.ParentClubId)
+              .Append('|').Append(t.TransferBudget).Append(';');
         return Hash(sb.ToString());
     }
 
