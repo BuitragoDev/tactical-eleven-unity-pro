@@ -95,7 +95,16 @@ public class GameResultsController : UIScreenController
             .ThenBy(g => g.Id)
             .ToList();
 
-        _filterCompetition = 0;
+        var competitions = _dayGames
+            .Select(g => g.CompetitionId)
+            .Distinct()
+            .OrderBy(id => id)
+            .ToList();
+
+        _filterCompetition = competitions.Contains(_game.CompetitionId)
+            ? _game.CompetitionId
+            : competitions.FirstOrDefault();
+
         BuildFilterButtons();
     }
 
@@ -152,8 +161,6 @@ public class GameResultsController : UIScreenController
 
         _filtersBar.Clear();
         _filterButtons.Clear();
-
-        AddFilterButton(0, LocalizationService.T("ui.game_results.filter_all"));
 
         foreach (int competitionId in _dayGames
                      .Select(g => g.CompetitionId)
@@ -258,9 +265,9 @@ public class GameResultsController : UIScreenController
         if (_gamesBody == null) return;
         _gamesBody.Clear();
 
-        var visible = _filterCompetition == 0
-            ? _dayGames
-            : _dayGames.Where(g => g.CompetitionId == _filterCompetition).ToList();
+        var visible = _dayGames
+            .Where(g => g.CompetitionId == _filterCompetition)
+            .ToList();
 
         if (visible.Count == 0)
         {
