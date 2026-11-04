@@ -306,6 +306,10 @@
       "value": "EQUIPO"
     },
     {
+      "key": "ui.dashboard.error_partido",
+      "value": "No se pudo simular el partido."
+    },
+    {
       "key": "ui.dashboard.espectadores",
       "value": "{0:N0} espectadores"
     },
@@ -710,6 +714,10 @@
       "value": "Reputación"
     },
     {
+      "key": "ui.dashboard.resultado_partido",
+      "value": "Resultado: {0} - {1}"
+    },
+    {
       "key": "ui.dashboard.salir_del_juego",
       "value": "SALIR DEL JUEGO"
     },
@@ -856,6 +864,98 @@
     {
       "key": "ui.dashboard.vs",
       "value": "VS"
+    },
+    {
+      "key": "ui.game_results.asistencias",
+      "value": "ASISTENCIAS"
+    },
+    {
+      "key": "ui.game_results.btn_dashboard",
+      "value": "CONTINUAR"
+    },
+    {
+      "key": "ui.game_results.filter_all",
+      "value": "TODOS"
+    },
+    {
+      "key": "ui.game_results.filter_champions",
+      "value": "CHAMPIONS"
+    },
+    {
+      "key": "ui.game_results.filter_conference",
+      "value": "CONFERENCE"
+    },
+    {
+      "key": "ui.game_results.filter_copa",
+      "value": "COPA"
+    },
+    {
+      "key": "ui.game_results.filter_europa",
+      "value": "EUROPA"
+    },
+    {
+      "key": "ui.game_results.filter_liga",
+      "value": "LIGA"
+    },
+    {
+      "key": "ui.game_results.filter_preseason",
+      "value": "AMISTOSOS"
+    },
+    {
+      "key": "ui.game_results.filter_supercopa",
+      "value": "SUPERCOPA"
+    },
+    {
+      "key": "ui.game_results.goles",
+      "value": "GOLES"
+    },
+    {
+      "key": "ui.game_results.header_subtitle",
+      "value": "RESULTADOS"
+    },
+    {
+      "key": "ui.game_results.maximos_asistentes",
+      "value": "MÁXIMOS ASISTENTES"
+    },
+    {
+      "key": "ui.game_results.maximos_goleadores",
+      "value": "MÁXIMOS GOLEADORES"
+    },
+    {
+      "key": "ui.game_results.mejores_notas",
+      "value": "MEJORES NOTAS"
+    },
+    {
+      "key": "ui.game_results.mvp_del_dia",
+      "value": "MVP DEL DÍA"
+    },
+    {
+      "key": "ui.game_results.mvp_del_partido",
+      "value": "MVP DEL PARTIDO"
+    },
+    {
+      "key": "ui.game_results.mvp_name",
+      "value": "Jugador"
+    },
+    {
+      "key": "ui.game_results.mvp_team",
+      "value": "Equipo"
+    },
+    {
+      "key": "ui.game_results.nota",
+      "value": "NOTA"
+    },
+    {
+      "key": "ui.game_results.resultados",
+      "value": "RESULTADOS DE LA JORNADA"
+    },
+    {
+      "key": "ui.game_results.sin_competicion",
+      "value": "Sin resultados en esta competición."
+    },
+    {
+      "key": "ui.game_results.sin_resultados",
+      "value": "Aún no hay resultados."
     },
     {
       "key": "ui.load_game.borrar_partida",
@@ -1224,6 +1324,254 @@
     {
       "key": "ui.main_menu.volumen_general",
       "value": "Volumen General"
+    },
+    {
+      "key": "ui.match_day.a_puerta",
+      "value": "A PUERTA"
+    },
+    {
+      "key": "ui.match_day.amarillas",
+      "value": "AMARILLAS"
+    },
+    {
+      "key": "ui.match_day.asistencias",
+      "value": "A"
+    },
+    {
+      "key": "ui.match_day.away_my_team_badge",
+      "value": "TU EQUIPO"
+    },
+    {
+      "key": "ui.match_day.btn_continue",
+      "value": "CONTINUAR"
+    },
+    {
+      "key": "ui.match_day.corners",
+      "value": "CÓRNERS"
+    },
+    {
+      "key": "ui.match_day.cronologia",
+      "value": "CRONOLOGÍA"
+    },
+    {
+      "key": "ui.match_day.event_added",
+      "value": "Tiempo añadido: {0} minutos"
+    },
+    {
+      "key": "ui.match_day.event_chance",
+      "value": "Ocasión de {0}"
+    },
+    {
+      "key": "ui.match_day.event_default",
+      "value": "Incidente del partido"
+    },
+    {
+      "key": "ui.match_day.event_fulltime",
+      "value": "Final del partido"
+    },
+    {
+      "key": "ui.match_day.event_goal",
+      "value": "Gol de {0}"
+    },
+    {
+      "key": "ui.match_day.event_goal_assist",
+      "value": "Gol de {0} (asistencia de {1})"
+    },
+    {
+      "key": "ui.match_day.event_kickoff",
+      "value": "Comienza el partido"
+    },
+    {
+      "key": "ui.match_day.event_red",
+      "value": "Tarjeta roja para {0}"
+    },
+    {
+      "key": "ui.match_day.event_save",
+      "value": "Parada de {0}"
+    },
+    {
+      "key": "ui.match_day.event_sub",
+      "value": "Entra {0} por {1}"
+    },
+    {
+      "key": "ui.match_day.event_yellow",
+      "value": "Tarjeta amarilla para {0}"
+    },
+    {
+      "key": "ui.match_day.faltas",
+      "value": "FALTAS"
+    },
+    {
+      "key": "ui.match_day.finalizado",
+      "value": "PARTIDO FINALIZADO"
+    },
+    {
+      "key": "ui.match_day.goles",
+      "value": "G"
+    },
+    {
+      "key": "ui.match_day.header_subtitle",
+      "value": "DÍA DE PARTIDO"
+    },
+    {
+      "key": "ui.match_day.home_my_team_badge",
+      "value": "TU EQUIPO"
+    },
+    {
+      "key": "ui.match_day.jugador",
+      "value": "JUGADOR"
+    },
+    {
+      "key": "ui.match_day.min",
+      "value": "MIN"
+    },
+    {
+      "key": "ui.match_day.nota",
+      "value": "NOTA"
+    },
+    {
+      "key": "ui.match_day.paradas",
+      "value": "PAR"
+    },
+    {
+      "key": "ui.match_day.pendiente",
+      "value": "PARTIDO PENDIENTE"
+    },
+    {
+      "key": "ui.match_day.posesion",
+      "value": "POSESIÓN"
+    },
+    {
+      "key": "ui.match_day.sin_eventos",
+      "value": "Sin eventos registrados."
+    },
+    {
+      "key": "ui.match_day.sin_partido",
+      "value": "No hay partido para mostrar."
+    },
+    {
+      "key": "ui.match_day.ta",
+      "value": "TA"
+    },
+    {
+      "key": "ui.match_day.tiros",
+      "value": "TIROS"
+    },
+    {
+      "key": "ui.match_day.tiros_col",
+      "value": "TIR"
+    },
+    {
+      "key": "ui.match_day.total",
+      "value": "TOTAL"
+    },
+    {
+      "key": "ui.match_day.tr",
+      "value": "TR"
+    },
+    {
+      "key": "ui.match_day.venue",
+      "value": "{0} · {1:N0} espectadores"
+    },
+    {
+      "key": "ui.pre_game.ataque",
+      "value": "ATAQUE"
+    },
+    {
+      "key": "ui.pre_game.baja_dias",
+      "value": "{0} días"
+    },
+    {
+      "key": "ui.pre_game.bajas",
+      "value": "BAJAS"
+    },
+    {
+      "key": "ui.pre_game.banquillo",
+      "value": "BANQUILLO"
+    },
+    {
+      "key": "ui.pre_game.btn_back",
+      "value": "VOLVER"
+    },
+    {
+      "key": "ui.pre_game.btn_go_match",
+      "value": "JUGAR PARTIDO"
+    },
+    {
+      "key": "ui.pre_game.defensa",
+      "value": "DEFENSA"
+    },
+    {
+      "key": "ui.pre_game.empate",
+      "value": "empate"
+    },
+    {
+      "key": "ui.pre_game.error_simular",
+      "value": "No se pudo simular el partido."
+    },
+    {
+      "key": "ui.pre_game.favorito",
+      "value": "FAVORITO: {0} · LOCAL {1}% / EMPATE {2}% / VISITANTE {3}%"
+    },
+    {
+      "key": "ui.pre_game.header_title_type",
+      "value": "PARTIDO"
+    },
+    {
+      "key": "ui.pre_game.jugadores_clave",
+      "value": "JUGADORES CLAVE"
+    },
+    {
+      "key": "ui.pre_game.key_assists",
+      "value": "ASISTENCIAS"
+    },
+    {
+      "key": "ui.pre_game.key_goals",
+      "value": "GOLES"
+    },
+    {
+      "key": "ui.pre_game.key_stats",
+      "value": "Goles: {0} · Asist: {1}"
+    },
+    {
+      "key": "ui.pre_game.num_bajas",
+      "value": "{0} bajas"
+    },
+    {
+      "key": "ui.pre_game.once_inicial",
+      "value": "ONCE INICIAL"
+    },
+    {
+      "key": "ui.pre_game.posicion",
+      "value": "{0}º de {1}"
+    },
+    {
+      "key": "ui.pre_game.previa_del_partido",
+      "value": "PREVIA DEL PARTIDO"
+    },
+    {
+      "key": "ui.pre_game.rank",
+      "value": "{0}º de {1}"
+    },
+    {
+      "key": "ui.pre_game.sin_bajas",
+      "value": "Sin bajas"
+    },
+    {
+      "key": "ui.pre_game.sin_jugadores",
+      "value": "Sin jugadores"
+    },
+    {
+      "key": "ui.pre_game.sin_partido",
+      "value": "No hay partido programado."
+    },
+    {
+      "key": "ui.pre_game.ultimos_5",
+      "value": "ÚLTIMOS 5"
+    },
+    {
+      "key": "ui.pre_game.vs",
+      "value": "VS"
     },
     {
       "key": "ui.preseason.borrar",

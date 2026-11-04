@@ -702,9 +702,11 @@ public class DashboardController : UIScreenController
     {
         if (ScreenManager.NavigationLocked) return;
 
-        if (_matchToday != null)
+        // Día de partido: primero la previa (PreGame), que lleva a MatchDay.
+        if (_matchToday != null && ScreenManager.Instance.IsRegistered(GameScreen.PreGame))
         {
-            ShowToast(LocalizationService.T("ui.dashboard.motor_f8"));
+            MatchContext.Set(_matchToday);
+            ScreenManager.Instance.GoTo(GameScreen.PreGame);
             return;
         }
 
@@ -712,6 +714,26 @@ public class DashboardController : UIScreenController
         ScreenManager.NavigationLocked = true;
         try
         {
+            // Sin PreGame: simular directamente el encuentro.
+            if (_matchToday != null)
+            {
+                if (db.PlayToday(_season, _myTeam.Id, out var match))
+                {
+                    GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
+                    ReloadGames();
+                    Refresh();
+
+                    ShowToast(LocalizationService.T("ui.dashboard.resultado_partido",
+                        match.HomeScore, match.AwayScore));
+                }
+                else
+                {
+                    ShowToast(LocalizationService.T("ui.dashboard.error_partido"));
+                }
+
+                return;
+            }
+
             var result = db.AdvanceDay(_season, _myTeam.Id, out _);
             GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
             ReloadGames();
@@ -795,6 +817,40 @@ public class DashboardController : UIScreenController
 #else
         Application.Quit();
 #endif
+    }
+
+    /// <summary>
+    /// Simula el partido de hoy (y el resto de la jornada) y navega a MatchDay.
+    /// La usa PreGame desde su botón JUGAR PARTIDO.
+    /// </summary>
+    public static bool RequestPlayMatch()
+    {
+        var db = DatabaseManager.Instance;
+        var manager = db?.GetActiveManager();
+        if (manager == null) return false;
+
+        var team = db.GetTeamById(manager.TeamId);
+        var season = db.GetActiveSeason(manager.Id);
+        if (team == null || season == null) return false;
+
+        var game = db.GetMatchOnDate(season.Id, team.Id, season.CurrentDate);
+        if (game == null) return false;
+
+        MatchContext.Set(game);
+
+        if (!db.PlayToday(season, team.Id, out var result) || result == null)
+            return false;
+
+        MatchContext.Result = result;
+        GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
+
+        var screens = ScreenManager.Instance;
+        if (screens.IsRegistered(GameScreen.MatchDay))
+            screens.GoTo(GameScreen.MatchDay);
+        else if (screens.IsRegistered(GameScreen.GameResults))
+            screens.GoTo(GameScreen.GameResults);
+
+        return true;
     }
 
     // ── NAVEGACIÓN Y UTILIDADES ────────────────────────────────────────────

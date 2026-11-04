@@ -258,7 +258,7 @@ Notas:
 | F6 | Pretemporada y calendario de liga | L | Calendario completo de la temporada |
 | F7 | Dashboard, header, sidebar y avance de día | XL | Puedes avanzar días |
 | **Hito 1** | **Corte vertical jugable** | — | **Una temporada completa de liga sin copa ni Europa** |
-| F8 | Motor de partido y pantallas de partido | XL | Partidos simulados con crónica |
+| F8 | 🚧 En curso | Motor de partido y pantallas de partido | XL | Partidos simulados con crónica |
 | F9 | Clasificaciones, resultados e info de liga | M | Competición visible y navegable |
 | F10 | Plantilla, alineación, táctica y dorsales | L | Once y formación editables |
 | F11 | Mercado: traspasos, cláusulas, cesiones, FA | XL | Fichar y vender |
@@ -647,6 +647,17 @@ Con F0-F9 se puede **jugar una temporada completa de liga** (sin copa ni Europa)
 **Fuera de alcance inicial:** vista 2D animada (campo con jugadores). Se deja como fase opcional posterior (F8b), con un `Match2DChoreographer` equivalente al `Sim2D` de T5.
 
 **Aceptación:** 1.000 partidos sintéticos con medias realistas (≈2,6 goles/partido), sin empates imposibles en eliminatorias; partido reproducible con la misma semilla; suite de tests de reglas.
+
+**F8 — estado actual (motor):**
+
+- **`FootballSimulator`** (puro): simula 90 minutos desde los onces, con posesión, xG, goles, tiros, paradas, córners, faltas, tarjetas, cambios, notas 1–10 y MVP. Determinista con `IRandomSource`.
+- **`FormationRules`**: 4-4-2, 4-3-3, 4-2-3-1, 3-5-2 y 5-3-2 con 11 huecos y compatibilidad por demarcación (natural, línea, contigua, portero).
+- **`LineupBuilder`**: once y banquillo automáticos (el mejor jugador disponible por hueco). F10 lo sustituirá por la alineación guardada.
+- **`MatchupPreview`**: probabilidades local/empate/visitante por Poisson con ventaja de campo.
+- **`DatabaseManager.MatchEngine`**: `SimulateGame` persiste resultado, eventos, estadísticas individuales y acumulados de temporada; `PlayToday` simula la **jornada completa** (mismo tipo y número) para que la clasificación sea coherente.
+- **Dashboard**: el botón JUGAR PARTIDO ya simula el encuentro y muestra el resultado; después CONTINUAR avanza el día.
+- **Pantallas** (réplica de Tactical5 adaptada al fútbol): `PreGame` (onces, banquillos, bajas, forma, jugadores clave y pronóstico), `MatchDay` (marcador, estadísticas de equipo, cronología y estadísticas individuales) y `GameResults` (resto de la jornada, MVP y líderes de goleadores/asistentes/notas). Flujo: Dashboard → PreGame → MatchDay → GameResults → Dashboard.
+- **Pendiente de F8**: play-by-play interactivo, cambios en directo y vista 2D (F8b).
 
 ---
 
