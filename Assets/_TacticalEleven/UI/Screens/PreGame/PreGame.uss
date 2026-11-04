@@ -683,3 +683,26 @@
     font-size: 14px;
     letter-spacing: 1px;
 }
+
+/* Jugadores clave: tipografías y alineación de nombres */
+.mpv-key-stat {
+    font-size: 22px;
+}
+.mpv-key-name {
+    font-size: 18px;
+}
+.mpv-key-label {
+    font-size: 16px;
+}
+
+/* Local: nombre a la izquierda con margen; visitante: a la derecha con margen */
+.mpv-key-player .mpv-key-name {
+    margin-left: 10px;
+    margin-right: 0;
+    -unity-text-align: middle-left;
+}
+.mpv-key-player--right .mpv-key-name {
+    margin-left: 0;
+    margin-right: 10px;
+    -unity-text-align: middle-right;
+}
