@@ -370,6 +370,66 @@
       "value": "Volumen General"
     },
     {
+      "key": "ui.preseason.borrar",
+      "value": "BORRAR"
+    },
+    {
+      "key": "ui.preseason.btn_away",
+      "value": "VISITANTE"
+    },
+    {
+      "key": "ui.preseason.btn_back",
+      "value": "VOLVER"
+    },
+    {
+      "key": "ui.preseason.btn_continue",
+      "value": "CONTINUAR"
+    },
+    {
+      "key": "ui.preseason.btn_home",
+      "value": "LOCAL"
+    },
+    {
+      "key": "ui.preseason.concentracion",
+      "value": "TEMPORADA"
+    },
+    {
+      "key": "ui.preseason.local",
+      "value": "LOCAL"
+    },
+    {
+      "key": "ui.preseason.partida_lista",
+      "value": "PARTIDA CREADA · CALENDARIO GENERADO"
+    },
+    {
+      "key": "ui.preseason.partido",
+      "value": "PARTIDO {0}"
+    },
+    {
+      "key": "ui.preseason.partidos_amistosos",
+      "value": "· PARTIDOS AMISTOSOS"
+    },
+    {
+      "key": "ui.preseason.partidos_elegidos",
+      "value": "PARTIDOS ELEGIDOS"
+    },
+    {
+      "key": "ui.preseason.pretemporada",
+      "value": "PRETEMPORADA"
+    },
+    {
+      "key": "ui.preseason.sin_rival",
+      "value": "SIN RIVAL"
+    },
+    {
+      "key": "ui.preseason.temporada",
+      "value": "TEMPORADA {0}"
+    },
+    {
+      "key": "ui.preseason.visitante",
+      "value": "VISITANTE"
+    },
+    {
       "key": "ui.select_team.aforo",
       "value": "Aforo"
     },
@@ -416,6 +476,10 @@
     {
       "key": "ui.select_team.edad_anios",
       "value": "{0} años"
+    },
+    {
+      "key": "ui.select_team.error_calendario",
+      "value": "ERROR: no se pudo generar el calendario. Vuelve a intentarlo."
     },
     {
       "key": "ui.select_team.estadio",

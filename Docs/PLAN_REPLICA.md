@@ -274,7 +274,7 @@ Notas:
 
 ### Estado de implementación
 
-**Actualizado: 2026-11-03**
+**Actualizado: 2026-11-04**
 
 | Fase | Estado | Qué hay |
 |---|---|---|
@@ -283,8 +283,19 @@ Notas:
 | **F2** | ✅ Hecha | 9 competiciones, **236 clubes** (82 españoles, 101 europeos y 53 históricos), 233 escudos + genérico, 10 estadios, huella de seed calculada y auditoría; tests `SeedTests` |
 | **F3** | ✅ Hecha | **4.184 jugadores** (~45 atributos, 19-29 por club), `PlayerRating` como fuente única del overall, **437 finales**, **69 Balones de Oro** y **32 Pichichis**; tests `PlayerSeedTests` |
 | **F4** | ✅ Hecha | Menú completo (Liga Manager, ProManager con modal, Cargar, Editor pendiente, Salir, aviso legal), **modal de configuración** en la base (audio/calidad/vista de partido), pantalla **Cargar partida** con tarjetas y borrado; tests `SaveSlotLifecycleTests` + UI |
-| **F5** | ✅ Hecha | Selección de equipo con **5 pestañas** (Todos, 1ª, 2ª, 1ª RFEF G1/G2), ficha del club, plantilla y nombre del manager; crea manager + temporada (38/42/38 jornadas) y deja el slot listo |
-| F6 | ⏭ Siguiente | Pretemporada y calendario de liga |
+| **F5** | ✅ Hecha | Selección de equipo con **4 pestañas** (1ª, 2ª, 1ª RFEF G1/G2), ficha del club, plantilla y nombre del manager; crea manager + temporada (38/42/38 jornadas) y deja el slot listo |
+| **F6** | ✅ Hecha | Calendario de liga completo (doble vuelta, 380/462/380 partidos), fechas con parones FIFA/navideño y descanso mínimo de 48 h, pretemporada de 4 amistosos y pantalla `Preseason`; tests `ScheduleTests` (**57/57** en total) |
+| F7 | ⏭ Siguiente | Dashboard, header, sidebar y avance de día |
+
+**F6 — decisiones tomadas:**
+
+- **`FootballCalendar`** (puro) decide las fechas: la liga arranca el primer sábado desde el 15/08, las jornadas van en fin de semana (sábado/domingo) y se saltan los parones FIFA (sept., oct., nov., mar.), el navideño (22/12–04/01) y el final de temporada (31/05). Si faltan fines de semana, añade jornadas entre semana (martes/miércoles).
+- **`FootballScheduleGenerator`** (puro) hace la doble vuelta por el método del círculo, baraja el orden con `IRandomSource` (misma semilla = mismo calendario) y valida: 38/42/38 jornadas, cada pareja 2 veces (1 casa/1 fuera), sin equipos repetidos por jornada y **48 h mínimas de descanso**.
+- **`PreseasonPlanner`** elige rivales de pretemporada de menor categoría (o menor nivel si no hay liga inferior), excluyendo filiales e históricos.
+- **`DatabaseManager.Schedule`** persiste en `games` (`GameType` = `regular`/`preseason`, `CompetitionId` = liga) y expone consultas (`GetGamesBySeason`, `GetNextGame`, `GetFirstLeagueGame`…). Regenerar **reemplaza** los partidos del mismo tipo (idempotente).
+- **Flujo**: al confirmar equipo se crean manager + temporada, se genera la liga (380/462/380 partidos) y 4 amistosos por defecto; la pantalla `Preseason` permite cambiar los amistosos y al CONTINUAR guarda la fecha de arranque y navega al Dashboard (cuando exista, F7).
+- **Copa y Europa no se generan aquí**: sus generadores (F13/F14) reservarán los huecos de fecha.
+- **`ClearAllManagers`** borra también `games` para no arrastrar calendarios de intentos abandonados.
 
 **F5 — decisiones tomadas:**
 
@@ -555,9 +566,15 @@ Reglas de compatibilidad:
 4. Restricción de descanso: mínimo **48 h** entre partidos del mismo equipo (incluye copa/Europa).
 5. Copa y Europa **no** se generan aquí: cada una tiene su generador (F13/F14) y este solo reserva los huecos de fecha.
 
-**Pretemporada:** 3-5 amistosos (julio/agosto) contra equipos de menor categoría, sin impacto en clasificación; se puede simular u omitir.
+**Implementado (F6):**
+- `FootballCalendar` + `FootballScheduleGenerator` + `PreseasonPlanner` (reglas puras, sin Unity ni SQLite).
+- `DatabaseManager.Schedule`: generación/persistencia idempotente y consultas de calendario.
+- Pantalla `Preseason` (`UI/Screens/Preseason/*` + `PreseasonController`) con 4 huecos, rejilla de rivales, alternancia local/visitante y guardado.
+- Tests `ScheduleTests`: doble vuelta 20/22 equipos, validación, misma semilla, parones/48 h, amistosos y persistencia.
 
-**Aceptación:** calendario válido (cada equipo juega 2× contra cada rival, 1 casa / 1 fuera), sin huecos ni solapamientos, con copa y europa encajadas; test puro del generador con semilla fija (mismo calendario en dos ejecuciones).
+**Pretemporada:** 4 amistosos (18/07, 22/07, 26/07 y 01/08) contra equipos de menor categoría, sin impacto en clasificación; se pueden quitar de la lista antes de continuar.
+
+**Aceptación:** calendario válido (cada equipo juega 2× contra cada rival, 1 casa / 1 fuera), sin huecos ni solapamientos, con parones y 48 h de descanso; test puro del generador con semilla fija (mismo calendario en dos ejecuciones). ✅
 
 ---
 
