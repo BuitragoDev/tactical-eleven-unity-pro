@@ -718,3 +718,37 @@
     flex-shrink: 1;
     flex-basis: 48%;
 }
+
+/* Nombre y apellido del jugador clave en dos filas */
+.mpv-key-name-stack {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
+    margin-left: 10px;
+    margin-right: 0;
+}
+.mpv-key-player--right .mpv-key-name-stack {
+    margin-left: 0;
+    margin-right: 10px;
+    align-items: flex-end;
+}
+.mpv-key-first-name {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 18px;
+    color: rgb(208, 216, 232);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mpv-key-last-name {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

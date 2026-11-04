@@ -436,8 +436,17 @@ public class PreGameController : UIScreenController
         photo.AddToClassList("mpv-key-photo");
         SetLogo(photo, team);
 
-        var name = new Label(ShortName(player));
-        name.AddToClassList("mpv-key-name");
+        var nameBlock = new VisualElement();
+        nameBlock.AddToClassList("mpv-key-name-stack");
+
+        var firstName = new Label(player.FirstName ?? "");
+        firstName.AddToClassList("mpv-key-first-name");
+
+        var lastName = new Label(player.LastName ?? "");
+        lastName.AddToClassList("mpv-key-last-name");
+
+        nameBlock.Add(firstName);
+        nameBlock.Add(lastName);
 
         var stat = new Label(value.ToString());
         stat.AddToClassList("mpv-key-stat");
@@ -446,13 +455,13 @@ public class PreGameController : UIScreenController
         if (rightSide)
         {
             block.Add(stat);
-            block.Add(name);
+            block.Add(nameBlock);
             block.Add(photo);
         }
         else
         {
             block.Add(photo);
-            block.Add(name);
+            block.Add(nameBlock);
             block.Add(stat);
         }
 
