@@ -21,8 +21,9 @@ public partial class DatabaseManager
     public void ClearAllManagers()
     {
         if (!EnsureDb()) return;
-        Db.Execute("DELETE FROM managers");
+        Db.Execute("DELETE FROM games");
         Db.Execute("DELETE FROM seasons");
+        Db.Execute("DELETE FROM managers");
     }
 
     /// <summary>

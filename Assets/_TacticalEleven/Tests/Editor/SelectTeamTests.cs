@@ -219,6 +219,12 @@ public class SelectTeamTests
         Assert.That(Resources.Load<Sprite>(CountryCodes.GetFlagPath("default")), Is.Not.Null,
             "Bandera genérica de reserva");
         Assert.That(CountryCodes.GetName("GER"), Is.EqualTo("Germany"));
+
+        // F6: el panel de detalle muestra el país en español (el seed guarda "Spain").
+        Assert.That(CountryCodes.GetNameEs("ESP"), Is.EqualTo("España"));
+        Assert.That(CountryCodes.GetNameEs("Spain"), Is.EqualTo("España"));
+        Assert.That(CountryCodes.GetNameEs("GER"), Is.EqualTo("Alemania"));
+        Assert.That(CountryCodes.GetNameEs("England"), Is.EqualTo("Inglaterra"));
     }
 
     // ── PANTALLA ───────────────────────────────────────────────────────────

@@ -382,7 +382,6 @@
     font-size: 18px;
     color: rgb(122, 138, 170);
     letter-spacing: 1px;
-    text-transform: uppercase;
     flex-shrink: 0;
     min-width: 120px;
 }

@@ -291,11 +291,11 @@ public class SelectTeamController : UIScreenController
         SetText(_detailCity, team.City);
         SetText(_detailCompetition, league?.Name ?? "—");
         SetText(_detailFoundation, team.YearFounded > 0 ? team.YearFounded.ToString() : "—");
-        SetText(_detailCountry, team.Country);
+        SetText(_detailCountry, CountryCodes.GetNameEs(team.Country));
         SetText(_detailStadium, team.StadiumName);
         SetText(_detailCapacity, team.StadiumCapacity > 0 ? team.StadiumCapacity.ToString("N0") : "—");
-        SetText(_detailBudget, $"{team.TransferBudget:N0} $");
-        SetText(_detailWageBill, $"{team.TotalWageBill:N0} $");
+        SetText(_detailBudget, $"{team.TransferBudget:N0} €");
+        SetText(_detailWageBill, $"{team.TotalWageBill:N0} €");
         SetText(_detailAttack, team.Attack.ToString());
         SetText(_detailDefense, team.Defense.ToString());
         SetText(_detailOverall, team.Overall.ToString());
@@ -416,7 +416,7 @@ public class SelectTeamController : UIScreenController
         flag.AddToClassList("modal-player-flag");
         var flagSprite = FlagFor(player.Nationality);
         if (flagSprite != null) flag.style.backgroundImage = new StyleBackground(flagSprite);
-        flag.tooltip = CountryCodes.GetName(player.Nationality);
+        flag.tooltip = CountryCodes.GetNameEs(player.Nationality);
         row.Add(flag);
 
         var age = new Label(LocalizationService.T("ui.select_team.edad_anios", player.Age));
@@ -501,9 +501,20 @@ public class SelectTeamController : UIScreenController
         int yearStart = DatabaseManager.CurrentSeasonStartYear();
         var season = db.CreateSeason(manager.Id, _selectedTeam.LeagueId, yearStart);
 
+        // F6: calendario de liga y amistosos de pretemporada por defecto. La
+        // pantalla de Pretemporada permite después cambiar los rivales.
+        int leagueGames = db.GenerateLeagueSchedule(season);
+        if (leagueGames < 0)
+        {
+            Debug.LogError("[SelectTeam] No se pudo generar el calendario de liga.");
+            if (_detailObjective != null)
+                _detailObjective.text = LocalizationService.T("ui.select_team.error_calendario");
+            return;
+        }
+
         GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
 
-        Debug.Log($"[SelectTeam] {managerName} → {_selectedTeam.Name} (temporada {season.YearStart}-{season.YearEnd})");
+        Debug.Log($"[SelectTeam] {managerName} → {_selectedTeam.Name} (temporada {season.YearStart}-{season.YearEnd}, {leagueGames} partidos)");
 
         if (ScreenManager.Instance.IsRegistered(GameScreen.Preseason))
         {
@@ -511,8 +522,7 @@ public class SelectTeamController : UIScreenController
             return;
         }
 
-        // F6 aún no tiene pantalla de pretemporada: la partida queda creada y visible
-        // en Cargar partida.
+        // Sin pantalla de Pretemporada: la partida queda creada y visible en Cargar partida.
         if (_detailObjective != null)
             _detailObjective.text = LocalizationService.T("ui.select_team.pretemporada_pendiente");
     }

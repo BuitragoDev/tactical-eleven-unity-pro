@@ -67,7 +67,7 @@ fútbol en lugar de baloncesto.
 - **Textos de UI por claves:** UXML con `text="{loc:clave}"`; C# con `LocalizationService.T("clave")`
   o `T("clave", args)` (plantillas `{0}`). La tabla base es `Resources/Localization/es.json`.
   **No añadas literales visibles** en UXML ni en controllers.
-- **Fechas** `"yyyy-MM-dd"`. **Dinero** `$"{valor:N0} $"` (siempre con formato `N0`).
+- **Fechas** `"yyyy-MM-dd"`. **Dinero** `$"{valor:N0} €"` (siempre con formato `N0` y sufijo `€`).
 - **Modales:** overlay + caja con las clases compartidas `modal-overlay--visible` /
   `modal-box--visible` (estilos en `UI/Styles/Modals.uss`, importados por el tema).
   **Nunca pongas `style="display: none"` inline en un `.modal-overlay`**: gana a la clase y el
@@ -92,10 +92,11 @@ fútbol en lugar de baloncesto.
 | F3 | ✅ | **4.184 jugadores**, `PlayerRating`, 437 finales, 69 premios y 32 Pichichis |
 | F4 | ✅ | Menú, modal de configuración, Cargar partida, aviso legal, salir |
 | F5 | ✅ | Selección de equipo (4 pestañas), filiales deshabilitados, ProManager (solo 1ª RFEF), manager + temporada, plantilla con banderas |
-| **F6** | ⏭ **Siguiente** | **Pretemporada y calendario de liga** |
-| F7…F18 | — | Dashboard/header/sidebar, motor de partido, competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
+| **F6** | ✅ | **Pretemporada y calendario de liga**: doble vuelta 38/42/38, parones FIFA/Navidad, 48 h de descanso, pretemporada vacía de hasta 4 amistosos con filtros y pantalla `Preseason` |
+| **F7** | ⏭ **Siguiente** | **Dashboard, header, sidebar y avance de día** |
+| F8…F18 | — | Motor de partido, competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
 
-**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (6 archivos, sin `.asmdef`; compilan en
+**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (7 archivos, sin `.asmdef`; compilan en
 `Assembly-CSharp-Editor`). Comando (con **Unity cerrado**):
 
 ```bash
@@ -152,6 +153,7 @@ que no se acumulan callbacks entre visitas.
    35 clubes jugables de 40. `CanSelect` es la única regla.
 4. **Banderas en ISO3** (`Flags/Default/{ISO3}`, `Flags/Large (2×)/{ISO3}`) con alias FIFA→ISO3 en
    `CountryCodes.NormalizeFlagCode` (`GER→DEU`, `NED→NLD`…). `default` va en minúsculas (Linux).
+   Para mostrar países usa **`CountryCodes.GetNameEs`** (acepta ISO3, inglés o español).
 5. **`PlayerPosition`**, no `Position`: un enum global `Position` ocultaba
    `UnityEngine.UIElements.Position` y rompía el fullscreen.
 6. **`Constants.cs` declara la clase `CountryCodes`** (no `Constants`).
@@ -192,10 +194,12 @@ que no se acumulan callbacks entre visitas.
 | `Scripts/Core/{AudioManager,CursorManager,LocalizationService,CustomScrollbar,CustomSlider,CalendarHelper}` | Servicios y utilidades comunes |
 | `Scripts/Data/DatabaseManager.cs` | Fachada: conexión, tablas, slots, template, índices |
 | `Scripts/Data/DatabaseManager.{Migrations,Seeding,Manager}.cs` | Migraciones, seed idempotente y manager/temporada |
+| `Scripts/Data/DatabaseManager.Schedule.cs` | Calendario: generación, persistencia y consultas de partidos |
+| `Scripts/Data/{FootballCalendar,FootballScheduleGenerator,PreseasonPlanner}.cs` | Reglas puras de fechas, doble vuelta y amistosos |
 | `Scripts/Data/GameSaveManager.cs` | Slots (`save_{n}.db`, `saves.json`) |
 | `Scripts/Data/{TeamSeeder,CompetitionSeeder,PlayerSeeder,PalmaresSeeder,GoldenBootSeeder}.cs` | Seed estático |
 | `Scripts/Data/{PlayerRating,FilialRules,PlayerPositionNames,SeedBaseline,SeedAudit,ReferentialIntegrity}.cs` | Reglas puras |
-| `Scripts/UI/{LoadingController,MainMenuController,LoadGameController,SelectTeamController}.cs` | Pantallas implementadas |
+| `Scripts/UI/{LoadingController,MainMenuController,LoadGameController,SelectTeamController,PreseasonController}.cs` | Pantallas implementadas |
 | `UI/Resources/TacticalElevenTheme.tss` / `TacticalElevenPanelSettings.asset` | Tema y escalado (1920×1080, match 0.5) |
 | `UI/Styles/{GlobalVariables,Typography,Utilities,Modals}.uss` | Estilos globales |
 | `Assets/Plugins/SQLite/` | Binarios nativos Windows/Linux |

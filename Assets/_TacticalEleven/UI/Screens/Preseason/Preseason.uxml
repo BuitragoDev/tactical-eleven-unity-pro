@@ -1,0 +1,84 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="Preseason.uss" />
+
+    <ui:VisualElement name="PreseasonRoot" class="preseason-root">
+
+        <!-- ══ HEADER ══ -->
+        <ui:VisualElement name="Header" class="header">
+            <ui:Button name="BtnBack" class="btn-back" text="{loc:ui.preseason.btn_back}" />
+            <ui:VisualElement class="header-title">
+                <ui:Label class="header-title-white" text="{loc:ui.preseason.pretemporada}" />
+                <ui:Label name="HeaderYear" class="header-title-gold"  text="" />
+                <ui:Label class="header-title-white" text="{loc:ui.preseason.partidos_amistosos}" />
+            </ui:VisualElement>
+            <ui:Button name="BtnContinue" class="btn-continue" text="{loc:ui.preseason.btn_continue}" />
+        </ui:VisualElement>
+
+        <!-- ══ INFO BAR ══ -->
+        <ui:VisualElement class="info-bar">
+            <ui:VisualElement name="InfoBarLogo" class="info-bar-logo" />
+            <ui:Label name="InfoBarTeam" class="info-bar-team" text="" />
+            <ui:Label class="info-bar-label" text="{loc:ui.preseason.partidos_elegidos}" />
+            <ui:Label name="InfoBarCount" class="info-bar-value" text="0 / 4" />
+            <ui:Label class="info-bar-label" text="{loc:ui.preseason.concentracion}" />
+                <ui:Label name="InfoBarSeason" class="info-bar-value" text="" />
+        </ui:VisualElement>
+
+        <!-- ══ CONTENT ══ -->
+        <ui:VisualElement class="content-area">
+
+            <!-- SLOTS de partidos (fila superior) -->
+            <ui:VisualElement name="SlotsRow" class="slots-row" />
+
+        </ui:VisualElement>
+
+        <!-- ══ BOTTOM: toggle + grid de equipos ══ -->
+        <ui:VisualElement class="bottom-area">
+
+            <!-- Toggle LOCAL / VISITANTE -->
+            <ui:VisualElement class="location-toggle">
+                <ui:Button name="BtnHome" class="toggle-btn toggle-btn--active toggle-btn--left"
+                           text="{loc:ui.preseason.btn_home}">
+                    <ui:VisualElement name="HomeIcon" class="location-toggle-icon" />
+                </ui:Button>
+                <ui:Button name="BtnAway" class="toggle-btn" text="{loc:ui.preseason.btn_away}">
+                    <ui:VisualElement name="AwayIcon" class="location-toggle-icon" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <!-- Filtros por competición -->
+            <ui:VisualElement name="FiltersBar" class="filters-bar">
+                <ui:Label text="{loc:ui.preseason.filtro_espana}" class="filters-group-label" />
+                <ui:Button name="FilterLaliga" class="filter-btn filter-btn--active"
+                           text="{loc:ui.preseason.filter_laliga}" />
+                <ui:Button name="FilterLaliga2" class="filter-btn"
+                           text="{loc:ui.preseason.filter_laliga2}" />
+                <ui:Button name="FilterRfef" class="filter-btn"
+                           text="{loc:ui.preseason.filter_rfef}" />
+                <ui:Label text="{loc:ui.preseason.filtro_europa}" class="filters-group-label filters-group-label--europe" />
+                <ui:Button name="FilterChampions" class="filter-btn"
+                           text="{loc:ui.preseason.filter_champions}" />
+                <ui:Button name="FilterEuropa" class="filter-btn"
+                           text="{loc:ui.preseason.filter_europa}" />
+                <ui:Button name="FilterConference" class="filter-btn"
+                           text="{loc:ui.preseason.filter_conference}" />
+            </ui:VisualElement>
+
+            <!-- Grid de equipos (barra de scroll propia) -->
+            <ui:VisualElement class="teams-scroll-row">
+                <ui:VisualElement name="TeamsViewport" class="teams-viewport">
+                    <ui:VisualElement name="TeamsGrid" class="teams-grid" />
+                </ui:VisualElement>
+                <ui:VisualElement name="TeamsScrollTrack" class="teams-scrollbar">
+                    <ui:VisualElement name="TeamsScrollThumb" class="teams-scrollbar-thumb" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>
