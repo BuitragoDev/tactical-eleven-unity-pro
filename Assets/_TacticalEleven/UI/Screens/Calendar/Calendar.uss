@@ -543,3 +543,52 @@
     background-position: center;
     flex-shrink: 0;
 }
+
+/* ══════════════════════════════════════════
+   S1 — FILA DE PARTIDO (formato Tactical5)
+   ══════════════════════════════════════════ */
+.selected-game-logo {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-right: 6px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.selected-game-logo--away {
+    margin-right: 0;
+    margin-left: 6px;
+}
+.selected-game-abbr {
+    width: 58px;
+    flex-shrink: 0;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 16px;
+    color: rgb(208, 216, 232);
+    -unity-text-align: middle-left;
+}
+.selected-game-abbr--away {
+    -unity-text-align: middle-right;
+}
+.selected-game-score {
+    width: 86px;
+    flex-shrink: 0;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    margin: 0;
+}
+.selected-game-type {
+    margin-left: auto;
+    margin-right: 0;
+    padding-left: 8px;
+    font-size: 14px;
+    color: rgb(212, 160, 23);
+}
+
+/* Filas más compactas, como en Tactical5 */
+.selected-game-row {
+    padding: 8px 16px;
+}

@@ -266,54 +266,43 @@ public class CalendarController : UIScreenController
         if (isMine) row.AddToClassList("selected-game-row--my-game");
         if (game.IsPlayed == 1) row.AddToClassList("selected-game-row--played");
 
-        var type = new Label(CompetitionShort(game.CompetitionId));
-        type.AddToClassList("selected-game-type");
+        var home = TeamOf(game.HomeTeamId);
+        var away = TeamOf(game.AwayTeamId);
 
-        var teams = new VisualElement();
-        teams.AddToClassList("selected-game-teams");
-
-        teams.Add(BuildTeamSide(game.HomeTeamId, false));
+        row.Add(BuildLogo(home, false));
+        row.Add(BuildAbbreviation(home, false));
 
         var score = new Label(game.IsPlayed == 1
             ? $"{game.HomeScore} - {game.AwayScore}"
             : LocalizationService.T("ui.calendar.vs"));
         score.AddToClassList("selected-game-score");
+        row.Add(score);
 
-        teams.Add(score);
-        teams.Add(BuildTeamSide(game.AwayTeamId, true));
+        row.Add(BuildAbbreviation(away, true));
+        row.Add(BuildLogo(away, true));
 
+        var type = new Label(CompetitionShort(game.CompetitionId));
+        type.AddToClassList("selected-game-type");
         row.Add(type);
-        row.Add(teams);
+
         return row;
     }
 
-    private VisualElement BuildTeamSide(int teamId, bool rightAlign)
+    private VisualElement BuildLogo(TeamDataDB team, bool away)
     {
-        var team = TeamOf(teamId);
-
-        var side = new VisualElement();
-        side.AddToClassList("selected-game-team");
-        if (rightAlign) side.AddToClassList("selected-game-team--right");
-
         var logo = new VisualElement();
-        logo.AddToClassList("selected-game-team-logo");
+        logo.AddToClassList("selected-game-logo");
+        if (away) logo.AddToClassList("selected-game-logo--away");
         SetLogo(logo, team);
+        return logo;
+    }
 
-        var name = new Label(team?.ShortName ?? "???");
-        name.AddToClassList("selected-game-team-name");
-
-        if (rightAlign)
-        {
-            side.Add(name);
-            side.Add(logo);
-        }
-        else
-        {
-            side.Add(logo);
-            side.Add(name);
-        }
-
-        return side;
+    private static Label BuildAbbreviation(TeamDataDB team, bool away)
+    {
+        var label = new Label(team?.ShortName ?? "???");
+        label.AddToClassList("selected-game-abbr");
+        if (away) label.AddToClassList("selected-game-abbr--away");
+        return label;
     }
 
     // ── UTILIDADES ─────────────────────────────────────────────────────────
