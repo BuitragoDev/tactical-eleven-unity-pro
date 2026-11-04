@@ -98,14 +98,18 @@ public class PreGameController : UIScreenController
 
     private GameDataDB ResolveGame(DatabaseManager db)
     {
+        // Prioridad: el partido pendiente de hoy; si no, el seleccionado por el
+        // contexto (entrada directa) o el siguiente del calendario.
+        var today = db.GetMatchOnDate(_season.Id, _myTeam.Id, _season.CurrentDate);
+        if (today != null) return today;
+
         if (MatchContext.HasGame)
         {
             var target = db.GetGamesBySeason(_season.Id).FirstOrDefault(g => g.Id == MatchContext.GameId);
             if (target != null) return target;
         }
 
-        return db.GetMatchOnDate(_season.Id, _myTeam.Id, _season.CurrentDate)
-               ?? db.GetNextGame(_season.Id, _myTeam.Id);
+        return db.GetNextGame(_season.Id, _myTeam.Id);
     }
 
     protected override void RegisterCallbacks()

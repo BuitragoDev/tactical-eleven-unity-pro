@@ -569,3 +569,54 @@
 .mpv-streak-dot--draw {
     background-color: rgb(122, 138, 170);
 }
+
+/* ══════════════════════════════════════════
+   F8 — ONCE DE FÚTBOL (11 jugadores, rejilla)
+   ══════════════════════════════════════════ */
+.mpv-starter-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin-bottom: 8px;
+}
+
+.mpv-starter-card {
+    flex-basis: 22%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+    min-height: 76px;
+    margin: 0 4px 6px 0;
+    padding: 6px 4px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.mpv-starter-photo {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 4px;
+}
+
+.mpv-starter-pos {
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+
+.mpv-starter-name {
+    font-size: 13px;
+    line-height: 1.0;
+    flex-grow: 0;
+    margin-bottom: 2px;
+}
+
+.mpv-starter-ovr {
+    font-size: 18px;
+}
+
+.mpv-bench-pos {
+    width: 62px;
+    font-size: 14px;
+}
