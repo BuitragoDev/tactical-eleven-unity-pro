@@ -706,3 +706,15 @@
     margin-right: 10px;
     -unity-text-align: middle-right;
 }
+
+/* Columnas: centro más ancho para los jugadores clave; laterales más estrechos */
+.mpv-col {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 26%;
+}
+.mpv-col--center {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 48%;
+}
