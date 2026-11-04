@@ -291,7 +291,7 @@ public class SelectTeamController : UIScreenController
         SetText(_detailCity, team.City);
         SetText(_detailCompetition, league?.Name ?? "—");
         SetText(_detailFoundation, team.YearFounded > 0 ? team.YearFounded.ToString() : "—");
-        SetText(_detailCountry, team.Country);
+        SetText(_detailCountry, CountryCodes.GetNameEs(team.Country));
         SetText(_detailStadium, team.StadiumName);
         SetText(_detailCapacity, team.StadiumCapacity > 0 ? team.StadiumCapacity.ToString("N0") : "—");
         SetText(_detailBudget, $"{team.TransferBudget:N0} $");
@@ -416,7 +416,7 @@ public class SelectTeamController : UIScreenController
         flag.AddToClassList("modal-player-flag");
         var flagSprite = FlagFor(player.Nationality);
         if (flagSprite != null) flag.style.backgroundImage = new StyleBackground(flagSprite);
-        flag.tooltip = CountryCodes.GetName(player.Nationality);
+        flag.tooltip = CountryCodes.GetNameEs(player.Nationality);
         row.Add(flag);
 
         var age = new Label(LocalizationService.T("ui.select_team.edad_anios", player.Age));
