@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
-/// F8 — Resultados del partido (réplica de Tactical5 adaptada al fútbol):
-/// resto de la jornada, MVP y líderes de goleadores/asistentes/notas.
+/// F8 — Resultados del día (réplica de Tactical5 adaptada al fútbol): partidos
+/// jugados esa fecha, filtros por las competiciones presentes, MVP del día y
+/// líderes de goleadores/asistentes/notas.
 /// </summary>
 public class GameResultsController : UIScreenController
 {
@@ -17,6 +18,7 @@ public class GameResultsController : UIScreenController
     private Button _btnDashboard;
     private VisualElement _loadingSpinner;
 
+    private VisualElement _filtersBar;
     private VisualElement _gamesBody;
     private VisualElement _mvpPanel;
     private VisualElement _mvpLogo;
@@ -24,20 +26,15 @@ public class GameResultsController : UIScreenController
 
     private VisualElement _lbScorersBody, _lbAssistersBody, _lbRatedBody;
 
-    private const int CompetitionCopa = 8;
-    private const int CompetitionSupercopa = 9;
-    private const int CompetitionChampions = 5;
-    private const int CompetitionEuropa = 6;
-    private const int CompetitionConference = 7;
-
-    private Button _filterLiga, _filterCopa, _filterSupercopa;
-    private Button _filterChampions, _filterEuropa, _filterConference;
-
     private GameDataDB _game;
+    private string _dayDate;
     private List<GameDataDB> _seasonGames = new();
-    private List<GameDataDB> _matchdayGames = new();
-    private int _filterCompetition;
-    private int _mvpGameId;
+    private List<GameDataDB> _dayGames = new();
+    private List<PlayerMatchStatsDB> _dayStats = new();
+    private List<LeaderEntry> _leaderEntries = new();
+    private int _filterCompetition; // 0 = todos los partidos del día
+
+    private readonly List<(Button Button, int CompetitionId)> _filterButtons = new();
     private readonly Dictionary<int, TeamDataDB> _teams = new();
     private readonly Dictionary<int, PlayerDataDB> _players = new();
     private readonly Dictionary<string, Sprite> _logos = new();
@@ -54,6 +51,7 @@ public class GameResultsController : UIScreenController
         _btnDashboard = Q<Button>("BtnDashboard");
         _loadingSpinner = Q<VisualElement>("LoadingSpinner");
 
+        _filtersBar = Q<VisualElement>("FiltersBar");
         _gamesBody = Q<VisualElement>("GamesBody");
         _mvpPanel = Q<VisualElement>("MvpPanel");
         _mvpLogo = Q<VisualElement>("MvpLogo");
@@ -64,13 +62,6 @@ public class GameResultsController : UIScreenController
         _lbScorersBody = Q<VisualElement>("LbScorersBody");
         _lbAssistersBody = Q<VisualElement>("LbAssistersBody");
         _lbRatedBody = Q<VisualElement>("LbRatedBody");
-
-        _filterLiga = Q<Button>("FilterLiga");
-        _filterCopa = Q<Button>("FilterCopa");
-        _filterSupercopa = Q<Button>("FilterSupercopa");
-        _filterChampions = Q<Button>("FilterChampions");
-        _filterEuropa = Q<Button>("FilterEuropa");
-        _filterConference = Q<Button>("FilterConference");
 
         if (_loadingSpinner != null) _loadingSpinner.style.display = DisplayStyle.None;
     }
@@ -96,10 +87,16 @@ public class GameResultsController : UIScreenController
         _game = ResolveGame(db);
         if (_game == null) return;
 
-        var league = db.GetLeagueById(_myTeam.LeagueId);
-        if (_filterLiga != null) _filterLiga.text = league?.ShortName ?? "LIGA";
+        // Los resultados y los filtros son del día en que se jugó el partido.
+        _dayDate = _game.MatchDate;
+        _dayGames = _seasonGames
+            .Where(g => g.IsPlayed == 1 && g.MatchDate == _dayDate)
+            .OrderBy(g => g.CompetitionId)
+            .ThenBy(g => g.Id)
+            .ToList();
 
-        _filterCompetition = _game.CompetitionId > 0 ? _game.CompetitionId : _myTeam.LeagueId;
+        _filterCompetition = 0;
+        BuildFilterButtons();
     }
 
     private GameDataDB ResolveGame(DatabaseManager db)
@@ -122,28 +119,6 @@ public class GameResultsController : UIScreenController
         });
 
         RegisterHandCursor(_btnDashboard);
-
-        RegisterFilter(_filterLiga, _myTeam?.LeagueId ?? 1);
-        RegisterFilter(_filterCopa, CompetitionCopa);
-        RegisterFilter(_filterSupercopa, CompetitionSupercopa);
-        RegisterFilter(_filterChampions, CompetitionChampions);
-        RegisterFilter(_filterEuropa, CompetitionEuropa);
-        RegisterFilter(_filterConference, CompetitionConference);
-    }
-
-    private void RegisterFilter(Button button, int competitionId)
-    {
-        if (button == null) return;
-        button.RegisterCallback<ClickEvent>(_ =>
-        {
-            PlayClick();
-            ApplyFilter(competitionId);
-            RefreshHeader();
-            RefreshGames();
-            RefreshMvp();
-            RefreshLeaderboards();
-        });
-        RegisterHandCursor(button);
     }
 
     protected override void Refresh()
@@ -159,62 +134,99 @@ public class GameResultsController : UIScreenController
             return;
         }
 
-        ApplyFilter(_filterCompetition);
+        LoadDayStats();
+        BuildLeaderEntries();
+
         RefreshHeader();
         RefreshGames();
         RefreshMvp();
         RefreshLeaderboards();
     }
 
-    // ── FILTROS ────────────────────────────────────────────────────────────
+    // ── FILTROS DINÁMICOS ──────────────────────────────────────────────────
 
-    private void ApplyFilter(int competitionId)
+    /// <summary>Solo se ofrecen las competiciones que han jugado ese día.</summary>
+    private void BuildFilterButtons()
     {
-        _filterCompetition = competitionId;
+        if (_filtersBar == null) return;
 
-        var played = _seasonGames
-            .Where(g => g.IsPlayed == 1 && g.CompetitionId == competitionId)
-            .ToList();
+        _filtersBar.Clear();
+        _filterButtons.Clear();
 
-        if (played.Count > 0)
+        AddFilterButton(0, LocalizationService.T("ui.game_results.filter_all"));
+
+        foreach (int competitionId in _dayGames
+                     .Select(g => g.CompetitionId)
+                     .Distinct()
+                     .OrderBy(id => id))
         {
-            int round = played.Max(g => g.MatchDay);
-            _matchdayGames = played
-                .Where(g => g.MatchDay == round)
-                .OrderBy(g => g.Id)
-                .ToList();
+            AddFilterButton(competitionId, CompetitionName(competitionId));
         }
-        else
+    }
+
+    private void AddFilterButton(int competitionId, string label)
+    {
+        var button = new Button { text = label };
+        button.AddToClassList("gr-filter-btn");
+
+        if (_filterCompetition == competitionId)
+            button.AddToClassList("gr-filter-btn--active");
+
+        button.RegisterCallback<ClickEvent>(_ =>
         {
-            _matchdayGames = new List<GameDataDB>();
-        }
+            PlayClick();
+            _filterCompetition = competitionId;
+            UpdateFilterButtons();
+            RefreshGames();
+        });
 
-        _mvpGameId = _matchdayGames
-            .Where(g => g.HomeTeamId == _myTeam.Id || g.AwayTeamId == _myTeam.Id)
-            .Select(g => g.Id)
-            .FirstOrDefault();
-
-        if (_mvpGameId == 0 && _matchdayGames.Count > 0)
-            _mvpGameId = _matchdayGames[0].Id;
-
-        UpdateFilterButtons();
+        RegisterHandCursor(button);
+        _filtersBar.Add(button);
+        _filterButtons.Add((button, competitionId));
     }
 
     private void UpdateFilterButtons()
     {
-        SetFilterActive(_filterLiga, _filterCompetition == (_myTeam?.LeagueId ?? 1));
-        SetFilterActive(_filterCopa, _filterCompetition == CompetitionCopa);
-        SetFilterActive(_filterSupercopa, _filterCompetition == CompetitionSupercopa);
-        SetFilterActive(_filterChampions, _filterCompetition == CompetitionChampions);
-        SetFilterActive(_filterEuropa, _filterCompetition == CompetitionEuropa);
-        SetFilterActive(_filterConference, _filterCompetition == CompetitionConference);
+        foreach (var entry in _filterButtons)
+        {
+            if (entry.CompetitionId == _filterCompetition)
+                entry.Button.AddToClassList("gr-filter-btn--active");
+            else
+                entry.Button.RemoveFromClassList("gr-filter-btn--active");
+        }
     }
 
-    private static void SetFilterActive(Button button, bool active)
+    private string CompetitionName(int competitionId)
     {
-        if (button == null) return;
-        if (active) button.AddToClassList("gr-filter-btn--active");
-        else button.RemoveFromClassList("gr-filter-btn--active");
+        if (competitionId <= 0)
+            return LocalizationService.T("ui.game_results.filter_preseason");
+
+        var league = DatabaseManager.Instance.GetLeagueById(competitionId);
+        return league?.ShortName ?? $"#{competitionId}";
+    }
+
+    // ── DATOS DEL DÍA ──────────────────────────────────────────────────────
+
+    private void LoadDayStats()
+    {
+        _dayStats = _dayGames
+            .SelectMany(g => DatabaseManager.Instance.GetPlayerMatchStats(g.Id))
+            .ToList();
+    }
+
+    private void BuildLeaderEntries()
+    {
+        _leaderEntries = _dayStats
+            .GroupBy(s => s.PlayerId)
+            .Select(g => new LeaderEntry
+            {
+                PlayerId = g.Key,
+                TeamId = g.First().TeamId,
+                Goals = g.Sum(s => s.Goals),
+                Assists = g.Sum(s => s.Assists),
+                Rating = g.Average(s => s.Rating)
+            })
+            .ToList();
     }
 
     // ── HEADER ─────────────────────────────────────────────────────────────
@@ -230,7 +242,8 @@ public class GameResultsController : UIScreenController
         if (_headerSeason != null)
             _headerSeason.text = LocalizationService.T("ui.dashboard.temporada",
                 _season.YearStart, _season.YearEnd);
-        var reference = _matchdayGames.FirstOrDefault() ?? _game;
+
+        var reference = _dayGames.FirstOrDefault() ?? _game;
         if (_headerDate != null) _headerDate.text = GameDayRules.FormatLongDate(reference.MatchDate);
         if (_headerGameDay != null)
             _headerGameDay.text = reference.GameType == DatabaseManager.GameTypePreseason
@@ -238,14 +251,18 @@ public class GameResultsController : UIScreenController
                 : LocalizationService.T("ui.dashboard.jornada", reference.MatchDay);
     }
 
-    // ── RESULTADOS DE LA JORNADA ───────────────────────────────────────────
+    // ── RESULTADOS DEL DÍA ─────────────────────────────────────────────────
 
     private void RefreshGames()
     {
         if (_gamesBody == null) return;
         _gamesBody.Clear();
 
-        if (_matchdayGames.Count == 0)
+        var visible = _filterCompetition == 0
+            ? _dayGames
+            : _dayGames.Where(g => g.CompetitionId == _filterCompetition).ToList();
+
+        if (visible.Count == 0)
         {
             var empty = new Label(LocalizationService.T("ui.game_results.sin_competicion"));
             empty.AddToClassList("no-games-text");
@@ -253,7 +270,7 @@ public class GameResultsController : UIScreenController
             return;
         }
 
-        foreach (var game in _matchdayGames)
+        foreach (var game in visible)
             _gamesBody.Add(BuildGameCard(game));
     }
 
@@ -325,22 +342,16 @@ public class GameResultsController : UIScreenController
         return side;
     }
 
-    // ── MVP ────────────────────────────────────────────────────────────────
+    // ── MVP DEL DÍA ────────────────────────────────────────────────────────
 
     private void RefreshMvp()
     {
-        if (_mvpGameId <= 0)
-        {
-            if (_mvpPanel != null) _mvpPanel.style.display = DisplayStyle.None;
-            return;
-        }
-
-        var stats = DatabaseManager.Instance.GetPlayerMatchStats(_mvpGameId)
-            .OrderByDescending(s => s.Rating)
-            .ThenByDescending(s => s.Goals)
+        var mvp = _leaderEntries
+            .OrderByDescending(e => e.Rating)
+            .ThenByDescending(e => e.Goals)
             .FirstOrDefault();
 
-        if (stats == null)
+        if (mvp == null)
         {
             if (_mvpPanel != null) _mvpPanel.style.display = DisplayStyle.None;
             return;
@@ -348,44 +359,33 @@ public class GameResultsController : UIScreenController
 
         if (_mvpPanel != null) _mvpPanel.style.display = DisplayStyle.Flex;
 
-        var team = TeamOf(stats.TeamId);
+        var team = TeamOf(mvp.TeamId);
         SetLogo(_mvpLogo, team);
 
-        if (_mvpName != null) _mvpName.text = PlayerName(stats.PlayerId);
+        if (_mvpName != null) _mvpName.text = PlayerName(mvp.PlayerId);
         if (_mvpTeam != null) _mvpTeam.text = team?.Name ?? "";
-        if (_mvpVal != null) _mvpVal.text = stats.Rating.ToString("F1");
+        if (_mvpVal != null) _mvpVal.text = mvp.Rating.ToString("F1");
     }
 
-    // ── LÍDERES ────────────────────────────────────────────────────────────
+    // ── LÍDERES DEL DÍA ────────────────────────────────────────────────────
 
     private void RefreshLeaderboards()
     {
-        var all = _matchdayGames
-            .SelectMany(g => DatabaseManager.Instance.GetPlayerMatchStats(g.Id))
-            .ToList();
-
-        var byPlayer = all
-            .GroupBy(s => s.PlayerId)
-            .Select(g => new LeaderEntry
-            {
-                PlayerId = g.Key,
-                TeamId = g.First().TeamId,
-                Goals = g.Sum(s => s.Goals),
-                Assists = g.Sum(s => s.Assists),
-                Rating = g.Average(s => s.Rating)
-            })
-            .ToList();
-
-        FillLeaderboard(_lbScorersBody, byPlayer
-            .OrderByDescending(e => e.Goals).ThenByDescending(e => e.Assists),
+        FillLeaderboard(_lbScorersBody, _leaderEntries
+            .OrderByDescending(e => e.Goals)
+            .ThenByDescending(e => e.Assists)
+            .ThenByDescending(e => e.Rating),
             e => e.Goals.ToString());
 
-        FillLeaderboard(_lbAssistersBody, byPlayer
-            .OrderByDescending(e => e.Assists).ThenByDescending(e => e.Goals),
+        FillLeaderboard(_lbAssistersBody, _leaderEntries
+            .OrderByDescending(e => e.Assists)
+            .ThenByDescending(e => e.Goals)
+            .ThenByDescending(e => e.Rating),
             e => e.Assists.ToString());
 
-        FillLeaderboard(_lbRatedBody, byPlayer
-            .OrderByDescending(e => e.Rating),
+        FillLeaderboard(_lbRatedBody, _leaderEntries
+            .OrderByDescending(e => e.Rating)
+            .ThenByDescending(e => e.Goals),
             e => e.Rating.ToString("F1"));
     }
 

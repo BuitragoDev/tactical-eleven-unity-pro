@@ -874,6 +874,10 @@
       "value": "VOLVER AL DASHBOARD"
     },
     {
+      "key": "ui.game_results.filter_all",
+      "value": "TODOS"
+    },
+    {
       "key": "ui.game_results.filter_champions",
       "value": "CHAMPIONS"
     },
@@ -892,6 +896,10 @@
     {
       "key": "ui.game_results.filter_liga",
       "value": "LIGA"
+    },
+    {
+      "key": "ui.game_results.filter_preseason",
+      "value": "AMISTOSOS"
     },
     {
       "key": "ui.game_results.filter_supercopa",
@@ -916,6 +924,10 @@
     {
       "key": "ui.game_results.mejores_notas",
       "value": "MEJORES NOTAS"
+    },
+    {
+      "key": "ui.game_results.mvp_del_dia",
+      "value": "MVP DEL DÍA"
     },
     {
       "key": "ui.game_results.mvp_del_partido",
