@@ -34,9 +34,9 @@ public class DashboardController : UIScreenController
     private VisualElement _lastHomeLog;
     private VisualElement _lastAwayLog;
     private Label _lastHomeName;
-    private Label _lastHomeRecord;
+    private VisualElement _lastHomeRecord;
     private Label _lastAwayName;
-    private Label _lastAwayRecord;
+    private VisualElement _lastAwayRecord;
     private Label _lastHomeScore;
     private Label _lastAwayScore;
     private Label _lastResultBadge;
@@ -50,9 +50,9 @@ public class DashboardController : UIScreenController
     private VisualElement _nextHomeLog;
     private VisualElement _nextAwayLog;
     private Label _nextHomeName;
-    private Label _nextHomeRecord;
+    private VisualElement _nextHomeRecord;
     private Label _nextAwayName;
-    private Label _nextAwayRecord;
+    private VisualElement _nextAwayRecord;
     private Label _nextGameDate;
     private Label _nextGameArena;
     private VisualElement _nextGameMeta;
@@ -133,9 +133,9 @@ public class DashboardController : UIScreenController
         _lastHomeLog = Q<VisualElement>("LastHomeLog");
         _lastAwayLog = Q<VisualElement>("LastAwayLog");
         _lastHomeName = Q<Label>("LastHomeName");
-        _lastHomeRecord = Q<Label>("LastHomeRecord");
+        _lastHomeRecord = Q<VisualElement>("LastHomeRecord");
         _lastAwayName = Q<Label>("LastAwayName");
-        _lastAwayRecord = Q<Label>("LastAwayRecord");
+        _lastAwayRecord = Q<VisualElement>("LastAwayRecord");
         _lastHomeScore = Q<Label>("LastHomeScore");
         _lastAwayScore = Q<Label>("LastAwayScore");
         _lastResultBadge = Q<Label>("LastResultBadge");
@@ -143,17 +143,15 @@ public class DashboardController : UIScreenController
         _lastGameArena = Q<Label>("LastGameArena");
         _lastGameMeta = Q<VisualElement>("LastGameMeta");
 
-        foreach (var record in new[] { _lastHomeRecord, _lastAwayRecord, _nextHomeRecord, _nextAwayRecord })
-            if (record != null) record.enableRichText = true;
 
         _noNextGame = Q<Label>("NoNextGame");
         _nextGameResult = Q<VisualElement>("NextGameResult");
         _nextHomeLog = Q<VisualElement>("NextHomeLog");
         _nextAwayLog = Q<VisualElement>("NextAwayLog");
         _nextHomeName = Q<Label>("NextHomeName");
-        _nextHomeRecord = Q<Label>("NextHomeRecord");
+        _nextHomeRecord = Q<VisualElement>("NextHomeRecord");
         _nextAwayName = Q<Label>("NextAwayName");
-        _nextAwayRecord = Q<Label>("NextAwayRecord");
+        _nextAwayRecord = Q<VisualElement>("NextAwayRecord");
         _nextGameDate = Q<Label>("NextGameDate");
         _nextGameArena = Q<Label>("NextGameArena");
         _nextGameMeta = Q<VisualElement>("NextGameMeta");
@@ -331,8 +329,8 @@ public class DashboardController : UIScreenController
         if (_lastHomeScore != null) _lastHomeScore.text = _lastGame.HomeScore.ToString();
         if (_lastAwayScore != null) _lastAwayScore.text = _lastGame.AwayScore.ToString();
 
-        if (_lastHomeRecord != null) _lastHomeRecord.text = RecordOf(_lastGame.HomeTeamId);
-        if (_lastAwayRecord != null) _lastAwayRecord.text = RecordOf(_lastGame.AwayTeamId);
+        FillStreak(_lastHomeRecord, _lastGame.HomeTeamId);
+        FillStreak(_lastAwayRecord, _lastGame.AwayTeamId);
 
         if (_lastGameDate != null) _lastGameDate.text = GameDayRules.FormatShortDate(_lastGame.MatchDate);
 
@@ -384,8 +382,8 @@ public class DashboardController : UIScreenController
 
         if (_nextHomeName != null) _nextHomeName.text = home?.Name.ToUpperInvariant() ?? "";
         if (_nextAwayName != null) _nextAwayName.text = away?.Name.ToUpperInvariant() ?? "";
-        if (_nextHomeRecord != null) _nextHomeRecord.text = RecordOf(_nextGame.HomeTeamId);
-        if (_nextAwayRecord != null) _nextAwayRecord.text = RecordOf(_nextGame.AwayTeamId);
+        FillStreak(_nextHomeRecord, _nextGame.HomeTeamId);
+        FillStreak(_nextAwayRecord, _nextGame.AwayTeamId);
         if (_nextGameDate != null) _nextGameDate.text = GameDayRules.FormatShortDate(_nextGame.MatchDate);
 
         if (_nextGameArena != null)
@@ -913,26 +911,36 @@ public class DashboardController : UIScreenController
         return index >= 0 ? index + 1 : total;
     }
 
-    private string RecordOf(int teamId)
+    /// <summary>Últimos 5 resultados del equipo: verde victoria, dorado empate, rojo derrota.</summary>
+    private void FillStreak(VisualElement container, int teamId)
     {
-        int won = 0, drawn = 0, lost = 0;
-        foreach (var game in _regularGames)
+        if (container == null) return;
+        container.Clear();
+
+        var last = _regularGames
+            .Where(g => g.IsPlayed == 1
+                        && (g.HomeTeamId == teamId || g.AwayTeamId == teamId))
+            .OrderByDescending(g => g.MatchDate)
+            .Take(5)
+            .ToList();
+
+        last.Reverse();
+
+        foreach (var game in last)
         {
-            if (game.IsPlayed != 1) continue;
-            if (game.HomeTeamId == teamId)
-            {
-                if (game.HomeScore > game.AwayScore) won++;
-                else if (game.HomeScore < game.AwayScore) lost++;
-                else drawn++;
-            }
-            else if (game.AwayTeamId == teamId)
-            {
-                if (game.AwayScore > game.HomeScore) won++;
-                else if (game.AwayScore < game.HomeScore) lost++;
-                else drawn++;
-            }
+            bool home = game.HomeTeamId == teamId;
+            int mine = home ? game.HomeScore : game.AwayScore;
+            int theirs = home ? game.AwayScore : game.HomeScore;
+
+            var dot = new VisualElement();
+            dot.AddToClassList("game-streak-dot");
+
+            if (mine > theirs) dot.AddToClassList("game-streak-dot--win");
+            else if (mine < theirs) dot.AddToClassList("game-streak-dot--loss");
+            else dot.AddToClassList("game-streak-dot--draw");
+
+            container.Add(dot);
         }
-        return $"<color=#27AE60>{won}V</color>-<color=#D4A017>{drawn}E</color>-<color=#C0392B>{lost}P</color>";
     }
 
     private TeamDataDB TeamOf(int teamId)

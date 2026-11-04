@@ -47,7 +47,7 @@
                                     <ui:VisualElement name="LastGameHome" class="game-team-block">
                                         <ui:VisualElement name="LastHomeLog" class="game-team-logo-lg"/>
                                         <ui:Label name="LastHomeName" text="" class="game-team-name-lg"/>
-                                        <ui:Label name="LastHomeRecord" text="" class="game-team-record"/>
+                                        <ui:VisualElement name="LastHomeRecord" class="game-team-record game-streak" />
                                     </ui:VisualElement>
                                     <ui:VisualElement class="game-score-block">
                                         <ui:VisualElement style="flex-direction: row; align-items: center;">
@@ -60,7 +60,7 @@
                                     <ui:VisualElement name="LastGameAway" class="game-team-block">
                                         <ui:VisualElement name="LastAwayLog" class="game-team-logo-lg"/>
                                         <ui:Label name="LastAwayName" text="" class="game-team-name-lg"/>
-                                        <ui:Label name="LastAwayRecord" text="" class="game-team-record"/>
+                                        <ui:VisualElement name="LastAwayRecord" class="game-team-record game-streak" />
                                     </ui:VisualElement>
                                 </ui:VisualElement>
                             </ui:VisualElement>
@@ -85,7 +85,7 @@
                                     <ui:VisualElement name="NextGameHome" class="game-team-block">
                                         <ui:VisualElement name="NextHomeLog" class="game-team-logo-lg"/>
                                         <ui:Label name="NextHomeName" text="" class="game-team-name-lg"/>
-                                        <ui:Label name="NextHomeRecord" text="" class="game-team-record"/>
+                                        <ui:VisualElement name="NextHomeRecord" class="game-team-record game-streak" />
                                     </ui:VisualElement>
                                     <ui:VisualElement class="game-score-block">
                                         <ui:Label text="{loc:ui.dashboard.vs}" class="game-vs-text"/>
@@ -93,7 +93,7 @@
                                     <ui:VisualElement name="NextGameAway" class="game-team-block">
                                         <ui:VisualElement name="NextAwayLog" class="game-team-logo-lg"/>
                                         <ui:Label name="NextAwayName" text="" class="game-team-name-lg"/>
-                                        <ui:Label name="NextAwayRecord" text="" class="game-team-record"/>
+                                        <ui:VisualElement name="NextAwayRecord" class="game-team-record game-streak" />
                                     </ui:VisualElement>
                                 </ui:VisualElement>
                             </ui:VisualElement>

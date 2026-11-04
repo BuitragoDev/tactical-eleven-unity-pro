@@ -2819,20 +2819,60 @@
 
 
 
-/* Resultado del último partido: texto verde / dorado / rojo */
+/* Resultado del último partido en badge (estilo Tactical5) */
 .game-result-badge {
-    background-color: transparent;
-    color: rgb(208, 216, 232);
+    border-radius: 4px;
 }
 .badge-win {
-    background-color: transparent;
-    color: rgb(39, 174, 96);
+    background-color: rgb(39, 174, 96);
+    color: rgb(255, 255, 255);
 }
 .badge-draw {
-    background-color: transparent;
-    color: rgb(212, 160, 23);
+    background-color: rgb(212, 160, 23);
+    color: rgb(20, 20, 20);
 }
 .badge-loss {
-    background-color: transparent;
-    color: rgb(192, 57, 43);
+    background-color: rgb(192, 57, 43);
+    color: rgb(255, 255, 255);
+}
+
+/* Racha de los últimos 5 partidos */
+.game-streak {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+}
+.game-streak-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin: 0 2px;
+}
+.game-streak-dot--win { background-color: rgb(39, 174, 96); }
+.game-streak-dot--draw { background-color: rgb(212, 160, 23); }
+.game-streak-dot--loss { background-color: rgb(192, 57, 43); }
+
+
+/* Anchos de la fila central: clasificación fija, noticias estrecha, centro flexible */
+.panel-standings--col {
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 450px;
+}
+.panel-messages--col {
+    width: 340px;
+    min-width: 340px;
+    max-width: 340px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 340px;
+}
+.center-column {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
 }
