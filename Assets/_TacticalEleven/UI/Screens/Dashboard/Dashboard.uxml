@@ -18,14 +18,6 @@
                     <ui:Label name="HeaderBudget" text="" class="header-stat-value"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="header-stat">
-                    <ui:Label text="{loc:ui.dashboard.masa_salarial}" class="header-stat-label"/>
-                    <ui:Label name="HeaderPayroll" text="" class="header-stat-value header-stat-value--neutral"/>
-                </ui:VisualElement>
-                <ui:VisualElement class="header-stat">
-                    <ui:Label text="{loc:ui.dashboard.reputacion}" class="header-stat-label"/>
-                    <ui:Label name="HeaderReputation" text="" class="header-stat-value"/>
-                </ui:VisualElement>
-                <ui:VisualElement class="header-stat">
                     <ui:Label text="{loc:ui.dashboard.quimica_de_equipo}" class="header-stat-label"/>
                     <ui:Label name="HeaderChemistry" text="" class="header-stat-value"/>
                 </ui:VisualElement>

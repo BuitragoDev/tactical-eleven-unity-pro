@@ -20,13 +20,13 @@ public class DashboardController : UIScreenController
     private Label _headerTeamName;
     private Label _headerManagerName;
     private Label _headerBudget;
-    private Label _headerPayroll;
-    private Label _headerReputation;
     private Label _headerChemistry;
     private Label _headerSeason;
     private Label _headerDate;
     private Button _btnAction;
     private VisualElement _configIcon;
+    private VisualElement _loadingSpinner;
+    private VisualElement _matchTransitionOverlay;
 
     // ── Último partido ─────────────────────────────────────────────────────
     private Label _noLastGame;
@@ -115,13 +115,18 @@ public class DashboardController : UIScreenController
         _headerTeamName = Q<Label>("HeaderTeamName");
         _headerManagerName = Q<Label>("HeaderManagerName");
         _headerBudget = Q<Label>("HeaderBudget");
-        _headerPayroll = Q<Label>("HeaderPayroll");
-        _headerReputation = Q<Label>("HeaderReputation");
         _headerChemistry = Q<Label>("HeaderChemistry");
         _headerSeason = Q<Label>("HeaderSeason");
         _headerDate = Q<Label>("HeaderDate");
         _btnAction = Q<Button>("BtnAction");
         _configIcon = Q<VisualElement>("ConfigIcon");
+
+        // El spinner solo se muestra durante operaciones largas (F8+).
+        _loadingSpinner = Q<VisualElement>("LoadingSpinner");
+        if (_loadingSpinner != null) _loadingSpinner.style.display = DisplayStyle.None;
+
+        _matchTransitionOverlay = Q<VisualElement>("MatchTransitionOverlay");
+        if (_matchTransitionOverlay != null) _matchTransitionOverlay.style.display = DisplayStyle.None;
 
         _noLastGame = Q<Label>("NoLastGame");
         _lastGameResult = Q<VisualElement>("LastGameResult");
@@ -276,10 +281,6 @@ public class DashboardController : UIScreenController
             _headerManagerName.text = LocalizationService.T("ui.common.manager", _manager?.Name ?? "");
 
         if (_headerBudget != null) _headerBudget.text = $"{_myTeam.TransferBudget:N0} €";
-        if (_headerPayroll != null) _headerPayroll.text = $"{_myTeam.TotalWageBill:N0} €";
-
-        if (_headerReputation != null)
-            _headerReputation.text = Mathf.RoundToInt((float)_myTeam.Reputation).ToString();
 
         if (_headerChemistry != null)
         {

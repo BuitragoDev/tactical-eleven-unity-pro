@@ -195,11 +195,16 @@ public class DashboardTests
         Assert.That(root.Q<VisualElement>("HeaderTeamLogo"), Is.Not.Null);
         Assert.That(root.Q<Label>("HeaderTeamName"), Is.Not.Null);
         Assert.That(root.Q<Label>("HeaderBudget"), Is.Not.Null);
-        Assert.That(root.Q<Label>("HeaderPayroll"), Is.Not.Null);
-        Assert.That(root.Q<Label>("HeaderReputation"), Is.Not.Null);
         Assert.That(root.Q<Label>("HeaderChemistry"), Is.Not.Null);
+        Assert.That(root.Q<Label>("HeaderPayroll"), Is.Null,
+            "La masa salarial ya no se muestra en la cabecera");
+        Assert.That(root.Q<Label>("HeaderReputation"), Is.Null,
+            "La reputación ya no se muestra en la cabecera");
         Assert.That(root.Q<Button>("BtnAction"), Is.Not.Null);
         Assert.That(root.Q<VisualElement>("ConfigIcon"), Is.Not.Null);
+
+        // El spinner del header existe pero el controller lo oculta al cargar.
+        Assert.That(root.Q<VisualElement>("LoadingSpinner"), Is.Not.Null);
 
         // Paneles
         Assert.That(root.Q<VisualElement>("PanelLastGame"), Is.Not.Null);
