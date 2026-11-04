@@ -588,3 +588,9 @@
     flex-shrink: 0;
     -unity-text-align: middle-right;
 }
+
+/* Filas de la lista del día más altas */
+.selected-game-row {
+    min-height: 58px;
+    padding: 12px 16px;
+}
