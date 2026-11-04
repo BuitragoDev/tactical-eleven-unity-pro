@@ -37,6 +37,7 @@ public class CalendarController : UIScreenController
     private readonly Dictionary<int, TeamDataDB> _teams = new();
     private readonly Dictionary<string, Sprite> _logos = new();
     private readonly Dictionary<string, Sprite> _logosLarge = new();
+    private readonly Dictionary<string, Sprite> _logos32 = new();
     private readonly Dictionary<DateTime, VisualElement> _dayCells = new();
 
     private DateTime _currentMonthDate;
@@ -84,6 +85,9 @@ public class CalendarController : UIScreenController
 
         foreach (var sprite in Resources.LoadAll<Sprite>("Teams/Logos/120x120"))
             _logosLarge[sprite.name] = sprite;
+
+        foreach (var sprite in Resources.LoadAll<Sprite>("Teams/Logos/32x32"))
+            _logos32[sprite.name] = sprite;
 
         var current = CalendarHelper.TryParse(_season.CurrentDate, out var date)
             ? date
@@ -293,7 +297,7 @@ public class CalendarController : UIScreenController
         var logo = new VisualElement();
         logo.AddToClassList("selected-game-logo");
         if (away) logo.AddToClassList("selected-game-logo--away");
-        SetLogo(logo, team);
+        SetListLogo(logo, team);
         return logo;
     }
 
@@ -317,12 +321,14 @@ public class CalendarController : UIScreenController
         return league?.ShortName ?? competitionId.ToString();
     }
 
-    private void SetLogo(VisualElement element, TeamDataDB team)
+    private void SetListLogo(VisualElement element, TeamDataDB team)
     {
         if (element == null || team == null) return;
         string key = string.IsNullOrEmpty(team.Logo) ? team.Id.ToString() : team.Logo;
-        if (_logos.TryGetValue(key, out var sprite))
+        if (_logos32.TryGetValue(key, out var sprite))
             element.style.backgroundImage = new StyleBackground(sprite);
+        else if (_logos.TryGetValue(key, out var fallback))
+            element.style.backgroundImage = new StyleBackground(fallback);
     }
 
     private void SetLargeLogo(VisualElement element, TeamDataDB team)
