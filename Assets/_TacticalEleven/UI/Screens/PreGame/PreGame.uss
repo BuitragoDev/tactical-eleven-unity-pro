@@ -676,3 +676,10 @@
     flex-basis: 0;
     min-width: 0;
 }
+
+/* Etiqueta central más compacta y valores pegados a ella */
+.mpv-key-label {
+    width: 118px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}

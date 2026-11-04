@@ -441,6 +441,7 @@ public class PreGameController : UIScreenController
 
         var stat = new Label(value.ToString());
         stat.AddToClassList("mpv-key-stat");
+        stat.AddToClassList(rightSide ? "mpv-key-stat--right" : "mpv-key-stat--left");
 
         if (rightSide)
         {
