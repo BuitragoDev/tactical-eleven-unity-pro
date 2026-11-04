@@ -153,6 +153,7 @@ que no se acumulan callbacks entre visitas.
    35 clubes jugables de 40. `CanSelect` es la única regla.
 4. **Banderas en ISO3** (`Flags/Default/{ISO3}`, `Flags/Large (2×)/{ISO3}`) con alias FIFA→ISO3 en
    `CountryCodes.NormalizeFlagCode` (`GER→DEU`, `NED→NLD`…). `default` va en minúsculas (Linux).
+   Para mostrar países usa **`CountryCodes.GetNameEs`** (acepta ISO3, inglés o español).
 5. **`PlayerPosition`**, no `Position`: un enum global `Position` ocultaba
    `UnityEngine.UIElements.Position` y rompía el fullscreen.
 6. **`Constants.cs` declara la clase `CountryCodes`** (no `Constants`).
