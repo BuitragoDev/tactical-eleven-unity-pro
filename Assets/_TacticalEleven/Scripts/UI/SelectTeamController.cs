@@ -158,7 +158,7 @@ public class SelectTeamController : UIScreenController
 
     protected override void RegisterCallbacks()
     {
-        _btnBack?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ScreenManager.Instance.GoTo(GameScreen.MainMenu); });
+        _btnBack?.RegisterCallback<ClickEvent>(_ => { PlayClick(); DiscardPendingGame(closeSlot: true); ScreenManager.Instance.GoTo(GameScreen.MainMenu); });
         _btnContinue?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OnContinue(); });
 
         _tabLiga?.RegisterCallback<ClickEvent>(_ => { PlayClick(); ShowFilter("liga"); });
@@ -332,32 +332,8 @@ public class SelectTeamController : UIScreenController
                               .OrderByDescending(t => t.Overall)
                               .ToList();
         int rank = rivals.FindIndex(t => t.Id == team.Id) + 1;
-        int total = rivals.Count;
 
-        string key;
-        if (team.LeagueId == 1)
-        {
-            if (rank <= 4) key = "ui.select_team.objetivo_campeonato";
-            else if (rank <= 7) key = "ui.select_team.objetivo_europa";
-            else if (rank <= total - 5) key = "ui.select_team.objetivo_media";
-            else key = "ui.select_team.objetivo_permanencia";
-        }
-        else if (team.LeagueId == 2)
-        {
-            if (rank <= 2) key = "ui.select_team.objetivo_ascenso";
-            else if (rank <= 6) key = "ui.select_team.objetivo_playoff";
-            else if (rank <= total - 6) key = "ui.select_team.objetivo_media";
-            else key = "ui.select_team.objetivo_permanencia";
-        }
-        else
-        {
-            if (rank <= 2) key = "ui.select_team.objetivo_ascenso";
-            else if (rank <= 5) key = "ui.select_team.objetivo_playoff";
-            else if (rank <= total - 6) key = "ui.select_team.objetivo_media";
-            else key = "ui.select_team.objetivo_permanencia";
-        }
-
-        return LocalizationService.T(key);
+        return LocalizationService.T(SeasonObjective.KeyFor(team.LeagueId, rank, rivals.Count));
     }
 
     // ── Plantilla ─────────────────────────────────────────────────────────
@@ -498,23 +474,10 @@ public class SelectTeamController : UIScreenController
         };
         db.SaveManager(manager);
 
-        int yearStart = DatabaseManager.CurrentSeasonStartYear();
-        var season = db.CreateSeason(manager.Id, _selectedTeam.LeagueId, yearStart);
-
-        // F6: calendario de liga y amistosos de pretemporada por defecto. La
-        // pantalla de Pretemporada permite después cambiar los rivales.
-        int leagueGames = db.GenerateLeagueSchedule(season);
-        if (leagueGames < 0)
-        {
-            Debug.LogError("[SelectTeam] No se pudo generar el calendario de liga.");
-            if (_detailObjective != null)
-                _detailObjective.text = LocalizationService.T("ui.select_team.error_calendario");
-            return;
-        }
-
-        GameSaveManager.UpdateSlotFromDatabase(db.ActiveSaveSlot);
-
-        Debug.Log($"[SelectTeam] {managerName} → {_selectedTeam.Name} (temporada {season.YearStart}-{season.YearEnd}, {leagueGames} partidos)");
+        // La partida NO se crea aquí: la temporada, el calendario y los metadatos
+        // del slot se generan al pulsar CONTINUAR en Pretemporada. Si el jugador
+        // abandona antes (VOLVER), no queda ninguna partida en Cargar partida.
+        Debug.Log($"[SelectTeam] {managerName} → {_selectedTeam.Name} (pretemporada pendiente)");
 
         if (ScreenManager.Instance.IsRegistered(GameScreen.Preseason))
         {
@@ -522,8 +485,17 @@ public class SelectTeamController : UIScreenController
             return;
         }
 
-        // Sin pantalla de Pretemporada: la partida queda creada y visible en Cargar partida.
+        // Sin pantalla de Pretemporada no hay forma de completar el proceso.
         if (_detailObjective != null)
             _detailObjective.text = LocalizationService.T("ui.select_team.pretemporada_pendiente");
+    }
+
+    /// <summary>
+    /// Borra la partida a medias (manager, temporada y partidos) sin escribir los
+    /// metadatos del slot. Así no aparece en Cargar partida.
+    /// </summary>
+    private static void DiscardPendingGame(bool closeSlot = false)
+    {
+        DatabaseManager.Instance?.DiscardPendingGame(closeSlot);
     }
 }

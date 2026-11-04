@@ -1,0 +1,111 @@
+/* ══════════════════════════════════════════
+   SIDEBAR — Sidebar.uss
+   ══════════════════════════════════════════ */
+
+.sidebar {
+    width: 200px;
+    height: 100%;
+    flex-shrink: 0;
+    flex-direction: column;
+    background-color: rgb(11, 14, 20);
+    border-right-width: 1px;
+    border-right-color: rgb(28, 33, 48);
+}
+
+.sidebar-nav {
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 8px 0;
+    overflow: hidden;
+    background-color: rgb(0, 0, 0);
+}
+
+.nav-item {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 12px;
+    border-width: 0;
+    background-color: rgb(0, 0, 0);
+}
+.nav-item:hover {
+    background-color: rgb(22, 26, 36);
+}
+.nav-item--active {
+    background-color: rgb(20, 28, 48);
+    border-left-width: 3px;
+    border-left-color: rgb(42, 95, 201);
+}
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 0;
+}
+.nav-label {
+    font-size: 16px;
+    color: rgb(122, 138, 170);
+    margin-left: 18px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.nav-item:hover .nav-label {
+    color: rgb(208, 216, 232);
+}
+.nav-item--active .nav-label {
+    color: rgb(255, 255, 255);
+}
+.nav-arrow {
+    font-size: 10px;
+    color: rgb(122, 138, 170);
+    margin-left: auto;
+    -unity-text-align: middle-right;
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+}
+.nav-item:hover .nav-arrow {
+    color: rgb(208, 216, 232);
+}
+.nav-item--active .nav-arrow {
+    color: rgb(255, 255, 255);
+}
+
+/* ── SUBMENU ── */
+.nav-submenu {
+    display: none;
+    flex-direction: column;
+    background-color: rgb(8, 10, 14);
+}
+.nav-submenu--visible {
+    display: flex;
+}
+.nav-submenu-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 12px 10px 54px;
+    border-width: 0;
+    background-color: transparent;
+}
+.nav-submenu-item:hover {
+    background-color: rgb(22, 26, 36);
+}
+.nav-submenu-item--active {
+    background-color: rgb(20, 28, 48);
+    border-left-width: 3px;
+    border-left-color: rgb(42, 95, 201);
+}
+.nav-submenu-label {
+    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Regular.ttf");
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    -unity-text-align: middle-left;
+    color: rgb(100, 116, 148);
+}
+.nav-submenu-item:hover .nav-submenu-label {
+    color: rgb(208, 216, 232);
+}
+.nav-submenu-item--active .nav-submenu-label {
+    color: rgb(255, 255, 255);
+}

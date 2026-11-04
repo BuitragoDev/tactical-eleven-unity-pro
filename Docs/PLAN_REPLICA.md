@@ -285,7 +285,7 @@ Notas:
 | **F4** | ✅ Hecha | Menú completo (Liga Manager, ProManager con modal, Cargar, Editor pendiente, Salir, aviso legal), **modal de configuración** en la base (audio/calidad/vista de partido), pantalla **Cargar partida** con tarjetas y borrado; tests `SaveSlotLifecycleTests` + UI |
 | **F5** | ✅ Hecha | Selección de equipo con **4 pestañas** (1ª, 2ª, 1ª RFEF G1/G2), ficha del club, plantilla y nombre del manager; crea manager + temporada (38/42/38 jornadas) y deja el slot listo |
 | **F6** | ✅ Hecha | Calendario de liga completo (doble vuelta, 380/462/380 partidos), fechas con parones FIFA/navideño y descanso mínimo de 48 h, pretemporada de hasta 4 amistosos elegidos por el jugador y pantalla `Preseason` con filtros por competición; tests `ScheduleTests` (**57/57** en total) |
-| F7 | ⏭ Siguiente | Dashboard, header, sidebar y avance de día |
+| **F7** | ✅ Hecha | Dashboard con header (club, fecha, presupuesto, manager), sidebar completo, tarjetas de resumen (próximo partido, último resultado, clasificación, objetivo, finanzas, plantilla, noticias), modal de ajustes y **avance de día** con parada en día de partido; tests `DashboardTests`
 
 **F6 — decisiones tomadas:**
 
@@ -293,7 +293,7 @@ Notas:
 - **`FootballScheduleGenerator`** (puro) hace la doble vuelta por el método del círculo, baraja el orden con `IRandomSource` (misma semilla = mismo calendario) y valida: 38/42/38 jornadas, cada pareja 2 veces (1 casa/1 fuera), sin equipos repetidos por jornada y **48 h mínimas de descanso**.
 - **`PreseasonPlanner`** elige rivales de pretemporada de menor categoría (o menor nivel si no hay liga inferior), excluyendo filiales e históricos.
 - **`DatabaseManager.Schedule`** persiste en `games` (`GameType` = `regular`/`preseason`, `CompetitionId` = liga) y expone consultas (`GetGamesBySeason`, `GetNextGame`, `GetFirstLeagueGame`…). Regenerar **reemplaza** los partidos del mismo tipo (idempotente).
-- **Flujo**: al confirmar equipo se crean manager + temporada y se genera la liga (380/462/380 partidos). La pantalla `Preseason` **arranca sin amistosos**: el jugador elige hasta 4 con filtros de competición (LaLiga, LaLiga 2, 1ª RFEF / Champions, Europa, Conference) y al CONTINUAR guarda la fecha de arranque y navega al Dashboard (cuando exista, F7).
+- **Flujo de creación (réplica de Tactical5)**: al confirmar equipo solo se crea el `manager` y se navega a `Preseason`. La temporada, el calendario (380/462/380 partidos), los amistosos y los **metadatos del slot** se generan al pulsar CONTINUAR en `Preseason`; solo entonces la partida aparece en Cargar partida y se navega al Dashboard. Si el jugador pulsa VOLVER antes, `DiscardPendingGame` borra manager/temporada/partidos y la partida nunca queda listada. La pantalla arranca sin amistosos y permite elegir hasta 4 con filtros de competición (LaLiga, LaLiga 2, 1ª RFEF / Champions, Europa, Conference).
 - **Copa y Europa no se generan aquí**: sus generadores (F13/F14) reservarán los huecos de fecha.
 - **`ClearAllManagers`** borra también `games` para no arrastrar calendarios de intentos abandonados.
 
@@ -304,7 +304,7 @@ Notas:
 - **Presupuestos reales 2026**: los 42 clubes de 1ª y 2ª usan el presupuesto anual aproximado de 2026 (`TransferBudget`), redondeado a múltiplos de 500.000 € (Madrid 1.248 M€, Barça 1.075 M€, Atlético 554 M€; en 2ª, de 60 M€ del Girona a 7 M€ del Celta Fortuna). La huella del seed incluye `TransferBudget`, así que el template se reconstruye solo; las partidas ya creadas conservan sus cifras hasta empezar una nueva.
 - **ProManager**: solo son seleccionables los clubes de **Primera Federación** (grupos 1 y 2) que no sean filiales (35 de 40). La pantalla abre en el grupo 1; el resto de clubes aparecen deshabilitados.
 - **Filiales visibles pero deshabilitados**: aparecen en la rejilla atenuados (tooltip «filial · no seleccionable») y no se pueden elegir. `FilialRules` los marca en el seed (`IsFilial`, `ParentClubId`) por nombre y tabla de padres (Real Sociedad B, Celta Fortuna, Bilbao Athletic, Fabril, Castilla, Atlético Madrileño y Villarreal B); `CanSelect` centraliza la regla (en ProManager solo Primera Federación sin filiales). Quedan **75 clubes jugables** de los 82 españoles. La huella incluye la marca y `InitSaveSlot` repara plantillas/partidas antiguas.
-- **Al continuar**: limpia managers/temporadas de intentos previos, crea `managers` + `seasons` (fase `preseason`, `current_date` 15/07, jornadas 38/42/38), actualiza `saves.json` y navega a Pretemporada cuando exista (F6).
+- **Al continuar**: limpia managers/temporadas de intentos previos, crea el `manager` y navega a `Preseason`. **No** crea temporada, calendario ni `saves.json`: eso ocurre en el commit de Pretemporada (ver F6).
 - **`PlayerPositionNames`**: códigos y nombres de demarcación en un único sitio (POR, DFC, LI, LD, MCD, MC, MCO, EI, ED, DC…).
 
 **F4 — decisiones tomadas:**
@@ -605,6 +605,16 @@ ACTUALIDAD: Noticias · Hilos
 **Extra:** simulación rápida hasta fecha (reutiliza `FastSimRoutine` y `CalendarController`).
 
 **Aceptación:** avanzar un día no rompe nada, el header refresca, los modales bloquean el avance y no hay doble pre-lote.
+
+**F7 — decisiones tomadas:**
+
+- **Réplica de la pantalla de Tactical5**: mismo layout (header, sidebar con submenús, paneles de último/próximo partido, estadísticas del equipo, clasificación, estadísticas de jugadores, relaciones y noticias). La sidebar se inyecta en runtime desde `UI/Resources/UI/Core/Sidebar.uxml` (`SidebarController`), como en Tactical5.
+- **Adaptación al fútbol**: las tarjetas de jugador pasan de Puntos/Rebotes/Asistencias/Robos/Tapones/Valoración a **Goles/Asistencias/Valoración/MVP/Partidos/Amarillas**; la clasificación usa PJ-G-E-P-DG-PTS; el sidebar sustituye Pabellón por **Estadio**, Quinteto por Alineación, Rotación por Táctica, Empleados por Cuerpo técnico, G-League por Filial/Cantera y Playoffs por Eliminatorias. Los destinos sin pantalla avisan con un toast.
+- **Reglas puras**: `LeagueTable` calcula la clasificación desde `games` jugados; `SeasonObjective` centraliza los **6 objetivos** (Campeonato, Europa, Media tabla, Permanencia, Ascenso y Playoff) y lo comparten la ficha de equipo y el Dashboard; `GameDayRules` resuelve fecha siguiente, fase y detección de día de partido.
+- **Avance de día** (`DatabaseManager.AdvanceDay`): mueve `seasons.current_date` y `current_match_day`, recalcula `phase` (`preseason` hasta el primer partido de liga; `regular` después) y **se detiene en el día de partido**. Sin motor (F8) el botón explica que la simulación llega en la fase siguiente; cuando F8 exista solo hay que enlazar el `PreGame`.
+- **Clasificación**: se muestran los 6 primeros y, si el club queda fuera, una fila separada con su posición. En pretemporada el objetivo se calcula por media de plantilla (igual que la ficha de F5).
+- **Estado en SQLite**: cada avance actualiza el slot (`saves.json`) para que Cargar partida muestre la fecha real.
+- **Escena**: `DashboardDocument` (UIDocument + FullScreenUI + DashboardController) creado y enlazado a `ScreenManager.dashboardDocument`.
 
 ---
 

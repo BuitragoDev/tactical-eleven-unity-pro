@@ -93,10 +93,11 @@ fútbol en lugar de baloncesto.
 | F4 | ✅ | Menú, modal de configuración, Cargar partida, aviso legal, salir |
 | F5 | ✅ | Selección de equipo (4 pestañas), filiales deshabilitados, ProManager (solo 1ª RFEF), manager + temporada, plantilla con banderas |
 | **F6** | ✅ | **Pretemporada y calendario de liga**: doble vuelta 38/42/38, parones FIFA/Navidad, 48 h de descanso, pretemporada vacía de hasta 4 amistosos con filtros y pantalla `Preseason` |
-| **F7** | ⏭ **Siguiente** | **Dashboard, header, sidebar y avance de día** |
-| F8…F18 | — | Motor de partido, competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
+| **F7** | ✅ | **Dashboard (réplica de Tactical5), header, sidebar y avance de día**: `LeagueTable`, `SeasonObjective`, `GameDayRules`, `DatabaseManager.AdvanceDay`, `SidebarController` y pantalla `Dashboard` con estadísticas de fútbol; tests `DashboardTests` |
+| **F8** | ⏭ **Siguiente** | **Motor de partido y pantallas de partido** |
+| F9…F18 | — | Competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
 
-**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (7 archivos, sin `.asmdef`; compilan en
+**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (9 archivos, sin `.asmdef`; compilan en
 `Assembly-CSharp-Editor`). Comando (con **Unity cerrado**):
 
 ```bash

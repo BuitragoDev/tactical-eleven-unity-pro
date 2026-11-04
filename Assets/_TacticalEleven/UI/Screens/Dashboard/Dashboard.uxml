@@ -1,0 +1,419 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="Dashboard.uss" />
+    <ui:VisualElement name="DashboardRoot" class="dashboard-root">
+        <ui:VisualElement class="main-area">
+            <ui:VisualElement name="TopHeader" class="top-header">
+                <ui:VisualElement class="header-brand">
+                    <ui:Label text="{loc:ui.dashboard.te}" class="header-brand-icon"/>
+                    <ui:Label text="{loc:ui.dashboard.tactical}" class="header-brand-text"/>
+                    <ui:Label text="{loc:ui.dashboard.eleven}" class="header-brand-text-gold"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="HeaderTeamLogo" class="header-team-logo"/>
+                <ui:VisualElement class="header-team-info">
+                    <ui:Label name="HeaderTeamName" text="" class="header-team-name"/>
+                    <ui:Label name="HeaderManagerName" text="" class="header-manager-name"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="header-stat">
+                    <ui:Label text="{loc:ui.dashboard.presupuesto}" class="header-stat-label"/>
+                    <ui:Label name="HeaderBudget" text="" class="header-stat-value"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="header-stat">
+                    <ui:Label text="{loc:ui.dashboard.quimica_de_equipo}" class="header-stat-label"/>
+                    <ui:Label name="HeaderChemistry" text="" class="header-stat-value"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="header-spacer"/>
+                <ui:VisualElement class="header-season-info">
+                    <ui:Label name="HeaderSeason" text="" class="header-season-label"/>
+                    <ui:Label name="HeaderDate" text="" class="header-date-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="LoadingSpinner" class="loading-spinner"/>
+                <ui:Button name="BtnAction" text="{loc:ui.dashboard.btn_action}" class="btn-action"/>
+                <ui:VisualElement name="ConfigIcon" class="header-config-icon"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="ContentScroll" horizontal-scrolling-enabled="false" mode="Vertical" class="content-scroll">
+                <ui:VisualElement class="panels-grid">
+                    <!-- ROW 1: ÚLTIMO PARTIDO + PRÓXIMO PARTIDO + ESTADÍSTICAS DEL EQUIPO -->
+                    <ui:VisualElement class="panels-row">
+                        <ui:VisualElement name="PanelLastGame" class="panel panel-game panel-game--third panel--gold">
+                            <ui:VisualElement class="panel-header">
+                                <ui:VisualElement class="panel-header-left">
+                                    <ui:Label text="{loc:ui.dashboard.ultimo_partido}" class="panel-title"/>
+                                </ui:VisualElement>
+                                <ui:Label name="LastGameDate" text="" class="panel-date"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="LastGameBody" class="panel-body">
+                                <ui:Label name="NoLastGame" text="{loc:ui.dashboard.no_last_game}" class="no-games-text"/>
+                                <ui:VisualElement name="LastGameResult" class="game-result">
+                                    <ui:VisualElement name="LastGameHome" class="game-team-block">
+                                        <ui:VisualElement name="LastHomeLog" class="game-team-logo-lg"/>
+                                        <ui:Label name="LastHomeName" text="" class="game-team-name-lg"/>
+                                        <ui:Label name="LastHomeRecord" text="" class="game-team-record"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="game-score-block">
+                                        <ui:VisualElement style="flex-direction: row; align-items: center;">
+                                            <ui:Label name="LastHomeScore" text="" class="game-score-text"/>
+                                            <ui:Label text="-" class="game-score-sep"/>
+                                            <ui:Label name="LastAwayScore" text="" class="game-score-text"/>
+                                        </ui:VisualElement>
+                                        <ui:Label name="LastResultBadge" text="" class="game-result-badge"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement name="LastGameAway" class="game-team-block">
+                                        <ui:VisualElement name="LastAwayLog" class="game-team-logo-lg"/>
+                                        <ui:Label name="LastAwayName" text="" class="game-team-name-lg"/>
+                                        <ui:Label name="LastAwayRecord" text="" class="game-team-record"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="LastGameMeta" class="game-meta-row">
+                                <ui:Label name="LastGameArena" text="" class="game-meta-arena"/>
+                                <ui:VisualElement class="game-meta-footer">
+                                    <ui:Label name="LastGameFooterLink" text="{loc:ui.dashboard.ver_resumen}" class="panel-footer-link"/>
+                                    <ui:Label text="→" class="panel-footer-arrow"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="PanelNextGame" class="panel panel-game panel-game--third panel--gold">
+                            <ui:VisualElement class="panel-header">
+                                <ui:VisualElement class="panel-header-left">
+                                    <ui:Label text="{loc:ui.dashboard.proximo_partido}" class="panel-title"/>
+                                </ui:VisualElement>
+                                <ui:Label name="NextGameDate" text="" class="panel-date"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="NextGameBody" class="panel-body">
+                                <ui:Label name="NoNextGame" text="{loc:ui.dashboard.no_next_game}" class="no-games-text"/>
+                                <ui:VisualElement name="NextGameResult" class="game-result">
+                                    <ui:VisualElement name="NextGameHome" class="game-team-block">
+                                        <ui:VisualElement name="NextHomeLog" class="game-team-logo-lg"/>
+                                        <ui:Label name="NextHomeName" text="" class="game-team-name-lg"/>
+                                        <ui:Label name="NextHomeRecord" text="" class="game-team-record"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="game-score-block">
+                                        <ui:Label text="{loc:ui.dashboard.vs}" class="game-vs-text"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement name="NextGameAway" class="game-team-block">
+                                        <ui:VisualElement name="NextAwayLog" class="game-team-logo-lg"/>
+                                        <ui:Label name="NextAwayName" text="" class="game-team-name-lg"/>
+                                        <ui:Label name="NextAwayRecord" text="" class="game-team-record"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="NextGameMeta" class="game-meta-row">
+                                <ui:Label name="NextGameArena" text="" class="game-meta-arena"/>
+                                <ui:VisualElement class="game-meta-footer">
+                                    <ui:Label name="NextGameFooterLink" text="{loc:ui.dashboard.ver_previa}" class="panel-footer-link"/>
+                                    <ui:Label text="→" class="panel-footer-arrow"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="PanelTeamStats" class="panel panel-team-stats panel-team-stats--third">
+                            <ui:VisualElement class="panel-body">
+                                <ui:VisualElement class="team-stat-row">
+                                    <ui:VisualElement class="team-stat-trophy-icon"/>
+                                    <ui:VisualElement class="team-stat-info">
+                                        <ui:Label text="{loc:ui.dashboard.objetivo_de_la_temporada}" class="team-stat-title"/>
+                                        <ui:Label name="TeamObjective" text="--" class="team-stat-subtitle"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement name="TeamObjectiveStatus" class="team-stat-status-icon"/>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="team-stat-row">
+                                    <ui:VisualElement name="TeamStatsLogo" class="team-stat-logo"/>
+                                    <ui:VisualElement class="team-stat-info">
+                                        <ui:Label text="{loc:ui.dashboard.media_equipo}" class="team-stat-title"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="team-stat-ring">
+                                        <ui:Label name="TeamOverallRingVal" text="--" class="team-stat-ring-val"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="team-stat-row">
+                                    <ui:VisualElement name="TeamChemistryIcon" class="team-stat-logo"/>
+                                    <ui:VisualElement class="team-stat-info">
+                                        <ui:Label text="{loc:ui.dashboard.quimica_equipo}" class="team-stat-title"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement name="TeamChemistryRing" class="team-stat-ring">
+                                        <ui:Label name="TeamChemistryRingVal" text="--" class="team-stat-ring-val"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="team-stat-row team-stat-row--last">
+                                    <ui:VisualElement class="team-stat-arena-icon"/>
+                                    <ui:VisualElement class="team-stat-info">
+                                        <ui:Label name="TeamArenaName" text="{loc:ui.dashboard.team_stadium_name}" class="team-stat-title"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="team-stat-right-group">
+                                        <ui:VisualElement name="TeamReputationStars" class="team-stat-stars"/>
+                                        <ui:Label name="TeamArenaCapacity" text="--" class="team-stat-capacity"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <!-- ROW 2: CLASIFICACIÓN | [ESTADÍSTICAS JUGADORES + RELACIONES] | NOTICIAS -->
+                    <ui:VisualElement class="panels-row panels-row--grow">
+                        <!-- IZQUIERDA: CLASIFICACIÓN -->
+                        <ui:VisualElement name="PanelStandings" class="panel panel-standings panel-standings--col panel--gold">
+                            <ui:VisualElement class="panel-header">
+                                <ui:VisualElement class="panel-header-left">
+                                    <ui:Label text="{loc:ui.dashboard.clasificacion}" class="panel-title"/>
+                                </ui:VisualElement>
+                                <ui:Label name="StandingsLeague" text="" class="panel-date"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="standings-header-row">
+                                <ui:Label text="#" class="col-rank col-stat--header"/>
+                                <ui:Label class="col-team-logo"/>
+                                <ui:Label text="{loc:ui.dashboard.equipo}" class="col-team-name col-stat--header"/>
+                                <ui:Label text="{loc:ui.dashboard.pj}" class="col-stat col-stat--header"/>
+                                <ui:Label text="{loc:ui.dashboard.g}" class="col-stat col-stat--header"/>
+                                <ui:Label text="{loc:ui.dashboard.e}" class="col-stat col-stat--header"/>
+                                <ui:Label text="{loc:ui.dashboard.p}" class="col-stat col-stat--header"/>
+                                <ui:Label text="{loc:ui.dashboard.dg}" class="col-stat col-stat--header"/>
+                                <ui:Label text="{loc:ui.dashboard.pts}" class="col-stat col-stat--header"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="StandingsBody" class="standings-table"/>
+                            <ui:VisualElement class="panel-footer">
+                                <ui:Label name="StandingsFooterLink" text="{loc:ui.dashboard.ver_clasificacion_completa}" class="panel-footer-link"/>
+                                <ui:Label text="→" class="panel-footer-arrow"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <!-- CENTRO: ESTADÍSTICAS JUGADORES + RELACIONES (vertical) -->
+                        <ui:VisualElement class="center-column">
+                            <ui:VisualElement name="PanelPlayerStats" class="panel panel-player-stats panel-player-stats--center panel--gold">
+                                <ui:VisualElement class="panel-header">
+                                    <ui:VisualElement class="panel-header-left">
+                                        <ui:Label text="{loc:ui.dashboard.estadisticas_de_jugadores}" class="panel-title"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="panel-body">
+                                    <ui:VisualElement class="stats-grid">
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatGoalsPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatGoalsIcon" text="{loc:ui.dashboard.stat_goals_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.goles}" class="stat-card-label"/>
+                                                <ui:Label name="StatGoals" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatGoalsName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatGoalsGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatAssistsPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatAssistsIcon" text="{loc:ui.dashboard.stat_assists_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.asistencias}" class="stat-card-label"/>
+                                                <ui:Label name="StatAssists" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatAssistsName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatAssistsGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatYellowPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatYellowIcon" text="{loc:ui.dashboard.stat_yellow_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.tarjetas_amarillas}" class="stat-card-label"/>
+                                                <ui:Label name="StatYellow" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatYellowName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatYellowGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatRedPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatRedIcon" text="{loc:ui.dashboard.stat_red_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.tarjetas_rojas}" class="stat-card-label"/>
+                                                <ui:Label name="StatRed" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatRedName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatRedGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatMvpPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatMvpIcon" text="{loc:ui.dashboard.stat_mvp_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.mvps}" class="stat-card-label"/>
+                                                <ui:Label name="StatMvp" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatMvpName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatMvpGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="stat-card">
+                                            <ui:VisualElement class="stat-card-photo-wrapper">
+                                                <ui:VisualElement name="StatMinutesPhoto" class="stat-card-photo"/>
+                                            </ui:VisualElement>
+                                            <ui:Label name="StatMinutesIcon" text="{loc:ui.dashboard.stat_minutes_icon}" class="stat-card-icon"/>
+                                            <ui:VisualElement class="stat-card-right">
+                                                <ui:Label text="{loc:ui.dashboard.minutos}" class="stat-card-label"/>
+                                                <ui:Label name="StatMinutes" text="--" class="stat-card-val"/>
+                                                <ui:Label name="StatMinutesName" text="" class="stat-card-player"/>
+                                                <ui:Label name="StatMinutesGames" text="" class="stat-card-games"/>
+                                            </ui:VisualElement>
+                                        </ui:VisualElement>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="PanelBoard" class="panel panel-board panel-board--center panel--gold">
+                                <ui:VisualElement class="panel-header">
+                                    <ui:Label text="{loc:ui.dashboard.relaciones}" class="panel-title"/>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="panel-body">
+                                    <ui:VisualElement class="board-columns">
+                                        <ui:VisualElement class="board-col">
+                                            <ui:VisualElement name="CircleTrust" class="board-circle">
+                                                <ui:Label name="ValTrust" text="50%" class="board-circle-val"/>
+                                            </ui:VisualElement>
+                                            <ui:Label text="{loc:ui.dashboard.confianza_directiva}" class="board-col-label"/>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="board-col-sep"/>
+                                        <ui:VisualElement class="board-col">
+                                            <ui:VisualElement name="CircleMorale" class="board-circle">
+                                                <ui:Label name="ValMorale" text="50%" class="board-circle-val"/>
+                                            </ui:VisualElement>
+                                            <ui:Label text="{loc:ui.dashboard.moral_del_equipo}" class="board-col-label"/>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="board-col-sep"/>
+                                        <ui:VisualElement class="board-col">
+                                            <ui:VisualElement name="CircleFanConfidence" class="board-circle">
+                                                <ui:Label name="ValFanConfidence" text="50%" class="board-circle-val"/>
+                                            </ui:VisualElement>
+                                            <ui:Label text="{loc:ui.dashboard.confianza_fans}" class="board-col-label"/>
+                                        </ui:VisualElement>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <!-- DERECHA: NOTICIAS -->
+                        <ui:VisualElement name="PanelMessages" class="panel panel-messages panel-messages--col panel--gold">
+                            <ui:VisualElement class="panel-header">
+                                <ui:VisualElement class="panel-header-left">
+                                    <ui:Label text="{loc:ui.dashboard.noticias}" class="panel-title"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:ScrollView name="MessagesScroll" horizontal-scrolling-enabled="false" mode="Vertical" class="messages-scroll">
+                                <ui:VisualElement name="MessagesBody" class="messages-body"/>
+                            </ui:ScrollView>
+                            <ui:VisualElement class="panel-footer">
+                                <ui:Label name="MessagesFooterLink" text="{loc:ui.dashboard.ver_todas_las_noticias}" class="panel-footer-link"/>
+                                <ui:Label text="→" class="panel-footer-arrow"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+
+        <!-- Transición visual Previa → MatchDay: evita mostrar el Dashboard
+             interactivo mientras se simula el día. Los modales siguen por encima. -->
+        <ui:VisualElement name="MatchTransitionOverlay" class="match-transition-overlay">
+            <ui:VisualElement class="match-transition-content">
+                <ui:VisualElement name="MatchTransitionSpinner" class="loading-spinner match-transition-spinner"/>
+                <ui:Label text="{loc:ui.dashboard.preparando_partido}" class="match-transition-title"/>
+                <ui:Label text="{loc:ui.dashboard.simulando_encuentro}" class="match-transition-subtitle"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="ConfigModalOverlay" class="modal-overlay">
+            <ui:VisualElement name="ConfigModalBox" class="modal-box">
+                <ui:Label text="{loc:ui.dashboard.configuracion}" class="modal-title"/>
+                <ui:VisualElement class="modal-body">
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.audio}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.dashboard.volumen_general}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderMaster" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillMaster" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerMaster" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelMaster" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.dashboard.musica}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderMusic" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillMusic" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerMusic" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelMusic" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="settings-row">
+                            <ui:Label text="{loc:ui.dashboard.efectos}" class="settings-label"/>
+                            <ui:VisualElement name="ConfigSliderSFX" class="custom-slider">
+                                <ui:VisualElement class="custom-slider-track"/>
+                                <ui:VisualElement name="ConfigFillSFX" class="custom-slider-fill"/>
+                                <ui:VisualElement name="ConfigDraggerSFX" class="custom-slider-dragger"/>
+                            </ui:VisualElement>
+                            <ui:Label name="ConfigLabelSFX" text="100%" class="settings-value"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.graficos}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-quality-row">
+                            <ui:Label text="{loc:ui.dashboard.calidad}" class="settings-label"/>
+                            <ui:VisualElement class="settings-quality-options">
+                                <ui:Button name="ConfigBtnQualityLow" text="{loc:ui.dashboard.config_btn_quality_low}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityMedium" text="{loc:ui.dashboard.config_btn_quality_medium}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityHigh" text="{loc:ui.dashboard.config_btn_quality_high}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnQualityUltra" text="{loc:ui.dashboard.config_btn_quality_ultra}" class="settings-quality-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.simulacion}" class="settings-section-title"/>
+                        <ui:VisualElement class="settings-quality-row">
+                            <ui:Label text="{loc:ui.dashboard.vista_de_partido}" class="settings-label"/>
+                            <ui:VisualElement class="settings-quality-options">
+                                <ui:Button name="ConfigBtnSimDirect" text="{loc:ui.dashboard.config_btn_sim_direct}" class="settings-quality-btn"/>
+                                <ui:Button name="ConfigBtnSimPlay" text="{loc:ui.dashboard.config_btn_sim_play}" class="settings-quality-btn settings-quality-btn--wide"/>
+                                <ui:Button name="ConfigBtnSimVisual" text="{loc:ui.dashboard.config_btn_sim_visual}" class="settings-quality-btn settings-quality-btn--wide"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-section">
+                        <ui:Label text="{loc:ui.dashboard.juego}" class="settings-section-title"/>
+                        <ui:VisualElement style="flex-direction: row; margin-top: 8px;">
+                            <ui:Button name="ConfigBtnMainMenu" text="{loc:ui.dashboard.config_btn_main_menu}" class="settings-btn settings-btn--secondary" style="width: 300px; margin-top: 0;"/>
+                            <ui:Button name="ConfigBtnExit" text="{loc:ui.dashboard.config_btn_exit}" class="settings-btn settings-btn--danger" style="width: 300px; margin-top: 0; margin-left: 12px;"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Button name="ConfigBtnCerrar" text="{loc:ui.dashboard.config_btn_cerrar}" class="btn-modal-confirm btn-modal-confirm--gold"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ConfigMainMenuConfirmOverlay" class="modal-overlay">
+            <ui:VisualElement name="ConfigMainMenuConfirmBox" class="modal-box">
+                <ui:Label text="{loc:ui.dashboard.volver_al_menu_principal}" class="modal-title"/>
+                <ui:VisualElement class="modal-body">
+                    <ui:Label text="{loc:ui.dashboard.estas_seguro_de_que_quieres_volver_al_me_6f548452}" class="modal-paragraph modal-paragraph--highlight"/>
+                    <ui:Label text="{loc:ui.dashboard.se_perdera_el_progreso_no_guardado_de_la_b10b7334}" class="modal-paragraph"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="fired-modal-actions">
+                    <ui:Button name="ConfigBtnMainMenuNo" text="{loc:ui.dashboard.config_btn_main_menu_no}" class="btn-modal-cancel"/>
+                    <ui:Button name="ConfigBtnMainMenuYes" text="{loc:ui.dashboard.config_btn_main_menu_yes}" class="btn-modal-confirm btn-modal-confirm--danger"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ConfigExitConfirmOverlay" class="modal-overlay">
+            <ui:VisualElement name="ConfigExitConfirmBox" class="modal-box">
+                <ui:Label text="{loc:ui.dashboard.salir_del_juego}" class="modal-title"/>
+                <ui:VisualElement class="modal-body">
+                    <ui:Label text="{loc:ui.dashboard.estas_seguro_de_que_quieres_salir_del_ju_c65dd5f1}" class="modal-paragraph modal-paragraph--highlight"/>
+                    <ui:Label text="{loc:ui.dashboard.tu_progreso_se_guarda_automaticamente_du_10fb1edb}" class="modal-paragraph"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="fired-modal-actions">
+                    <ui:Button name="ConfigBtnExitNo" text="{loc:ui.dashboard.config_btn_exit_no}" class="btn-modal-cancel"/>
+                    <ui:Button name="ConfigBtnExitYes" text="{loc:ui.dashboard.config_btn_exit_yes}" class="btn-modal-confirm btn-modal-confirm--danger"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
