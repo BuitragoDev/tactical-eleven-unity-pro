@@ -99,7 +99,11 @@ public static class HeaderController
         var configIcon = header.Q<VisualElement>("ConfigIcon");
         if (configIcon != null && controller != null)
         {
-            configIcon.RegisterCallback<ClickEvent>(_ => controller.ShowConfigModal());
+            configIcon.RegisterCallback<ClickEvent>(_ =>
+            {
+                PlayClick();
+                controller.ShowConfigModal();
+            });
             CursorManager.Instance?.RegisterHandCursor(configIcon);
         }
 
@@ -107,9 +111,18 @@ public static class HeaderController
         if (mainMenu != null)
         {
             mainMenu.RegisterCallback<ClickEvent>(_ =>
-                ScreenManager.Instance?.GoTo(GameScreen.Dashboard));
+            {
+                PlayClick();
+                ScreenManager.Instance?.GoTo(GameScreen.Dashboard);
+            });
             CursorManager.Instance?.RegisterHandCursor(mainMenu);
         }
+    }
+
+    private static void PlayClick()
+    {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySFX("click");
     }
 
     private static bool IsOverlay(VisualElement element)
