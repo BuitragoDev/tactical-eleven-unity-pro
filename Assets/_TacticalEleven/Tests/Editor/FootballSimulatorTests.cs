@@ -307,6 +307,9 @@ public class FootballSimulatorTests
         Assert.That(grRoot.Q<VisualElement>("GamesBody"), Is.Not.Null);
         Assert.That(grRoot.Q<VisualElement>("MvpPanel"), Is.Not.Null);
         Assert.That(grRoot.Q<VisualElement>("LbScorersBody"), Is.Not.Null);
+        Assert.That(grRoot.Q<Label>("MvpVal"), Is.Not.Null);
+        Assert.That(grRoot.Q<Label>("MvpGoals"), Is.Null, "El MVP solo muestra la nota");
+        Assert.That(grRoot.Q<Label>("MvpAssists"), Is.Null, "El MVP solo muestra la nota");
         Assert.That(grRoot.Q<Button>("BtnDashboard"), Is.Not.Null);
     }
 

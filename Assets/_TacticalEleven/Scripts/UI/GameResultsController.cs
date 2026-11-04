@@ -20,7 +20,7 @@ public class GameResultsController : UIScreenController
     private VisualElement _gamesBody;
     private VisualElement _mvpPanel;
     private VisualElement _mvpLogo;
-    private Label _mvpName, _mvpTeam, _mvpGoals, _mvpAssists, _mvpVal;
+    private Label _mvpName, _mvpTeam, _mvpVal;
 
     private VisualElement _lbScorersBody, _lbAssistersBody, _lbRatedBody;
 
@@ -47,8 +47,6 @@ public class GameResultsController : UIScreenController
         _mvpLogo = Q<VisualElement>("MvpLogo");
         _mvpName = Q<Label>("MvpName");
         _mvpTeam = Q<Label>("MvpTeam");
-        _mvpGoals = Q<Label>("MvpGoals");
-        _mvpAssists = Q<Label>("MvpAssists");
         _mvpVal = Q<Label>("MvpVal");
 
         _lbScorersBody = Q<VisualElement>("LbScorersBody");
@@ -210,8 +208,18 @@ public class GameResultsController : UIScreenController
         name.AddToClassList("game-card-team-name");
         if (team != null && team.Id == _myTeam.Id) name.AddToClassList("my-team");
 
-        side.Add(logo);
-        side.Add(name);
+        // Local: nombre → logo (pegado al marcador). Visitante: logo → nombre.
+        if (first)
+        {
+            side.Add(name);
+            side.Add(logo);
+        }
+        else
+        {
+            side.Add(logo);
+            side.Add(name);
+        }
+
         return side;
     }
 
@@ -237,8 +245,6 @@ public class GameResultsController : UIScreenController
 
         if (_mvpName != null) _mvpName.text = PlayerName(stats.PlayerId);
         if (_mvpTeam != null) _mvpTeam.text = team?.Name ?? "";
-        if (_mvpGoals != null) _mvpGoals.text = stats.Goals.ToString();
-        if (_mvpAssists != null) _mvpAssists.text = stats.Assists.ToString();
         if (_mvpVal != null) _mvpVal.text = stats.Rating.ToString("F1");
     }
 
@@ -290,7 +296,7 @@ public class GameResultsController : UIScreenController
         if (body == null) return;
         body.Clear();
 
-        var top = entries.Take(5).ToList();
+        var top = entries.Take(3).ToList();
         for (int i = 0; i < top.Count; i++)
         {
             var entry = top[i];

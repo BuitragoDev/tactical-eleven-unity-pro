@@ -48,14 +48,6 @@
                                         </ui:VisualElement>
                                     </ui:VisualElement>
                                     <ui:VisualElement class="mvp-stats">
-                                        <ui:VisualElement class="mvp-stat">
-                                            <ui:Label name="MvpGoals" text="0" class="mvp-stat-val"/>
-                                            <ui:Label text="{loc:ui.game_results.goles}" class="mvp-stat-label"/>
-                                        </ui:VisualElement>
-                                        <ui:VisualElement class="mvp-stat">
-                                            <ui:Label name="MvpAssists" text="0" class="mvp-stat-val"/>
-                                            <ui:Label text="{loc:ui.game_results.asistencias}" class="mvp-stat-label"/>
-                                        </ui:VisualElement>
                                         <ui:VisualElement class="mvp-stat mvp-rating">
                                             <ui:Label name="MvpVal" text="0" class="mvp-stat-val"/>
                                             <ui:Label text="{loc:ui.game_results.nota}" class="mvp-stat-label"/>
