@@ -27,30 +27,6 @@
                     <ui:Button name="BtnNextMonth" class="calendar-nav-btn" text="▶" />
                 </ui:VisualElement>
 
-                <!-- Leyenda de competiciones -->
-                <ui:VisualElement class="calendar-legend">
-                    <ui:VisualElement class="calendar-legend-item">
-                        <ui:VisualElement class="calendar-legend-dot calendar-legend-dot--league" />
-                        <ui:Label text="{loc:ui.calendar.leyenda_liga}" class="calendar-legend-label" />
-                    </ui:VisualElement>
-                    <ui:VisualElement class="calendar-legend-item">
-                        <ui:VisualElement class="calendar-legend-dot calendar-legend-dot--champions" />
-                        <ui:Label text="{loc:ui.calendar.leyenda_champions}" class="calendar-legend-label" />
-                    </ui:VisualElement>
-                    <ui:VisualElement class="calendar-legend-item">
-                        <ui:VisualElement class="calendar-legend-dot calendar-legend-dot--europa" />
-                        <ui:Label text="{loc:ui.calendar.leyenda_europa}" class="calendar-legend-label" />
-                    </ui:VisualElement>
-                    <ui:VisualElement class="calendar-legend-item">
-                        <ui:VisualElement class="calendar-legend-dot calendar-legend-dot--conference" />
-                        <ui:Label text="{loc:ui.calendar.leyenda_conference}" class="calendar-legend-label" />
-                    </ui:VisualElement>
-                    <ui:VisualElement class="calendar-legend-item">
-                        <ui:VisualElement class="calendar-legend-dot calendar-legend-dot--cup" />
-                        <ui:Label text="{loc:ui.calendar.leyenda_copa}" class="calendar-legend-label" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-
                 <!-- Rejilla + detalle del día -->
                 <ui:VisualElement class="calendar-body">
 

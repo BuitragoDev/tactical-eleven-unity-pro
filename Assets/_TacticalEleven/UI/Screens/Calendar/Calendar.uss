@@ -449,37 +449,6 @@
 .calendar-day-dot--conference { background-color: rgb(34, 197, 94); }
 .calendar-day-dot--cup { background-color: rgb(231, 76, 60); }
 
-.calendar-legend {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.calendar-legend-item {
-    flex-direction: row;
-    align-items: center;
-    margin-right: 18px;
-    margin-bottom: 4px;
-}
-.calendar-legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    margin-right: 6px;
-}
-.calendar-legend-dot--league { background-color: rgb(212, 160, 23); }
-.calendar-legend-dot--champions { background-color: rgb(59, 130, 246); }
-.calendar-legend-dot--europa { background-color: rgb(245, 130, 32); }
-.calendar-legend-dot--conference { background-color: rgb(34, 197, 94); }
-.calendar-legend-dot--cup { background-color: rgb(231, 76, 60); }
-.calendar-legend-label {
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgb(122, 138, 170);
-}
-
 .selected-game-team {
     flex-direction: row;
     align-items: center;
