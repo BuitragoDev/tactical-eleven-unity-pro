@@ -107,7 +107,7 @@ public static class HeaderController
         if (mainMenu != null)
         {
             mainMenu.RegisterCallback<ClickEvent>(_ =>
-                ScreenManager.Instance?.GoTo(GameScreen.MainMenu));
+                ScreenManager.Instance?.GoTo(GameScreen.Dashboard));
             CursorManager.Instance?.RegisterHandCursor(mainMenu);
         }
     }

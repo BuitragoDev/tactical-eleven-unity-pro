@@ -82,6 +82,10 @@
       "value": "MENÚ PRINCIPAL"
     },
     {
+      "key": "ui.core_header.pantalla_principal",
+      "value": "PANTALLA PRINCIPAL"
+    },
+    {
       "key": "ui.core_header.presupuesto",
       "value": "Presupuesto"
     },

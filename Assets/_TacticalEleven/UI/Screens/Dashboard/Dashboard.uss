@@ -2813,21 +2813,4 @@
     color: rgb(100, 200, 140);
 }
 
-/* Botón MENÚ PRINCIPAL del header inyectado */
-.header-main-menu-btn {
-    width: 200px;
-    height: 46px;
-    margin-right: 6px;
-    background-color: transparent;
-    border-width: 2px;
-    border-color: rgb(59, 130, 246);
-    border-radius: 6px;
-    color: rgb(255, 255, 255);
-    -unity-font: url("project://database/Assets/_TacticalEleven/Art/Fonts/Saira_Condensed-Bold.ttf");
-    font-size: 18px;
-    letter-spacing: 1px;
-    -unity-text-align: middle-center;
-}
-.header-main-menu-btn:hover {
-    background-color: rgba(59, 130, 246, 0.15);
-}
+
