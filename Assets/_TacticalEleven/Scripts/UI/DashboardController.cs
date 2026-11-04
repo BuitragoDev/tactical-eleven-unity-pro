@@ -237,6 +237,7 @@ public class DashboardController : UIScreenController
         SidebarController.ScreenUnavailable = _ => ShowToast(
             LocalizationService.T("ui.dashboard.proximamente"));
         SidebarController.Attach(_root, ScreenId);
+        HeaderController.Attach(_root);
 
         _btnAction?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OnActionClicked(); });
         _configIcon?.RegisterCallback<ClickEvent>(_ => { PlayClick(); OpenConfigModal(); });

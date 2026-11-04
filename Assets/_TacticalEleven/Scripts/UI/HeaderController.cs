@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
 /// S1 — Header común de las pantallas del sidebar (club, manager, presupuesto,
-/// química, temporada y fecha). Se inyecta en runtime, igual que la sidebar.
+/// química, temporada y fecha). Se inyecta en runtime, igual que la sidebar, y
+/// deja el header a todo el ancho con la sidebar debajo.
 /// </summary>
 public static class HeaderController
 {
@@ -20,13 +22,28 @@ public static class HeaderController
         if (container == null) container = root;
 
         var existing = container.Q<VisualElement>("TopHeader");
-        if (existing != null)
+
+        // Ya está en la posición correcta (hijo directo del contenedor).
+        if (existing != null && existing.parent == container)
         {
             Populate(existing);
             return;
         }
 
-        // Reestructura: container (columna) → header + body-row (sidebar + main).
+        // Si el header existe pero está anidado (p. ej. dentro de main-area),
+        // se saca para colocarlo a todo el ancho.
+        VisualElement header;
+        if (existing != null)
+        {
+            existing.parent.Remove(existing);
+            header = existing;
+        }
+        else
+        {
+            header = template.CloneTree();
+        }
+
+        // Recoge los hijos actuales para reordenarlos.
         var children = new List<VisualElement>();
         while (container.childCount > 0)
         {
@@ -34,22 +51,36 @@ public static class HeaderController
             container.RemoveAt(0);
         }
 
-        var header = template.CloneTree();
+        var sidebar = children.FirstOrDefault(c => c.name == "Sidebar");
+        var main = children.FirstOrDefault(c => c != sidebar && !IsOverlay(c));
+        var rest = children.Where(c => c != sidebar && c != main).ToList();
+
         container.Add(header);
 
-        var body = new VisualElement();
-        body.style.flexDirection = FlexDirection.Row;
-        body.style.flexGrow = 1;
-        body.style.minHeight = 0;
+        if (sidebar != null || main != null)
+        {
+            var body = new VisualElement();
+            body.style.flexDirection = FlexDirection.Row;
+            body.style.flexGrow = 1;
+            body.style.minHeight = 0;
 
-        foreach (var child in children)
-            body.Add(child);
+            if (sidebar != null) body.Add(sidebar);
+            if (main != null) body.Add(main);
 
-        container.Add(body);
+            container.Add(body);
+        }
+
+        // Los overlays/modales y avisos absolutos se quedan al final.
+        foreach (var child in rest)
+            container.Add(child);
+
         container.style.flexDirection = FlexDirection.Column;
 
         Populate(header);
     }
+
+    private static bool IsOverlay(VisualElement element)
+        => element != null && element.ClassListContains("modal-overlay");
 
     private static VisualTreeAsset GetTemplate()
     {
