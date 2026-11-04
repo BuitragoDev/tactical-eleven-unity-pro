@@ -2818,3 +2818,21 @@
 }
 
 
+
+/* Resultado del último partido: texto verde / dorado / rojo */
+.game-result-badge {
+    background-color: transparent;
+    color: rgb(208, 216, 232);
+}
+.badge-win {
+    background-color: transparent;
+    color: rgb(39, 174, 96);
+}
+.badge-draw {
+    background-color: transparent;
+    color: rgb(212, 160, 23);
+}
+.badge-loss {
+    background-color: transparent;
+    color: rgb(192, 57, 43);
+}

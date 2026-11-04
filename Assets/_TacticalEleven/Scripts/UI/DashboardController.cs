@@ -143,6 +143,9 @@ public class DashboardController : UIScreenController
         _lastGameArena = Q<Label>("LastGameArena");
         _lastGameMeta = Q<VisualElement>("LastGameMeta");
 
+        foreach (var record in new[] { _lastHomeRecord, _lastAwayRecord, _nextHomeRecord, _nextAwayRecord })
+            if (record != null) record.enableRichText = true;
+
         _noNextGame = Q<Label>("NoNextGame");
         _nextGameResult = Q<VisualElement>("NextGameResult");
         _nextHomeLog = Q<VisualElement>("NextHomeLog");
@@ -345,9 +348,12 @@ public class DashboardController : UIScreenController
                 won ? "ui.dashboard.victoria" : drawn ? "ui.dashboard.empate" : "ui.dashboard.derrota");
 
             _lastResultBadge.RemoveFromClassList("badge-win");
+            _lastResultBadge.RemoveFromClassList("badge-draw");
             _lastResultBadge.RemoveFromClassList("badge-loss");
+
             if (won) _lastResultBadge.AddToClassList("badge-win");
-            else if (!drawn) _lastResultBadge.AddToClassList("badge-loss");
+            else if (drawn) _lastResultBadge.AddToClassList("badge-draw");
+            else _lastResultBadge.AddToClassList("badge-loss");
         }
 
         if (_lastGameArena != null) _lastGameArena.text = home?.StadiumName ?? "";
@@ -926,7 +932,7 @@ public class DashboardController : UIScreenController
                 else drawn++;
             }
         }
-        return $"{won}-{drawn}-{lost}";
+        return $"<color=#27AE60>{won}V</color>-<color=#D4A017>{drawn}E</color>-<color=#C0392B>{lost}P</color>";
     }
 
     private TeamDataDB TeamOf(int teamId)
