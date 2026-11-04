@@ -63,10 +63,14 @@ public class ScheduleTests
     [Test]
     public void GenerateLeague_22Teams_Produces42RoundsAnd462Games()
     {
-        var fixtures = FootballScheduleGenerator.GenerateLeague(Ids(22), 2026, 2, new SeededRandomSource(7));
+        var ids = Ids(22);
+        var fixtures = FootballScheduleGenerator.GenerateLeague(ids, 2026, 2, new SeededRandomSource(7));
 
         Assert.That(fixtures.Count, Is.EqualTo(462), "22 equipos × 21 rivales × 2");
         Assert.That(fixtures.Max(f => f.MatchDay), Is.EqualTo(42));
+
+        var validation = FootballScheduleGenerator.Validate(fixtures, ids);
+        Assert.That(validation.IsValid, Is.True, validation.ToString());
     }
 
     [Test]
