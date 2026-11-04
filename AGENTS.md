@@ -98,7 +98,7 @@ fútbol en lugar de baloncesto.
 | **F8** | 🚧 **En curso** | **Motor de partido y pantallas**: motor, persistencia y pantallas `PreGame`/`MatchDay`/`GameResults`. **F8b (play-by-play y 2D) en pausa**: el foco pasa a las pantallas del sidebar (ver `Docs/PLAN_PANTALLAS_SIDEBAR.md`) |
 | F9…F18 | — | Competiciones, mercado, finanzas, copa, Europa, rollover, staff/cantera, narrativa y build |
 
-**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (10 archivos, sin `.asmdef`; compilan en
+**Tests:** `Assets/_TacticalEleven/Tests/Editor/` (11 archivos, sin `.asmdef`; compilan en
 `Assembly-CSharp-Editor`). Comando (con **Unity cerrado**):
 
 ```bash
